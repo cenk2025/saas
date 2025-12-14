@@ -1,0 +1,26 @@
+{
+    "Navbar": {
+        "dashboard": "Dashboard",
+        "advisor": "Advisor",
+        "billing": "Billing",
+        "admin": "Admin",
+        "diagnostic": "Diagnostic",
+        "signIn": "Sign In",
+        "logout": "Logout"
+    },
+    "Landing": {
+        "tagline": "AI-Powered Corporate Intelligence",
+        "title": "See Your Business With Perfect Clarity",
+        "subtitle": "Stop guessing. Our AI diagnostic engine analyzes your organization's structure to reveal hidden weaknesses and unlocked potential.",
+        "ctaTest": "Run a Free Diagnostic",
+        "ctaDemo": "View Demo",
+        "features": {
+            "deep": "Deep Diagnostics",
+            "deepDesc": "Evaluate operational efficiency, digital maturity, and risk awareness.",
+            "insights": "Actionable Insights",
+            "insightsDesc": "Receive 3 concrete, prioritized recommendations.",
+            "secure": "Secure & Private",
+            "secureDesc": "Your data is encrypted and partitioned."
+        }
+    }
+}

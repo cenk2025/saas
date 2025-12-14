@@ -1,0 +1,26 @@
+{
+    "Navbar": {
+        "dashboard": "Hallintapaneeli",
+        "advisor": "Neuvonantaja",
+        "billing": "Laskutus",
+        "admin": "Ylläpito",
+        "diagnostic": "Diagnostiikka",
+        "signIn": "Kirjaudu sisään",
+        "logout": "Kirjaudu ulos"
+    },
+    "Landing": {
+        "tagline": "Tekoälypohjainen yritysäly",
+        "title": "Näe liiketoimintasi täydellisellä selkeydellä",
+        "subtitle": "Lopeta arvailu. Tekoälydiagnostiikkamme analysoi organisaatiosi rakenteen paljastaakseen piilevät heikkoudet ja hyödyntämättömän potentiaalin.",
+        "ctaTest": "Suorita ilmainen diagnostiikka",
+        "ctaDemo": "Katso demo",
+        "features": {
+            "deep": "Syvä diagnostiikka",
+            "deepDesc": "Arvioi toiminnan tehokkuus, digitaalinen kypsyys ja riskitietoisuus.",
+            "insights": "Toiminnalliset oivallukset",
+            "insightsDesc": "Saat 3 konkreettista, priorisoitua suositusta.",
+            "secure": "Turvallinen & Yksityinen",
+            "secureDesc": "Tietosi ovat salattuja ja eristettyjä."
+        }
+    }
+}
