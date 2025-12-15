@@ -11,10 +11,9 @@ export async function getUserSubscriptionPlan(userId: string) {
         return {
             ...PLANS[0],
             isPro: false,
-            stripeCurrentPeriodEnd: null,
-            stripeCustomerId: null,
-            stripePriceId: null,
-            stripeSubscriptionId: null,
+            stripeCurrentPeriodEnd: undefined,
+            stripeCustomerId: undefined,
+            stripeSubscriptionId: undefined,
         }
     }
 
@@ -27,8 +26,10 @@ export async function getUserSubscriptionPlan(userId: string) {
         : PLANS[0] // Default to Free
 
     return {
-        ...plan,
         ...user.company,
+        ...plan,
+        stripeCustomerId: user.company.stripeCustomerId,
+        stripeSubscriptionId: user.company.stripeSubscriptionId,
         stripeCurrentPeriodEnd: user.company.stripeCurrentPeriodEnd?.getTime(),
         isPro: !!isPro,
     }
