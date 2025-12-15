@@ -9,6 +9,10 @@ export async function POST(req: Request) {
         const session = await getServerSession(authOptions)
         if (!session?.user?.email) return new NextResponse("Unauthorized", { status: 401 })
 
+        if (!stripe) {
+            return new NextResponse("Billing not configured", { status: 503 })
+        }
+
         // Use findFirst for reliability if findUnique logic is tricky with relations, but here email is unique on User.
         const user = await prisma.user.findUnique({
             where: { email: session.user.email },

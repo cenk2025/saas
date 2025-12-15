@@ -22,14 +22,14 @@ export async function getUserSubscriptionPlan(userId: string) {
         user.company.stripeCurrentPeriodEnd?.getTime()! + 86_400_000 > Date.now()
 
     const plan = isPro
-        ? PLANS.find((plan) => plan.stripePriceId === user.company!.stripePriceId)
+        ? PLANS.find((plan) => plan.stripePriceId === user.company!.stripePriceId) || PLANS[0]
         : PLANS[0] // Default to Free
 
     return {
-        ...user.company,
         ...plan,
         stripeCustomerId: user.company.stripeCustomerId,
         stripeSubscriptionId: user.company.stripeSubscriptionId,
+        stripePriceId: user.company.stripePriceId || plan.stripePriceId,
         stripeCurrentPeriodEnd: user.company.stripeCurrentPeriodEnd?.getTime(),
         isPro: !!isPro,
     }

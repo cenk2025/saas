@@ -9,6 +9,10 @@ export async function POST(req: Request) {
         const session = await getServerSession(authOptions)
         if (!session?.user?.email) return new NextResponse("Unauthorized", { status: 401 })
 
+        if (!stripe) {
+            return new NextResponse("Billing not configured", { status: 503 })
+        }
+
         const user = await prisma.user.findUnique({
             where: { email: session.user.email },
             include: { company: true }
