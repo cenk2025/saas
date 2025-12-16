@@ -1,4 +1,4 @@
-# ClarityAI - AI-Powered SaaS Platform
+# Voon Business - AI-Powered SaaS Platform
 
 ## Setup
 

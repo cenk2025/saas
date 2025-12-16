@@ -8,8 +8,8 @@ import { getMessages } from 'next-intl/server'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ClarityAI - AI-Powered Business Insights',
-  description: 'See your company clearly with AI-driven analysis.',
+  title: 'Voon Business - AI-Powered Business Insights',
+  description: 'Transform your business with AI-powered diagnostics and insights',
 }
 
 export default async function RootLayout({
