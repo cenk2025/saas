@@ -42,11 +42,18 @@ export async function POST(req: Request) {
       Be professional, encouraging, and specific. If asked about something not in the report, use general business knowledge but mention the report didn't cover it specifically.`
         }
 
-        if (process.env.OPENAI_API_KEY) {
-            const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+        const apiKey = process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY;
+
+        if (apiKey) {
+            const openai = new OpenAI({
+                apiKey,
+                baseURL: process.env.DEEPSEEK_API_KEY ? 'https://api.deepseek.com' : undefined
+            })
+
             const completion = await openai.chat.completions.create({
                 messages: [systemMessage, ...messages],
-                model: "gpt-4-turbo-preview",
+                model: process.env.DEEPSEEK_API_KEY ? "deepseek-chat" : "gpt-4-turbo-preview",
+                temperature: 0.7
             })
 
             return NextResponse.json(completion.choices[0].message)

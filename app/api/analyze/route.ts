@@ -32,15 +32,22 @@ export async function POST(req: Request) {
 
         let analysisResult;
 
-        if (process.env.OPENAI_API_KEY) {
-            const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+        const apiKey = process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY;
+
+        if (apiKey) {
+            const openai = new OpenAI({
+                apiKey,
+                baseURL: process.env.DEEPSEEK_API_KEY ? 'https://api.deepseek.com' : undefined
+            })
+
             const completion = await openai.chat.completions.create({
                 messages: [
                     { role: "system", content: ANALYSIS_SYSTEM_PROMPT },
                     { role: "user", content: userPrompt }
                 ],
-                model: "gpt-4-turbo-preview",
-                response_format: { type: "json_object" }
+                model: process.env.DEEPSEEK_API_KEY ? "deepseek-chat" : "gpt-4-turbo-preview",
+                response_format: { type: "json_object" },
+                temperature: 0.7
             })
 
             const content = completion.choices[0].message.content
