@@ -8,10 +8,10 @@ import { TrendingUp, AlertTriangle, Lightbulb, ArrowRight, Activity, Shield, Zap
 import { KPICard } from "@/components/KPICard"
 import { DataChart } from "@/components/DashboardCharts"
 
-// Initialize Supabase client
+// Initialize Supabase client with service role key for server-side queries
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
 export default async function DashboardPage() {

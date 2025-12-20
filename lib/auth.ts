@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 export const authOptions: NextAuthOptions = {
@@ -25,10 +26,10 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 try {
-                    // Use Supabase Auth to verify credentials
-                    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+                    // Use Anon Key for user authentication (signInWithPassword)
+                    const authClient = createClient(supabaseUrl, supabaseAnonKey);
 
-                    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+                    const { data: authData, error: authError } = await authClient.auth.signInWithPassword({
                         email: credentials.email,
                         password: credentials.password,
                     });
@@ -37,6 +38,9 @@ export const authOptions: NextAuthOptions = {
                         console.error("Auth error:", authError);
                         return null;
                     }
+
+                    // Use Service Role Key for database operations
+                    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
                     // Get user details from our users table
                     const { data: userData, error: userError } = await supabase
