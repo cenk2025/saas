@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
-import { Role } from "@prisma/client"
+import { createClient } from "@supabase/supabase-js"
 import { DownloadReportButton } from "@/components/DownloadReportButton"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -9,21 +8,42 @@ import { TrendingUp, AlertTriangle, Lightbulb, ArrowRight, Activity, Shield, Zap
 import { KPICard } from "@/components/KPICard"
 import { DataChart } from "@/components/DashboardCharts"
 
-
+// Initialize Supabase client
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions)
     if (!session?.user?.email) return null
 
-    const user = await prisma.user.findUnique({
-        where: { email: session.user.email },
-        include: { company: { include: { reports: { orderBy: { createdAt: 'asc' } } } } }
-    })
+    // Fetch user from Supabase
+    const { data: user, error: userError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', session.user.email)
+        .single()
 
-    if (user?.role === Role.ADMIN) redirect('/admin')
+    if (userError || !user) {
+        return (
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+                <h2 className="text-2xl font-bold">User Not Found</h2>
+                <p className="text-muted-foreground mt-2">Please contact your administrator.</p>
+            </div>
+        )
+    }
 
-    const company = user?.company
-    if (!company) {
+    if (user.role === 'ADMIN') redirect('/admin')
+
+    // Fetch company from Supabase
+    const { data: company, error: companyError } = await supabase
+        .from('companies')
+        .select('*')
+        .eq('id', user.company_id)
+        .single()
+
+    if (!company || companyError) {
         return (
             <div className="flex flex-col items-center justify-center py-20 text-center">
                 <h2 className="text-2xl font-bold">No Company Assigned</h2>
@@ -32,19 +52,26 @@ export default async function DashboardPage() {
         )
     }
 
-    const reports = company.reports
-    const latestReport = reports[reports.length - 1]
-    const previousReport = reports[reports.length - 2] as any // Type assertion for simplicity
+    // Fetch diagnostic reports for the company
+    const { data: reports, error: reportsError } = await supabase
+        .from('diagnostic_reports')
+        .select('*')
+        .eq('company_id', company.id)
+        .order('created_at', { ascending: true })
 
-    const chartData = reports.map(r => ({
-        date: new Date(r.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+    const reportsList = reports || []
+    const latestReport = reportsList[reportsList.length - 1]
+    const previousReport = reportsList[reportsList.length - 2]
+
+    const chartData = reportsList.map((r: any) => ({
+        date: new Date(r.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
         score: r.score
     }))
 
     // Parse category scores safely
     let categoryData: any[] = []
-    if (latestReport?.categoryScores) {
-        const scores = latestReport.categoryScores as Record<string, number>
+    if (latestReport?.category_scores) {
+        const scores = latestReport.category_scores as Record<string, number>
         categoryData = Object.keys(scores).map(key => ({
             subject: key,
             A: scores[key],
@@ -60,6 +87,7 @@ export default async function DashboardPage() {
         { name: 'Financial', value: 25 },
         { name: 'Strategic', value: 55 },
     ].sort((a, b) => b.value - a.value)
+
 
 
     return (
@@ -144,7 +172,7 @@ export default async function DashboardPage() {
                                 "{latestReport.summary}"
                             </p>
                             <div className="mt-6 flex flex-wrap gap-2">
-                                {latestReport.recommendations.slice(0, 2).map((rec, i) => (
+                                {latestReport.recommendations.slice(0, 2).map((rec: string, i: number) => (
                                     <span key={i} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                         <Zap className="w-3 h-3 mr-1" /> Recommendation
                                     </span>
