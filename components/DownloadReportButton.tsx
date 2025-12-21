@@ -28,7 +28,7 @@ export function DownloadReportButton({ report }: { report: any }) {
         // Metadata
         doc.setFontSize(10)
         doc.setTextColor(100, 100, 100)
-        doc.text(`Date: ${new Date(report.createdAt).toLocaleDateString()}`, 20, 30)
+        doc.text(`Date: ${new Date(report.created_at || report.createdAt).toLocaleDateString()}`, 20, 30)
         doc.text(`Score: ${report.score}/100`, 20, 35)
 
         // Summary
@@ -75,7 +75,7 @@ export function DownloadReportButton({ report }: { report: any }) {
             yPos += (splitText.length * 7) + 5
         })
 
-        doc.save(`clarity-report-${new Date(report.createdAt).toISOString().split('T')[0]}.pdf`)
+        doc.save(`clarity-report-${new Date(report.created_at || report.createdAt).toISOString().split('T')[0]}.pdf`)
         setLoading(false)
     }
 

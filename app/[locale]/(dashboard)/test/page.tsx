@@ -91,9 +91,10 @@ export default function DiagnosticPage() {
                 body: JSON.stringify({ answers })
             })
 
-            if (res.ok) {
-                router.push("/dashboard")
-                router.refresh()
+            const data = await res.json()
+
+            if (res.ok && data.reportId) {
+                router.push(`/results/${data.reportId}`)
             } else {
                 alert("Failed to submit analysis")
                 setLoading(false)
@@ -132,8 +133,8 @@ export default function DiagnosticPage() {
                                         type="button"
                                         onClick={() => handleChange(q.id, opt)}
                                         className={`p-3 rounded-lg border text-sm font-medium transition-all ${answers[q.id] === opt
-                                                ? "bg-primary text-primary-foreground border-primary ring-2 ring-primary ring-offset-2"
-                                                : "bg-background hover:bg-muted"
+                                            ? "bg-primary text-primary-foreground border-primary ring-2 ring-primary ring-offset-2"
+                                            : "bg-background hover:bg-muted"
                                             }`}
                                     >
                                         {opt}

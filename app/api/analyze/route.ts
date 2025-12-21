@@ -18,14 +18,16 @@ export async function POST(req: Request) {
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
+
         // Fetch user from Supabase
         const { data: user, error: userError } = await supabase
             .from('users')
-            .select('*, companies(*)')
+            .select('*')
             .eq('email', session.user.email)
             .single()
 
         if (userError || !user?.company_id) {
+            console.error("User fetch error:", userError)
             return new NextResponse("User not associated with a company", { status: 400 })
         }
 

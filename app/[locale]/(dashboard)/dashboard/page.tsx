@@ -34,7 +34,8 @@ export default async function DashboardPage() {
         )
     }
 
-    if (user.role === 'ADMIN') redirect('/admin')
+    // Note: ADMIN users can view their own dashboard
+    // They can also access /admin for company management
 
     // Fetch company from Supabase
     const { data: company, error: companyError } = await supabase
