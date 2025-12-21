@@ -1,9 +1,14 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
+import { createClient } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
 import OpenAI from "openai"
 import { ANALYSIS_SYSTEM_PROMPT } from "@/lib/ai/prompt"
+
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 export async function POST(req: Request) {
     try {
@@ -13,16 +18,14 @@ export async function POST(req: Request) {
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
-        const user = await prisma.user.findUnique({
-            where: { email: session.user.email },
-            include: { company: true }
-        })
+        // Fetch user from Supabase
+        const { data: user, error: userError } = await supabase
+            .from('users')
+            .select('*, companies(*)')
+            .eq('email', session.user.email)
+            .single()
 
-        if (!user?.companyId) {
-            // For demo purposes, create a company if none exists?
-            // Or return error. User asked for "Companies fill out...".
-            // If user just signed up (if sign up existed), they might not have company.
-            // But our seed creates them.
+        if (userError || !user?.company_id) {
             return new NextResponse("User not associated with a company", { status: 400 })
         }
 
@@ -76,19 +79,26 @@ export async function POST(req: Request) {
             }
         }
 
-        // Save to DB
-        const report = await prisma.diagnosticReport.create({
-            data: {
-                companyId: user.companyId,
+        // Save to Supabase
+        const { data: report, error: reportError } = await supabase
+            .from('diagnostic_reports')
+            .insert({
+                company_id: user.company_id,
                 score: analysisResult.score,
                 summary: analysisResult.summary,
                 weaknesses: analysisResult.weaknesses,
                 recommendations: analysisResult.recommendations,
-                categoryScores: analysisResult.categoryScores,
-                rawAnswers: answers,
-                aiResponse: analysisResult
-            }
-        })
+                category_scores: analysisResult.categoryScores,
+                raw_answers: answers,
+                ai_response: analysisResult
+            })
+            .select()
+            .single()
+
+        if (reportError) {
+            console.error("Database Error:", reportError)
+            return new NextResponse("Failed to save report", { status: 500 })
+        }
 
         return NextResponse.json({ success: true, reportId: report.id })
     } catch (error) {
