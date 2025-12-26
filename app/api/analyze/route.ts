@@ -37,12 +37,11 @@ export async function POST(req: Request) {
 
         let analysisResult;
 
-        const apiKey = process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY;
+        const apiKey = process.env.OPENAI_API_KEY;
 
         if (apiKey) {
             const openai = new OpenAI({
-                apiKey,
-                baseURL: process.env.DEEPSEEK_API_KEY ? 'https://api.deepseek.com' : undefined
+                apiKey
             })
 
             const completion = await openai.chat.completions.create({
@@ -50,7 +49,7 @@ export async function POST(req: Request) {
                     { role: "system", content: ANALYSIS_SYSTEM_PROMPT },
                     { role: "user", content: userPrompt }
                 ],
-                model: process.env.DEEPSEEK_API_KEY ? "deepseek-chat" : "gpt-4-turbo-preview",
+                model: "gpt-4o-mini",
                 response_format: { type: "json_object" },
                 temperature: 0.7
             })
@@ -59,7 +58,7 @@ export async function POST(req: Request) {
             if (!content) throw new Error("No content from AI")
             analysisResult = JSON.parse(content)
         } else {
-            // Mock Data
+            // Mock Data for development (when no API key is set)
             await new Promise(resolve => setTimeout(resolve, 2000))
             analysisResult = {
                 score: Math.floor(Math.random() * 30) + 60, // 60-90

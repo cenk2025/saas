@@ -11,10 +11,9 @@ DIRECT_URL=postgresql://postgres:[YOUR-PASSWORD]@db.uesjyfsmqwawlkgaidvv.supabas
 NEXTAUTH_URL=http://localhost:3002
 NEXTAUTH_SECRET=your-nextauth-secret-here
 
-# AI Provider (DeepSeek or OpenAI)
-AI_PROVIDER=deepseek
-DEEPSEEK_API_KEY=your-deepseek-api-key
+# AI Provider (OpenAI GPT-4o-mini)
 OPENAI_API_KEY=your-openai-api-key
+
 
 # Stripe (Optional)
 STRIPE_SECRET_KEY=your-stripe-secret-key

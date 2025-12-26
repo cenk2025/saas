@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/app/globals.css'
 import { Navbar } from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import CookieConsent from '@/components/CookieConsent'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo'
@@ -41,7 +43,9 @@ export default async function RootLayout({
             <main className="flex-1 flex flex-col">
               {children}
             </main>
+            <Footer />
           </div>
+          <CookieConsent />
         </NextIntlClientProvider>
       </body>
     </html>
