@@ -1,8 +1,13 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
+import { createClient } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
 import OpenAI from "openai"
+
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 export async function POST(req: Request) {
     try {
@@ -13,16 +18,34 @@ export async function POST(req: Request) {
 
         const { messages } = await req.json()
 
-        // Get context from latest report
-        const user = await prisma.user.findUnique({
-            where: { email: session.user.email },
-            include: { company: { include: { reports: { orderBy: { createdAt: 'desc' }, take: 1 } } } }
-        })
+        // Get user and their company's latest report from Supabase
+        const { data: user, error: userError } = await supabase
+            .from('users')
+            .select('id, company_id')
+            .eq('email', session.user.email)
+            .single()
 
-        const latestReport = user?.company?.reports[0]
+        if (userError || !user?.company_id) {
+            return NextResponse.json({
+                role: "assistant",
+                content: "I couldn't find your user profile. Please make sure you're properly registered."
+            })
+        }
 
-        if (!latestReport) {
-            return NextResponse.json({ role: "assistant", content: "I don't see any diagnostic reports for your company yet. Please run a diagnostic test first so I can understand your business context." })
+        // Get the latest diagnostic report for the user's company
+        const { data: latestReport, error: reportError } = await supabase
+            .from('diagnostic_reports')
+            .select('*')
+            .eq('company_id', user.company_id)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single()
+
+        if (reportError || !latestReport) {
+            return NextResponse.json({
+                role: "assistant",
+                content: "I don't see any diagnostic reports for your company yet. Please run a diagnostic test first so I can understand your business context."
+            })
         }
 
         const context = `
