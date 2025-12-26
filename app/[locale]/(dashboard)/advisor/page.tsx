@@ -16,7 +16,12 @@ export default function AdvisorPage() {
         if (!input.trim() || loading) return
 
         const userMsg = { role: 'user' as const, content: input }
-        setMessages(prev => [...prev, userMsg])
+        console.log('🔵 Adding user message:', userMsg)
+        setMessages(prev => {
+            const newMessages = [...prev, userMsg]
+            console.log('🔵 Messages after user msg:', newMessages)
+            return newMessages
+        })
         setInput("")
         setLoading(true)
 
@@ -30,9 +35,14 @@ export default function AdvisorPage() {
             if (!res.ok) throw new Error("Failed to fetch")
 
             const data = await res.json()
-            setMessages(prev => [...prev, data])
+            console.log('🟢 API Response:', data)
+            setMessages(prev => {
+                const newMessages = [...prev, data]
+                console.log('🟢 Messages after API response:', newMessages)
+                return newMessages
+            })
         } catch (err) {
-            console.error(err)
+            console.error('🔴 Error:', err)
             setMessages(prev => [...prev, { role: 'assistant', content: "I'm having trouble connecting right now. Please try again." }])
         } finally {
             setLoading(false)
@@ -44,7 +54,7 @@ export default function AdvisorPage() {
     }, [messages])
 
     return (
-        <div className="flex flex-col h-[calc(100vh-8rem)] max-w-4xl mx-auto border rounded-xl bg-card shadow-sm overflow-hidden">
+        <div className="flex flex-col flex-1 max-w-4xl mx-auto border rounded-xl bg-card shadow-sm overflow-hidden my-4">
             {/* Header */}
             <div className="p-4 border-b bg-muted/30 flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-full">
@@ -66,8 +76,8 @@ export default function AdvisorPage() {
                             </div>
                         )}
                         <div className={`p-4 rounded-2xl max-w-[80%] text-sm leading-relaxed ${m.role === 'user'
-                                ? 'bg-primary text-primary-foreground rounded-tr-none'
-                                : 'bg-card border shadow-sm rounded-tl-none'
+                            ? 'bg-primary text-primary-foreground rounded-tr-none'
+                            : 'bg-card border shadow-sm rounded-tl-none'
                             }`}>
                             {m.content}
                         </div>
