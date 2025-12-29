@@ -1,6 +1,7 @@
 import { Link } from '@/src/i18n/navigation'
 import { ArrowRight, BarChart3, CheckCircle2, ShieldCheck } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import ContactForm from '@/components/ContactForm'
 
 export default async function Home() {
   const t = await getTranslations('Landing')
@@ -74,6 +75,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Contact Form Section */}
+      <ContactForm />
     </div>
   )
 }

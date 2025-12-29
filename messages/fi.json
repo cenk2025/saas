@@ -22,5 +22,21 @@
             "secure": "Turvallinen & Yksityinen",
             "secureDesc": "Tietosi ovat salattuja ja eristettyjä."
         }
+    },
+    "contact": {
+        "subtitle": "Ota yhteyttä - olemme täällä auttamassa",
+        "name": "Nimi",
+        "namePlaceholder": "Nimesi",
+        "email": "Sähköposti",
+        "emailPlaceholder": "nimi@yritys.fi",
+        "company": "Yritys",
+        "companyPlaceholder": "Yrityksesi nimi",
+        "message": "Viesti",
+        "messagePlaceholder": "Kerro meille miten voimme auttaa...",
+        "submit": "Lähetä viesti",
+        "sending": "Lähetetään...",
+        "success": "Viesti lähetetty onnistuneesti! Otamme sinuun yhteyttä pian.",
+        "error": "Viestin lähetys epäonnistui. Yritä uudelleen.",
+        "alternativeContact": "Tai ota suoraan yhteyttä:"
     }
 }

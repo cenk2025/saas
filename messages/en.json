@@ -22,5 +22,21 @@
             "secure": "Secure & Private",
             "secureDesc": "Your data is encrypted and partitioned."
         }
+    },
+    "contact": {
+        "subtitle": "Get in touch - we're here to help",
+        "name": "Name",
+        "namePlaceholder": "Your name",
+        "email": "Email",
+        "emailPlaceholder": "name@company.com",
+        "company": "Company",
+        "companyPlaceholder": "Your company name",
+        "message": "Message",
+        "messagePlaceholder": "Tell us how we can help...",
+        "submit": "Send message",
+        "sending": "Sending...",
+        "success": "Message sent successfully! We'll get back to you soon.",
+        "error": "Failed to send message. Please try again.",
+        "alternativeContact": "Or contact us directly:"
     }
 }
