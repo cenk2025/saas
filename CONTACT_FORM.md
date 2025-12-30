@@ -1,27 +1,41 @@
 # Contact Form Configuration
 
 ## Overview
-The Business VoonIQ platform now includes a professional contact form that sends emails using the Resend API.
+The Business VoonIQ platform includes a professional contact form with **AI-powered auto-response** using n8n workflow automation and Brevo email service.
 
 ## Features
 - **Modern Design**: Glassmorphism effect with gradient backgrounds
 - **Bilingual Support**: Finnish and English translations
+- **AI Auto-Response**: Gemini AI generates personalized responses in Finnish
+- **Dual Email System**: 
+  - Customer receives AI-generated response
+  - Admin receives notification with form details
 - **Form Validation**: Required fields with proper error handling
 - **Status Feedback**: Success and error messages
 - **Responsive Layout**: Works on all device sizes
-- **Email Notifications**: Sends formatted emails to info@voon.fi
+
+## Architecture
+
+```
+Contact Form → Next.js API → n8n Webhook → Gemini AI → Brevo Email
+```
+
+### Workflow Steps:
+1. User submits contact form
+2. Next.js API validates and forwards to n8n webhook
+3. n8n triggers Gemini AI to generate personalized Finnish response
+4. n8n sends two emails via Brevo:
+   - AI response to customer
+   - Notification to admin (info@voon.fi)
 
 ## Setup Instructions
 
-### 1. Add Resend API Key to Environment Variables
+### 1. Environment Variables
 
-You need to add your Resend API key to your local environment file:
+Add to your `.env.local` file:
 
 ```bash
-# Open your .env.local file (or create it if it doesn't exist)
-# Add the following line:
-
-RESEND_API_KEY="re_VCbkxcoV_9zW6hJub29uSPwPtL9gXXfLv"
+N8N_WEBHOOK_URL="https://vooniq.app.n8n.cloud/webhook/contact-form-ai"
 ```
 
 **Important**: Never commit `.env.local` to Git. It's already in `.gitignore`.
@@ -33,10 +47,11 @@ When deploying to Vercel, add the environment variable:
 1. Go to your Vercel project dashboard
 2. Navigate to **Settings** → **Environment Variables**
 3. Add a new variable:
-   - **Name**: `RESEND_API_KEY`
-   - **Value**: `re_VCbkxcoV_9zW6hJub29uSPwPtL9gXXfLv`
+   - **Name**: `N8N_WEBHOOK_URL`
+   - **Value**: `https://vooniq.app.n8n.cloud/webhook/contact-form-ai`
    - **Environment**: Select all (Production, Preview, Development)
 4. Click **Save**
+5. Redeploy your application
 
 ### 3. Restart Development Server
 
@@ -48,33 +63,50 @@ After adding the environment variable, restart your development server:
 npm run dev
 ```
 
+## n8n Workflow Configuration
+
+### Workflow Structure:
+```
+[Webhook] → [Gemini AI] → [Brevo Email 1 - Customer]
+                        → [Brevo Email 2 - Admin]
+```
+
+### Webhook Node:
+- **URL**: `https://vooniq.app.n8n.cloud/webhook/contact-form-ai`
+- **Method**: POST
+- **Authentication**: None (public webhook)
+
+### Gemini AI Node:
+- **Model**: Gemini 1.5 Flash
+- **Prompt**: Generates personalized Finnish response based on customer message
+- **Output**: Professional email content in HTML format
+
+### Brevo Email Nodes:
+
+#### Email 1 (Customer):
+- **From**: `info@voon.fi` (Business VoonIQ)
+- **To**: Customer's email from form
+- **Subject**: "Thank you for contacting Business VoonIQ"
+- **Content**: AI-generated response in Finnish
+
+#### Email 2 (Admin):
+- **From**: `info@voon.fi`
+- **To**: `info@voon.fi`
+- **Subject**: "New Contact: [Customer Name]"
+- **Content**: Form details (name, email, company, message)
+
 ## Email Configuration
 
-### Current Settings
-- **From**: `Business VoonIQ <onboarding@resend.dev>`
-- **To**: `info@voon.fi`
-- **Subject**: `New Contact Form Submission from [Name]`
+### Brevo Setup:
+1. Create account at https://www.brevo.com/
+2. Verify sender email: `info@voon.fi`
+3. Generate API key
+4. Configure in n8n Brevo nodes
 
-### Email Template
-The email includes:
-- Sender's name
-- Sender's email (clickable mailto link)
-- Company name (if provided)
-- Message content
-- Professional HTML formatting with Business VoonIQ branding
-
-### Customizing the Email
-
-To customize the email template, edit:
-```
-/app/api/contact/route.ts
-```
-
-You can modify:
-- Email subject line
-- HTML template styling
-- Recipient email address
-- From address (requires Resend domain verification)
+### Current Settings:
+- **Sender**: `info@voon.fi` (Business VoonIQ)
+- **Admin Recipient**: `info@voon.fi`
+- **Customer Recipient**: Dynamic (from form submission)
 
 ## Form Fields
 
@@ -102,8 +134,8 @@ You can modify:
 ### Success Response (200)
 ```json
 {
-  "message": "Email sent successfully",
-  "data": { ... }
+  "message": "Message sent successfully. You will receive an AI-powered response shortly.",
+  "success": true
 }
 ```
 
@@ -130,39 +162,46 @@ The contact form supports both Finnish and English. Translations are located in:
 
 ### Local Testing
 
-1. Ensure `RESEND_API_KEY` is set in `.env.local`
+1. Ensure `N8N_WEBHOOK_URL` is set in `.env.local`
 2. Navigate to `http://localhost:3000/fi` or `http://localhost:3000/en`
 3. Scroll down to the "Business VoonIQ" contact form
 4. Fill out the form and submit
-5. Check `info@voon.fi` for the email
+5. Check email for:
+   - AI-generated response (to your email)
+   - Admin notification (to info@voon.fi)
 
 ### Test Data
 ```
 Name: Test User
-Email: test@example.com
+Email: info@voon.fi
 Company: Test Company
-Message: This is a test message from the contact form.
+Message: Haluaisin tietää lisää AI-ratkaisuistanne.
 ```
 
 ## Troubleshooting
 
 ### Email Not Sending
 
-**Check 1**: Verify API key is set
+**Check 1**: Verify n8n webhook URL is set
 ```bash
 # In your terminal:
-echo $RESEND_API_KEY
+echo $N8N_WEBHOOK_URL
 ```
 
 **Check 2**: Check server logs for errors
 ```bash
-# Look for "Resend error:" in the terminal where npm run dev is running
+# Look for "n8n webhook error:" in the terminal where npm run dev is running
 ```
 
-**Check 3**: Verify Resend API key is valid
-- Log in to [Resend Dashboard](https://resend.com/dashboard)
-- Check API Keys section
-- Ensure the key hasn't been revoked
+**Check 3**: Verify n8n workflow is active
+- Log in to n8n dashboard
+- Check workflow status (should be green/active)
+- Test workflow manually
+
+**Check 4**: Check Brevo sender verification
+- Log in to Brevo dashboard
+- Verify `info@voon.fi` is verified
+- Check email delivery logs
 
 ### Form Not Appearing
 
@@ -176,19 +215,30 @@ import ContactForm from '@/components/ContactForm'
 - Open browser DevTools (F12)
 - Look for errors in the Console tab
 
-### Styling Issues
+### n8n Webhook Not Responding
 
-The form uses Tailwind CSS classes. If styles aren't applying:
-1. Ensure Tailwind is properly configured
-2. Check `tailwind.config.ts` includes the components directory
-3. Restart the development server
+**Check 1**: Verify workflow is published and active
+- n8n workflows must be both saved AND activated
+- Check the toggle switch in n8n dashboard
+
+**Check 2**: Test webhook directly
+```bash
+curl -X POST https://vooniq.app.n8n.cloud/webhook/contact-form-ai \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test",
+    "email": "test@example.com",
+    "message": "Test message"
+  }'
+```
 
 ## Security Considerations
 
-- ✅ API key stored in environment variables (not in code)
-- ✅ Server-side email sending (API key never exposed to client)
+- ✅ No API keys in client-side code
+- ✅ Server-side webhook forwarding only
 - ✅ Input validation on both client and server
-- ✅ Rate limiting recommended for production (not yet implemented)
+- ✅ n8n webhook is public but only accepts POST requests
+- ⚠️ Rate limiting recommended for production (not yet implemented)
 
 ### Recommended: Add Rate Limiting
 
@@ -203,18 +253,43 @@ npm install @upstash/ratelimit @upstash/redis
 - **Contact Form Component**: `/components/ContactForm.tsx`
 - **API Route**: `/app/api/contact/route.ts`
 - **Landing Page**: `/app/[locale]/page.tsx`
+- **n8n Workflow**: `Contact Form AI Auto-Response` (n8n cloud)
 
 ## Dependencies
 
 ```json
 {
-  "resend": "^latest"
+  "dependencies": {
+    "next": "^16.0.0"
+  }
 }
 ```
+
+**Note**: No additional npm packages required. Email sending is handled by n8n + Brevo.
+
+## n8n Workflow Maintenance
+
+### Updating AI Prompt:
+1. Open n8n workflow
+2. Click on "Message a model" (Gemini AI) node
+3. Edit the system prompt
+4. Save and publish
+
+### Changing Email Templates:
+1. Open n8n workflow
+2. Click on Brevo email nodes
+3. Edit HTML content or subject
+4. Save and publish
+
+### Monitoring:
+- n8n dashboard shows execution history
+- Brevo dashboard shows email delivery logs
+- Check both for troubleshooting
 
 ## Support
 
 For issues with:
-- **Resend API**: Visit [Resend Documentation](https://resend.com/docs)
-- **Contact Form**: Check this documentation or contact the development team
-- **Email Delivery**: Check Resend dashboard for delivery logs
+- **n8n Workflow**: Check n8n execution logs
+- **Brevo Email**: Visit [Brevo Dashboard](https://app.brevo.com/)
+- **Contact Form**: Check this documentation or server logs
+- **AI Responses**: Adjust Gemini AI prompt in n8n workflow
