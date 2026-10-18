@@ -7,7 +7,8 @@ import { routing } from '@/src/i18n/navigation';
 
 // Same setup as voon.fi: RESEND_FROM must be an address on a domain verified in Resend
 // (e.g. "Voon Business <info@voon.fi>"); the sandbox fallback is likely to land in spam.
-const FROM_ADDRESS = process.env.RESEND_FROM || 'Voon Business <onboarding@resend.dev>';
+// RESEND_FORM is accepted too, as a common misspelling of the variable name in Vercel.
+const FROM_ADDRESS = process.env.RESEND_FROM || process.env.RESEND_FORM || 'Voon Business <onboarding@resend.dev>';
 const TEAM_ADDRESS = 'info@voon.fi';
 
 const contactSchema = z.object({
