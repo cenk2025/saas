@@ -1,39 +1,16 @@
+// Plan names, descriptions and features are translated in messages/*.json under "Plans.<id>".
 export interface SubscriptionPlan {
-    id: string
-    name: string
-    description: string
+    id: "free" | "pro" | "business" | "enterprise"
     stripePriceId: string
     price: number
-    features: string[]
+    /** Shown as "from X €" and handled through sales instead of Stripe checkout */
+    contactSales?: boolean
     maxReportsPerMonth: number
 }
 
 export const PLANS: SubscriptionPlan[] = [
-    {
-        id: "free",
-        name: "Free",
-        description: "Essential analytics for small businesses.",
-        stripePriceId: "",
-        price: 0,
-        features: ["1 Diagnostic Report/month", "Basic AI Insights", "Community Support"],
-        maxReportsPerMonth: 1
-    },
-    {
-        id: "pro",
-        name: "Pro",
-        description: "Advanced insights for growing companies.",
-        stripePriceId: "price_1Q...", // Replace with real Stripe Price ID
-        price: 49,
-        features: ["Unlimited Reports", "Deep AI Recommendations", "Priority Support", "Trend Analysis"],
-        maxReportsPerMonth: 999
-    },
-    {
-        id: "enterprise",
-        name: "Enterprise",
-        description: "Custom solutions for large organizations.",
-        stripePriceId: "price_1Q...", // Replace with real Stripe Price ID
-        price: 199,
-        features: ["Everything in Pro", "Dedicated Account Manager", "Custom Integrations", "SLA"],
-        maxReportsPerMonth: 9999
-    }
+    { id: "free", stripePriceId: "", price: 0, maxReportsPerMonth: 1 },
+    { id: "pro", stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO ?? "", price: 39, maxReportsPerMonth: 999 },
+    { id: "business", stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_BUSINESS ?? "", price: 99, maxReportsPerMonth: 9999 },
+    { id: "enterprise", stripePriceId: "", price: 900, contactSales: true, maxReportsPerMonth: 9999 },
 ]

@@ -1,30 +1,677 @@
 {
+    "Meta": {
+        "title": "Voon Business – AI workspace for SMEs",
+        "description": "AI tools for everyday business: quotes, emails, marketing, hiring, meeting notes, automation, funding and EU AI Act checks – in Finnish, Swedish and English."
+    },
     "Navbar": {
-        "dashboard": "Dashboard",
-        "advisor": "Advisor",
-        "billing": "Billing",
-        "admin": "Admin",
-        "diagnostic": "Diagnostic",
-        "signIn": "Sign In",
-        "logout": "Logout"
+        "features": "Features",
+        "tools": "AI tools",
+        "pricing": "Pricing",
+        "contact": "Contact",
+        "signIn": "Sign in",
+        "getStarted": "Start free",
+        "openApp": "Open workspace",
+        "menu": "Menu"
     },
     "Landing": {
-        "tagline": "AI-Powered Corporate Intelligence",
-        "title": "Transform Your Business with AI-Driven Insights",
-        "subtitle": "Stop guessing. Our AI diagnostic engine analyzes your organization's structure to reveal hidden weaknesses and unlocked potential.",
-        "ctaTest": "Run a Free Diagnostic",
-        "ctaDemo": "View Demo",
-        "features": {
-            "deep": "Deep Diagnostics",
-            "deepDesc": "Evaluate operational efficiency, digital maturity, and risk awareness.",
-            "insights": "Actionable Insights",
-            "insightsDesc": "Receive 3 concrete, prioritized recommendations.",
-            "secure": "Secure & Private",
-            "secureDesc": "Your data is encrypted and partitioned."
+        "eyebrow": "AI workspace for SMEs",
+        "title": "Stop guessing.",
+        "titleAccent": "Let AI do the busywork.",
+        "subtitle": "Voon Business brings a secure AI co-worker to your company: it writes quotes and emails, plans marketing, drafts job ads, summarises meetings, finds funding and spots automation opportunities – based on your own company profile.",
+        "ctaPrimary": "Start free",
+        "ctaSecondary": "Take the free health check",
+        "trust1": "Finnish, Swedish & English",
+        "trust2": "Built for GDPR",
+        "trust3": "Made in Jyväskylä",
+        "previewGreeting": "Good morning, Aino",
+        "previewScore": "Business health",
+        "previewTask": "Quote for Lakeside Oy",
+        "previewTaskStatus": "Ready to send",
+        "previewSaved": "Time saved this month",
+        "previewHours": "14 h",
+        "problemTitle": "Small teams, big to-do lists",
+        "problemText": "Everyone talks about AI, but in a small company there is little time to try it and data security worries. Voon Business turns AI into ready-made, safe tools for the work you already do every week.",
+        "stat1": "10",
+        "stat1Label": "AI tools ready to use",
+        "stat2": "3",
+        "stat2Label": "languages: FI, SV, EN",
+        "stat3": "5 min",
+        "stat3Label": "to your first result",
+        "toolsEyebrow": "AI tools",
+        "toolsTitle": "One workspace for the whole business",
+        "toolsSubtitle": "Every tool knows your company profile, writes in your language and saves the results to your shared library.",
+        "howEyebrow": "How it works",
+        "howTitle": "From sign-up to results in minutes",
+        "step1Title": "Describe your company",
+        "step1Text": "Fill in a short company profile once. Every AI tool uses it as context.",
+        "step2Title": "Pick a tool or ask the advisor",
+        "step2Text": "Fill in a few fields or just ask – the AI answers in Finnish, Swedish or English.",
+        "step3Title": "Edit, save and act",
+        "step3Text": "Copy the result, save it to the library and share it with your team.",
+        "healthEyebrow": "Business health check",
+        "healthTitle": "Know where to start",
+        "healthText": "Answer 12 questions and get a score for operations, digital maturity, innovation, finances and risk – with three prioritised recommendations and a PDF report.",
+        "healthPoint1": "Five-area score and trend over time",
+        "healthPoint2": "Three concrete, prioritised actions",
+        "healthPoint3": "AI advisor that knows your results",
+        "healthCta": "Run the health check",
+        "trustEyebrow": "Responsible AI",
+        "trustTitle": "AI assists. People decide.",
+        "trust1Title": "Company data stays separate",
+        "trust1Text": "Each company's data is isolated, and access is limited to your own team.",
+        "trust2Title": "Transparent by design",
+        "trust2Text": "The AI marks assumptions in [brackets] so you always know what to check.",
+        "trust3Title": "Built for EU rules",
+        "trust3Text": "Designed with the GDPR and the EU AI Act in mind – and a tool that helps you check your own AI use.",
+        "pricingEyebrow": "Pricing",
+        "pricingTitle": "Start free, grow when you're ready",
+        "pricingSubtitle": "Prices excl. VAT. Cancel any time.",
+        "perMonth": "/ month",
+        "from": "from",
+        "popular": "Most popular",
+        "ecosystemEyebrow": "VOON IQ",
+        "ecosystemTitle": "Part of the VOON IQ family",
+        "ecosystemText": "Voon Business is the business tool of VOON IQ, an AI startup from Jyväskylä. Our other services cover marketing, skills and careers.",
+        "faqTitle": "Frequently asked questions",
+        "faq1q": "Do I need technical skills?",
+        "faq1a": "No. Each tool is a short form, and the advisor works like a chat. If you can write an email, you can use Voon Business.",
+        "faq2q": "Which languages are supported?",
+        "faq2a": "The whole service and every AI result is available in Finnish, Swedish and English.",
+        "faq3q": "Is our data used to train AI models?",
+        "faq3a": "No. We use the AI provider through its business API, where submitted data is not used for model training by default.",
+        "faq4q": "Can the AI make mistakes?",
+        "faq4a": "Yes. That's why results are drafts for you to review, and assumptions are clearly marked. Legal and funding tools remind you to verify the details.",
+        "ctaTitle": "Give your team an AI co-worker today",
+        "ctaText": "Free to start. No credit card needed."
+    },
+    "Ecosystem": {
+        "voon": "AI consulting, mapping and automation for companies",
+        "ads": "Marketing and design",
+        "tyo": "SkillPath – skills to jobs and training",
+        "worklife": "Talent Factory – careers for international talent"
+    },
+    "Plans": {
+        "free": {
+            "name": "Free",
+            "description": "Try the workspace with your own company.",
+            "features": [
+                "Business health check",
+                "20 AI tool runs / month",
+                "AI advisor",
+                "1 user"
+            ]
+        },
+        "pro": {
+            "name": "Pro",
+            "description": "For entrepreneurs and freelancers.",
+            "features": [
+                "Unlimited AI tools",
+                "Unlimited health checks & PDF reports",
+                "Document library",
+                "1 user"
+            ]
+        },
+        "business": {
+            "name": "Business",
+            "description": "For SMEs and their teams.",
+            "features": [
+                "Everything in Pro",
+                "Up to 10 users",
+                "Shared library",
+                "Priority support"
+            ]
+        },
+        "enterprise": {
+            "name": "Enterprise & Public",
+            "description": "For large companies, municipalities and employment areas.",
+            "features": [
+                "Custom tools & integrations",
+                "Unlimited users",
+                "Training & onboarding",
+                "Contract billing"
+            ]
+        },
+        "contactUs": "Contact us",
+        "choose": "Choose",
+        "current": "Current plan",
+        "manage": "Manage subscription",
+        "downgrade": "Free plan",
+        "billingTitle": "Plan & billing",
+        "billingSubtitle": "You are currently on the {plan} plan.",
+        "checkoutError": "Could not open the checkout. Please try again."
+    },
+    "Footer": {
+        "tagline": "AI workspace for small and medium-sized companies. A service by VOON IQ.",
+        "product": "Product",
+        "ecosystem": "VOON IQ services",
+        "contact": "Contact",
+        "location": "Jyväskylä, Finland",
+        "rights": "All rights reserved."
+    },
+    "Cookies": {
+        "text": "We only use cookies that are necessary for signing in and remembering your language. No tracking or advertising cookies.",
+        "ok": "OK"
+    },
+    "Auth": {
+        "loginTitle": "Welcome back",
+        "loginSubtitle": "Sign in to your AI workspace",
+        "email": "Work email",
+        "password": "Password",
+        "forgot": "Forgot password?",
+        "signIn": "Sign in",
+        "noAccount": "No account yet?",
+        "createAccount": "Create a free account",
+        "invalid": "Wrong email or password.",
+        "unexpected": "Something went wrong. Please try again.",
+        "registered": "Account created – you can now sign in.",
+        "passwordUpdated": "Password updated – sign in with your new password.",
+        "registerTitle": "Create your workspace",
+        "registerSubtitle": "Free to start. No credit card needed.",
+        "companyName": "Company name",
+        "fullName": "Your name",
+        "phone": "Phone (optional)",
+        "country": "Country",
+        "selectCountry": "Select country",
+        "confirmPassword": "Confirm password",
+        "acceptTerms": "I accept the terms of service and privacy policy",
+        "createWorkspace": "Create workspace",
+        "haveAccount": "Already have an account?",
+        "passwordMismatch": "Passwords do not match.",
+        "passwordShort": "Password must be at least 8 characters.",
+        "termsRequired": "Please accept the terms.",
+        "registerFailed": "Registration failed.",
+        "forgotTitle": "Reset your password",
+        "forgotSubtitle": "Enter your email and we'll send you a reset link.",
+        "sendLink": "Send reset link",
+        "checkEmail": "Check your email",
+        "checkEmailText": "If an account exists for {email}, you'll receive a reset link shortly.",
+        "backToLogin": "Back to sign in",
+        "resetTitle": "Choose a new password",
+        "newPassword": "New password",
+        "savePassword": "Save password",
+        "resetInvalid": "The reset link is invalid or has expired. Please request a new one.",
+        "countries": {
+            "FI": "Finland",
+            "SE": "Sweden",
+            "NO": "Norway",
+            "DK": "Denmark",
+            "EE": "Estonia",
+            "DE": "Germany",
+            "OTHER": "Other"
         }
     },
+    "App": {
+        "home": "Home",
+        "tools": "AI tools",
+        "advisor": "AI advisor",
+        "health": "Health check",
+        "library": "Library",
+        "company": "Company profile",
+        "billing": "Plan & billing",
+        "admin": "Admin",
+        "signOut": "Sign out",
+        "roles": {
+            "ADMIN": "Admin",
+            "MANAGER": "Manager",
+            "EMPLOYEE": "Employee"
+        }
+    },
+    "Workspace": {
+        "demoNotice": "**Demo mode** – the AI service is not configured yet (OPENAI_API_KEY is missing), so this is a placeholder instead of a real AI answer. This is what was sent:",
+        "demoChat": "**Demo mode** – the AI service is not configured yet (OPENAI_API_KEY is missing). Once it is set, the advisor answers here using your company profile and health check.",
+        "generate": "Generate",
+        "generating": "Writing…",
+        "stop": "Stop",
+        "copy": "Copy",
+        "copied": "Copied",
+        "save": "Save to library",
+        "saved": "Saved",
+        "saveFailed": "Saving failed. Has the database migration been run?",
+        "regenerate": "Try again",
+        "result": "Result",
+        "emptyResult": "Fill in the form and the result will appear here.",
+        "error": "The AI could not answer right now. Please try again.",
+        "required": "Required",
+        "optional": "Optional",
+        "back": "Back",
+        "delete": "Delete",
+        "deleteConfirm": "Delete this document?",
+        "open": "Open",
+        "privacyHint": "Don't paste sensitive personal data (e.g. health information or personal identity codes).",
+        "aiDisclaimer": "AI can make mistakes. Review the result before using it.",
+        "noCompany": "Your user is not linked to a company yet. Please contact your administrator."
+    },
+    "Tools": {
+        "title": "AI tools",
+        "subtitle": "Ready-made AI tools for everyday work. Each one uses your company profile and writes in your language.",
+        "all": "All",
+        "categories": {
+            "sales": "Sales",
+            "marketing": "Marketing & customers",
+            "people": "People & hiring",
+            "operations": "Operations",
+            "finance": "Finance & funding",
+            "legal": "Contracts & compliance"
+        },
+        "quote": {
+            "name": "Quote writer",
+            "description": "A professional, ready-to-send quote with pricing and terms.",
+            "fields": {
+                "customer": {
+                    "label": "Customer",
+                    "placeholder": "e.g. Lakeside Oy, Maria Virtanen"
+                },
+                "scope": {
+                    "label": "What are you offering?",
+                    "placeholder": "Describe the products or services, scope and schedule…"
+                },
+                "price": {
+                    "label": "Price information",
+                    "placeholder": "e.g. 85 €/h, estimated 40 h, or a fixed price of 3 400 €"
+                },
+                "tone": {
+                    "label": "Tone"
+                }
+            },
+            "options": {
+                "tone": {
+                    "formal": "Formal",
+                    "friendly": "Friendly"
+                }
+            }
+        },
+        "email": {
+            "name": "Email assistant",
+            "description": "Replies, follow-ups, complaints and payment reminders in seconds.",
+            "fields": {
+                "situation": {
+                    "label": "Situation"
+                },
+                "context": {
+                    "label": "Background",
+                    "placeholder": "Paste the message you received or describe the situation…"
+                },
+                "tone": {
+                    "label": "Tone"
+                }
+            },
+            "options": {
+                "situation": {
+                    "reply": "Reply to a message",
+                    "followUp": "Follow-up after a meeting or quote",
+                    "outreach": "First contact with a prospect",
+                    "complaint": "Answer a complaint",
+                    "paymentReminder": "Payment reminder"
+                },
+                "tone": {
+                    "formal": "Formal",
+                    "friendly": "Friendly"
+                }
+            }
+        },
+        "social": {
+            "name": "Social media posts",
+            "description": "Three post variants with hooks, hashtags and visual ideas.",
+            "fields": {
+                "topic": {
+                    "label": "What do you want to tell?",
+                    "placeholder": "e.g. We opened a new office in Jyväskylä and are hiring two developers"
+                },
+                "platform": {
+                    "label": "Channel"
+                },
+                "goal": {
+                    "label": "Goal",
+                    "placeholder": "e.g. more leads, employer brand, event sign-ups"
+                }
+            },
+            "options": {
+                "platform": {
+                    "linkedin": "LinkedIn",
+                    "instagram": "Instagram",
+                    "facebook": "Facebook",
+                    "newsletter": "Newsletter"
+                }
+            }
+        },
+        "feedback": {
+            "name": "Customer feedback analysis",
+            "description": "Themes, sentiment, improvement actions and reply drafts from reviews.",
+            "fields": {
+                "reviews": {
+                    "label": "Customer feedback",
+                    "placeholder": "Paste reviews, survey answers or feedback emails – one per line…"
+                }
+            }
+        },
+        "jobad": {
+            "name": "Job ad & interview kit",
+            "description": "An inclusive job ad with ESCO skills and interview questions.",
+            "fields": {
+                "role": {
+                    "label": "Job title",
+                    "placeholder": "e.g. Customer service specialist"
+                },
+                "details": {
+                    "label": "About the role",
+                    "placeholder": "Tasks, requirements, location, salary range, start date…"
+                },
+                "employment": {
+                    "label": "Type of employment"
+                }
+            },
+            "options": {
+                "employment": {
+                    "fullTime": "Full-time, permanent",
+                    "partTime": "Part-time",
+                    "fixedTerm": "Fixed-term",
+                    "internship": "Internship / trainee"
+                }
+            }
+        },
+        "meeting": {
+            "name": "Meeting minutes",
+            "description": "Turns notes or a transcript into decisions, action items and a follow-up email.",
+            "fields": {
+                "notes": {
+                    "label": "Notes or transcript",
+                    "placeholder": "Paste your notes or the transcript of the meeting…"
+                }
+            }
+        },
+        "automation": {
+            "name": "Automation finder",
+            "description": "Finds the steps that AI and automation can take over – with time savings.",
+            "fields": {
+                "process": {
+                    "label": "Describe the process",
+                    "placeholder": "e.g. Every month we collect hours from Excel, check them, create invoices in the accounting software and send them by email…"
+                },
+                "tools": {
+                    "label": "Software in use",
+                    "placeholder": "e.g. Netvisor, Excel, Outlook, HubSpot"
+                },
+                "volume": {
+                    "label": "Volume",
+                    "placeholder": "e.g. 120 invoices per month, 3 people"
+                }
+            }
+        },
+        "funding": {
+            "name": "Funding finder",
+            "description": "Finnish and EU funding instruments that fit your project.",
+            "fields": {
+                "project": {
+                    "label": "Describe the project",
+                    "placeholder": "What are you developing, why, what does it cost and when should it start?"
+                },
+                "stage": {
+                    "label": "Company stage"
+                },
+                "employees": {
+                    "label": "Employees"
+                }
+            },
+            "options": {
+                "stage": {
+                    "startup": "Starting up (0–2 years)",
+                    "growth": "Growth company",
+                    "established": "Established company"
+                },
+                "employees": {
+                    "1-9": "1–9",
+                    "10-49": "10–49",
+                    "50-249": "50–249",
+                    "250+": "250+"
+                }
+            }
+        },
+        "contract": {
+            "name": "Contract review",
+            "description": "Key terms, deadlines and risks of a contract in plain language.",
+            "fields": {
+                "document": {
+                    "label": "Contract text",
+                    "placeholder": "Paste the contract or the clauses you want to check…"
+                },
+                "focus": {
+                    "label": "What should we look at in particular?",
+                    "placeholder": "e.g. liability, termination, price changes"
+                }
+            }
+        },
+        "aiact": {
+            "name": "EU AI Act & GDPR check",
+            "description": "Risk class, obligations and a checklist for your AI use case.",
+            "fields": {
+                "useCase": {
+                    "label": "Describe the AI use case",
+                    "placeholder": "e.g. We want to use AI to screen job applications and rank candidates…"
+                },
+                "data": {
+                    "label": "What data is processed?",
+                    "placeholder": "e.g. CVs, names, contact details"
+                }
+            }
+        }
+    },
+    "Dashboard": {
+        "greeting": "Hello, {name}",
+        "subtitle": "What shall we get done today?",
+        "quickTitle": "Quick start",
+        "allTools": "All tools",
+        "healthTitle": "Business health",
+        "healthEmpty": "You haven't run the health check yet. It takes about 5 minutes and shows where AI can help you most.",
+        "healthCta": "Start the health check",
+        "outOf": "/ 100",
+        "change": "{value} points since last check",
+        "viewReport": "View report",
+        "runAgain": "Run again",
+        "trend": "Trend",
+        "recommendations": "Recommended next steps",
+        "recentTitle": "Recent documents",
+        "recentEmpty": "Documents you save from the AI tools will appear here.",
+        "profileTitle": "Complete your company profile",
+        "profileText": "The AI gives much better answers when it knows what your company does.",
+        "profileCta": "Fill in profile",
+        "advisorTitle": "Ask the AI advisor",
+        "advisorText": "Strategy, sales, pricing, hiring – ask anything about your business.",
+        "advisorCta": "Open advisor",
+        "ecosystemTitle": "More from VOON IQ"
+    },
+    "Advisor": {
+        "title": "AI advisor",
+        "subtitle": "Knows your company profile and your latest health check.",
+        "welcome": "Hi! I'm your AI business advisor. Ask me anything about your company – sales, marketing, pricing, hiring, funding or how to start using AI.",
+        "placeholder": "Ask a question…",
+        "send": "Send",
+        "newChat": "New conversation",
+        "suggestionsTitle": "Try asking",
+        "suggestions": [
+            "What should we improve first based on our health check?",
+            "How could we use AI in customer service?",
+            "Give me 5 ideas to get more customers this quarter",
+            "How do I price a new service?"
+        ]
+    },
+    "Library": {
+        "title": "Library",
+        "subtitle": "AI documents saved by your team.",
+        "empty": "Nothing saved yet. Use an AI tool and click “Save to library”.",
+        "emptyCta": "Browse AI tools",
+        "notFound": "Document not found.",
+        "createdBy": "Created {date}",
+        "setupHint": "The library needs the database migration supabase/business_workspace.sql."
+    },
+    "Company": {
+        "title": "Company profile",
+        "subtitle": "The AI uses this information in every tool and in the advisor. The more specific you are, the better the results.",
+        "name": "Company name",
+        "country": "Country",
+        "industry": "Industry",
+        "industryPlaceholder": "e.g. Construction, IT services, Restaurant",
+        "size": "Size",
+        "sizes": {
+            "1": "Sole trader",
+            "2-9": "2–9 people",
+            "10-49": "10–49 people",
+            "50-249": "50–249 people",
+            "250+": "250+ people"
+        },
+        "location": "Location",
+        "locationPlaceholder": "e.g. Jyväskylä",
+        "website": "Website",
+        "description": "What does the company do?",
+        "descriptionPlaceholder": "Products and services, what makes you different…",
+        "customers": "Who are your customers?",
+        "customersPlaceholder": "e.g. Housing companies in Central Finland, B2B software companies…",
+        "goals": "Current goals and challenges",
+        "goalsPlaceholder": "e.g. Grow sales by 20 %, hire two people, less admin work",
+        "save": "Save profile",
+        "saved": "Profile saved",
+        "saveFailed": "Saving failed. Has the database migration been run?",
+        "readOnly": "Only admins and managers can edit the company profile."
+    },
+    "Diagnostic": {
+        "title": "Business health check",
+        "subtitle": "12 questions, about 5 minutes. The AI scores five areas of your business and gives you three prioritised recommendations.",
+        "progress": "{done} / {total} answered",
+        "poor": "Weak",
+        "excellent": "Excellent",
+        "submit": "Analyse with AI",
+        "analyzing": "Analysing…",
+        "failed": "The analysis failed. Please try again.",
+        "categories": {
+            "operations": "Operations",
+            "digital": "Digital & AI",
+            "people": "People",
+            "innovation": "Innovation",
+            "risk": "Risk",
+            "finance": "Finance"
+        },
+        "scoreCategories": {
+            "operations": "Operational efficiency",
+            "digital": "Digital maturity",
+            "innovation": "Innovation capability",
+            "finance": "Financial health",
+            "risk": "Risk management"
+        },
+        "questions": {
+            "efficiency_process": {
+                "label": "How clearly are your operational processes defined and documented?"
+            },
+            "efficiency_automation": {
+                "label": "To what extent are your core workflows automated?",
+                "options": {
+                    "manual": "Manual",
+                    "someTools": "Some tools",
+                    "mostly": "Mostly automated",
+                    "fully": "Fully automated"
+                }
+            },
+            "digital_tools": {
+                "label": "How well are your digital tools connected across teams?",
+                "options": {
+                    "siloed": "Separate silos",
+                    "some": "Partly connected",
+                    "integrated": "Integrated",
+                    "realtime": "Real-time sync"
+                }
+            },
+            "digital_data": {
+                "label": "How often do you use data in decision making?",
+                "options": {
+                    "rarely": "Rarely",
+                    "monthly": "Monthly",
+                    "weekly": "Weekly",
+                    "daily": "Daily"
+                }
+            },
+            "ai_usage": {
+                "label": "How is AI used in your company today?",
+                "options": {
+                    "none": "Not at all",
+                    "individual": "Some individuals",
+                    "someProcesses": "In some processes",
+                    "strategic": "Strategically"
+                }
+            },
+            "hr_training": {
+                "label": "Do you have a continuous learning or training programme?",
+                "options": {
+                    "no": "No",
+                    "adHoc": "Occasionally",
+                    "formal": "Formal programme",
+                    "culture": "Strong learning culture"
+                }
+            },
+            "hr_satisfaction": {
+                "label": "How would you rate employee satisfaction and retention?"
+            },
+            "innovation_budget": {
+                "label": "What share of your budget goes to development and new initiatives?",
+                "options": {
+                    "0": "0 %",
+                    "1-5": "1–5 %",
+                    "5-10": "5–10 %",
+                    "10+": "Over 10 %"
+                }
+            },
+            "innovation_speed": {
+                "label": "How fast can you take a new product or service from idea to market?",
+                "options": {
+                    "years": "Years",
+                    "months": "Months",
+                    "weeks": "Weeks",
+                    "days": "Days"
+                }
+            },
+            "risk_compliance": {
+                "label": "How regularly do you review compliance, data protection and security risks?",
+                "options": {
+                    "never": "Never",
+                    "annually": "Annually",
+                    "quarterly": "Quarterly",
+                    "continuous": "Continuously"
+                }
+            },
+            "risk_resilience": {
+                "label": "Do you have a tested continuity or disaster recovery plan?",
+                "options": {
+                    "no": "No",
+                    "drafted": "Drafted, not tested",
+                    "tested": "Tested annually",
+                    "automated": "Robust & automated"
+                }
+            },
+            "finance_visibility": {
+                "label": "How well does management see cash flow and profitability?",
+                "options": {
+                    "poor": "Poorly",
+                    "monthly": "Monthly",
+                    "weekly": "Weekly",
+                    "realtime": "In real time"
+                }
+            }
+        }
+    },
+    "Results": {
+        "title": "Your business health report",
+        "notFound": "Report not found.",
+        "categoryTitle": "Score by area",
+        "strengths": "Strengths",
+        "weaknesses": "Areas to improve",
+        "recommendations": "AI recommendations",
+        "nextTitle": "Turn the recommendations into action",
+        "nextText": "Ask the AI advisor how to get started, or let the automation finder look for quick wins.",
+        "askAdvisor": "Ask the advisor",
+        "findAutomation": "Find automations",
+        "download": "Download PDF",
+        "dashboard": "Back to home"
+    },
     "contact": {
-        "subtitle": "Get in touch - we're here to help",
+        "title": "Let's talk",
+        "subtitle": "Questions, a demo or a custom solution for your company? We reply within one business day.",
         "name": "Name",
         "namePlaceholder": "Your name",
         "email": "Email",
@@ -32,11 +679,11 @@
         "company": "Company",
         "companyPlaceholder": "Your company name",
         "message": "Message",
-        "messagePlaceholder": "Tell us how we can help...",
+        "messagePlaceholder": "Tell us how we can help…",
         "submit": "Send message",
-        "sending": "Sending...",
-        "success": "Message sent successfully! We'll get back to you soon.",
-        "error": "Failed to send message. Please try again.",
-        "alternativeContact": "Or contact us directly:"
+        "sending": "Sending…",
+        "success": "Message sent! We'll get back to you soon.",
+        "error": "Sending failed. Please try again.",
+        "alternativeContact": "Or email us directly:"
     }
 }

@@ -1,21 +1,41 @@
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/auth"
-import { redirect } from "next/navigation"
+import { getTranslations } from "next-intl/server"
+import { AppShell } from "@/components/app/AppShell"
+import { getWorkspace } from "@/lib/workspace"
+import { redirect } from "@/src/i18n/navigation"
 
 export default async function DashboardLayout({
     children,
+    params,
 }: {
     children: React.ReactNode
+    params: Promise<{ locale: string }>
 }) {
-    const session = await getServerSession(authOptions)
+    const { locale } = await params
+    const workspace = await getWorkspace()
 
-    if (!session) {
-        redirect("/login")
+    if (!workspace) {
+        return redirect({ href: "/login", locale })
     }
 
+    const t = await getTranslations("App")
+
     return (
-        <div className="container mx-auto py-8 px-4 animate-in fade-in duration-500">
-            {children}
-        </div>
+        <AppShell
+            user={{
+                name: workspace.user.name || workspace.user.email,
+                email: workspace.user.email,
+                role: t(`roles.${workspace.user.role}`),
+                isAdmin: workspace.user.role === "ADMIN",
+            }}
+            companyName={workspace.company?.name}
+        >
+            {workspace.company ? (
+                children
+            ) : (
+                <div className="card mx-auto mt-10 max-w-lg p-8 text-center text-muted-foreground">
+                    {(await getTranslations("Workspace"))("noCompany")}
+                </div>
+            )}
+        </AppShell>
     )
 }

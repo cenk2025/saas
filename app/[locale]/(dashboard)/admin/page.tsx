@@ -52,8 +52,9 @@ export default async function AdminPage() {
         `)
 
     // If not super admin, filter by user's company
-    if (!isSuperAdmin && user.company_id) {
-        companiesQuery = companiesQuery.eq('id', user.company_id)
+    if (!isSuperAdmin) {
+        // Company admins only ever see their own company
+        companiesQuery = companiesQuery.eq('id', user.company_id ?? '00000000-0000-0000-0000-000000000000')
     }
 
     const { data: allCompanies, error: companiesError } = await companiesQuery.order('created_at', { ascending: false })

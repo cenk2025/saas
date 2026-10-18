@@ -4,89 +4,128 @@ import { jsPDF } from "jspdf"
 import { Download, Loader2 } from "lucide-react"
 import { useState } from "react"
 
-interface ReportData {
-    score: number;
-    summary: string;
-    strengths: string[];
-    weaknesses: string[];
-    recommendations: string[];
-    date: string;
+interface ReportForPdf {
+    score: number
+    summary: string
+    created_at: string
+    strengths: string[]
+    weaknesses: string[]
+    recommendations: string[]
+    categoryScores: [string, number][]
 }
 
-export function DownloadReportButton({ report }: { report: any }) {
+interface PdfLabels {
+    button: string
+    title: string
+    summary: string
+    strengths: string
+    weaknesses: string
+    recommendations: string
+    categories: string
+}
+
+const MARGIN = 20
+const WIDTH = 170
+
+export function DownloadReportButton({ report, labels }: { report: ReportForPdf; labels: PdfLabels }) {
     const [loading, setLoading] = useState(false)
 
     const handleDownload = () => {
         setLoading(true)
         const doc = new jsPDF()
+        let y = 0
 
-        // Title
-        doc.setFontSize(22)
-        doc.setTextColor(40, 40, 40)
-        doc.text("Company Diagnostic Report", 20, 20)
+        const ensureSpace = (needed: number) => {
+            if (y + needed > 280) {
+                doc.addPage()
+                y = MARGIN
+            }
+        }
 
-        // Metadata
+        const heading = (text: string) => {
+            ensureSpace(16)
+            doc.setFont("helvetica", "bold")
+            doc.setFontSize(14)
+            doc.setTextColor(22, 19, 26)
+            doc.text(text, MARGIN, y)
+            y += 8
+        }
+
+        const paragraph = (text: string, prefix = "") => {
+            doc.setFont("helvetica", "normal")
+            doc.setFontSize(11)
+            doc.setTextColor(70, 66, 74)
+            const lines = doc.splitTextToSize(`${prefix}${text}`, WIDTH)
+            ensureSpace(lines.length * 6)
+            doc.text(lines, MARGIN, y)
+            y += lines.length * 6 + 3
+        }
+
+        // Brand header: orange → pink bar
+        doc.setFillColor(255, 169, 112)
+        doc.rect(0, 0, 105, 6, "F")
+        doc.setFillColor(242, 64, 159)
+        doc.rect(105, 0, 105, 6, "F")
+
+        y = 24
+        doc.setFont("helvetica", "bold")
+        doc.setFontSize(20)
+        doc.setTextColor(22, 19, 26)
+        doc.text(labels.title, MARGIN, y)
+        y += 8
+        doc.setFont("helvetica", "normal")
         doc.setFontSize(10)
-        doc.setTextColor(100, 100, 100)
-        doc.text(`Date: ${new Date(report.created_at || report.createdAt).toLocaleDateString()}`, 20, 30)
-        doc.text(`Score: ${report.score}/100`, 20, 35)
+        doc.setTextColor(102, 97, 108)
+        doc.text(`${new Date(report.created_at).toLocaleDateString()} · Voon Business · business.voon.fi`, MARGIN, y)
 
-        // Summary
-        doc.setFontSize(16)
-        doc.setTextColor(0, 0, 0)
-        doc.text("Executive Summary", 20, 50)
+        doc.setFont("helvetica", "bold")
+        doc.setFontSize(36)
+        doc.setTextColor(226, 61, 150)
+        doc.text(`${report.score}`, 190, 30, { align: "right" })
+        doc.setFontSize(10)
+        doc.text("/ 100", 190, 36, { align: "right" })
 
-        doc.setFontSize(12)
-        doc.setTextColor(60, 60, 60)
-        const splitSummary = doc.splitTextToSize(report.summary, 170)
-        doc.text(splitSummary, 20, 60)
+        y += 14
+        paragraph(report.summary)
+        y += 4
 
-        let yPos = 60 + (splitSummary.length * 7) + 10
-
-        // Recommendations
-        if (yPos > 250) { doc.addPage(); yPos = 20; }
-        doc.setFontSize(16)
-        doc.setTextColor(0, 0, 0)
-        doc.text("Recommended Actions", 20, yPos)
-        yPos += 10
-
-        doc.setFontSize(12)
-        doc.setTextColor(60, 60, 60)
-        report.recommendations.forEach((rec: string, i: number) => {
-            const text = `${i + 1}. ${rec}`
-            const splitText = doc.splitTextToSize(text, 170)
-            doc.text(splitText, 20, yPos)
-            yPos += (splitText.length * 7) + 5
+        heading(labels.categories)
+        report.categoryScores.forEach(([name, value]) => {
+            ensureSpace(10)
+            doc.setFont("helvetica", "normal")
+            doc.setFontSize(11)
+            doc.setTextColor(70, 66, 74)
+            doc.text(name, MARGIN, y)
+            doc.text(String(value), 190, y, { align: "right" })
+            doc.setFillColor(243, 242, 244)
+            doc.rect(MARGIN, y + 2, WIDTH, 2, "F")
+            doc.setFillColor(242, 64, 159)
+            doc.rect(MARGIN, y + 2, (WIDTH * value) / 100, 2, "F")
+            y += 10
         })
+        y += 4
 
-        // Weaknesses
-        yPos += 10
-        if (yPos > 250) { doc.addPage(); yPos = 20; }
-        doc.setFontSize(16)
-        doc.setTextColor(0, 0, 0)
-        doc.text("Areas for Improvement", 20, yPos)
-        yPos += 10
+        heading(labels.recommendations)
+        report.recommendations.forEach((rec, i) => paragraph(rec, `${i + 1}. `))
+        y += 4
 
-        doc.setFontSize(12)
-        report.weaknesses.forEach((weak: string, i: number) => {
-            const text = `• ${weak}`
-            const splitText = doc.splitTextToSize(text, 170)
-            doc.text(splitText, 20, yPos)
-            yPos += (splitText.length * 7) + 5
-        })
+        if (report.strengths.length > 0) {
+            heading(labels.strengths)
+            report.strengths.forEach((item) => paragraph(item, "• "))
+            y += 4
+        }
 
-        doc.save(`clarity-report-${new Date(report.created_at || report.createdAt).toISOString().split('T')[0]}.pdf`)
+        heading(labels.weaknesses)
+        report.weaknesses.forEach((item) => paragraph(item, "• "))
+
+        doc.save(`voon-business-report-${new Date(report.created_at).toISOString().split("T")[0]}.pdf`)
         setLoading(false)
     }
 
     return (
-        <button
-            onClick={handleDownload}
-            disabled={loading}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/80 transition-colors"
-        >
+        <button type="button" onClick={handleDownload} disabled={loading} className="btn-primary">
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-            Download PDF
+            {labels.button}
         </button>
     )
 }

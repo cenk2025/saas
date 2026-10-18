@@ -1,97 +1,79 @@
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/auth"
-import { createClient } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
-import OpenAI from "openai"
 import { ANALYSIS_SYSTEM_PROMPT } from "@/lib/ai/prompt"
-
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+import { getOpenAI, AI_MODEL, languageName } from "@/lib/ai/client"
+import { QUESTIONS } from "@/lib/diagnostic"
+import { companyContext, getWorkspace, supabaseAdmin } from "@/lib/workspace"
+import { routing } from "@/src/i18n/navigation"
 
 export async function POST(req: Request) {
     try {
-        const session = await getServerSession(authOptions)
+        const workspace = await getWorkspace()
+        if (!workspace) return new NextResponse("Unauthorized", { status: 401 })
+        if (!workspace.company) return new NextResponse("User not associated with a company", { status: 400 })
 
-        if (!session || !session.user.email) {
-            return new NextResponse("Unauthorized", { status: 401 })
-        }
+        const body = await req.json()
+        const answers: Record<string, string | number> = body?.answers ?? {}
+        const locale = routing.locales.includes(body?.locale) ? body.locale : routing.defaultLocale
 
+        // Pair each answer with the English question so the model sees full context
+        const answered = QUESTIONS.map((q) => `- ${q.prompt} → ${answers[q.id] ?? "no answer"}`).join("\n")
+        const userPrompt = `Company context:\n${companyContext(workspace.company)}\n\nAnswers to the business health check:\n${answered}`
 
-        // Fetch user from Supabase
-        const { data: user, error: userError } = await supabase
-            .from('users')
-            .select('*')
-            .eq('email', session.user.email)
-            .single()
+        let analysisResult
+        const openai = getOpenAI()
 
-        if (userError || !user?.company_id) {
-            console.error("User fetch error:", userError)
-            return new NextResponse("User not associated with a company", { status: 400 })
-        }
-
-        const { answers } = await req.json()
-
-        const userPrompt = `Here are the company's answers to the diagnostic test:\n${JSON.stringify(answers, null, 2)}`
-
-        let analysisResult;
-
-        const apiKey = process.env.OPENAI_API_KEY;
-
-        if (apiKey) {
-            const openai = new OpenAI({
-                apiKey
-            })
-
+        if (openai) {
             const completion = await openai.chat.completions.create({
                 messages: [
-                    { role: "system", content: ANALYSIS_SYSTEM_PROMPT },
-                    { role: "user", content: userPrompt }
+                    {
+                        role: "system",
+                        content: `${ANALYSIS_SYSTEM_PROMPT}\nWrite summary, strengths, weaknesses and recommendations in ${languageName(locale)}. Keep the categoryScores keys exactly as shown in English.`,
+                    },
+                    { role: "user", content: userPrompt },
                 ],
-                model: "gpt-4o-mini",
+                model: AI_MODEL,
                 response_format: { type: "json_object" },
-                temperature: 0.7
+                temperature: 0.5,
             })
 
             const content = completion.choices[0].message.content
             if (!content) throw new Error("No content from AI")
             analysisResult = JSON.parse(content)
         } else {
-            // Mock Data for development (when no API key is set)
-            await new Promise(resolve => setTimeout(resolve, 2000))
+            // Mock data for development (when no API key is set)
+            await new Promise((resolve) => setTimeout(resolve, 1500))
             analysisResult = {
-                score: Math.floor(Math.random() * 30) + 60, // 60-90
-                summary: "The company shows strong operational discipline but trails in digital transformation metrics. Innovation is stifled by a lack of dedicated budget.",
-                strengths: ["Clear operational processes", "High risk awareness", "Strong leadership alignment"],
-                weaknesses: ["Siloed digital tools", "Insufficient R&D spending", "Slow feedback loops"],
+                score: Math.floor(Math.random() * 30) + 60,
+                summary: "Demo: the company shows solid operational discipline but trails in digital tools and AI adoption.",
+                strengths: ["Clear operational processes", "High risk awareness", "Committed team"],
+                weaknesses: ["Siloed digital tools", "Little use of AI and automation", "Slow feedback loops"],
                 recommendations: [
-                    "Implement a unified data platform to break down silos.",
-                    "Allocate at least 5% of revenue to an innovation fund.",
-                    "Establish a cross-functional digital transformation task force."
+                    "Map the three most time-consuming manual workflows and automate one of them this quarter.",
+                    "Connect sales, invoicing and reporting data into one view for weekly decisions.",
+                    "Run a one-day AI pilot with the team using a secure AI assistant.",
                 ],
                 categoryScores: {
                     "Operational Efficiency": Math.floor(Math.random() * 20) + 70,
                     "Digital Maturity": Math.floor(Math.random() * 20) + 50,
                     "Innovation Capability": Math.floor(Math.random() * 20) + 40,
-                    "Financial Health": Math.floor(Math.random() * 20) + 80,
-                    "Risk Management": Math.floor(Math.random() * 20) + 60
-                }
+                    "Financial Health": Math.floor(Math.random() * 20) + 70,
+                    "Risk Management": Math.floor(Math.random() * 20) + 60,
+                },
             }
         }
 
-        // Save to Supabase
-        const { data: report, error: reportError } = await supabase
-            .from('diagnostic_reports')
+        const { data: report, error: reportError } = await supabaseAdmin()
+            .from("diagnostic_reports")
             .insert({
-                company_id: user.company_id,
+                company_id: workspace.company.id,
+                user_id: workspace.user.id,
                 score: analysisResult.score,
                 summary: analysisResult.summary,
                 weaknesses: analysisResult.weaknesses,
                 recommendations: analysisResult.recommendations,
                 category_scores: analysisResult.categoryScores,
                 raw_answers: answers,
-                ai_response: analysisResult
+                ai_response: analysisResult,
             })
             .select()
             .single()

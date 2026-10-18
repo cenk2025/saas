@@ -1,32 +1,38 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { useLocale } from "next-intl"
+import { useTransition } from "react"
+import { routing, usePathname, useRouter } from "@/src/i18n/navigation"
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ className = "" }: { className?: string }) {
+    const locale = useLocale()
     const pathname = usePathname()
     const router = useRouter()
+    const [isPending, startTransition] = useTransition()
 
-    const currentLocale = pathname.split('/')[1] || 'en'
-
-    const handleCreate = (locale: string) => {
-        const newPath = `/${locale}${pathname.substring(3)}`
-        router.push(newPath)
+    const switchTo = (next: string) => {
+        startTransition(() => {
+            router.replace(pathname, { locale: next })
+        })
     }
 
     return (
-        <div className="flex items-center gap-2">
-            <button
-                onClick={() => handleCreate('en')}
-                className={`text-xs font-bold px-2 py-1 rounded ${currentLocale === 'en' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}
-            >
-                EN
-            </button>
-            <button
-                onClick={() => handleCreate('fi')}
-                className={`text-xs font-bold px-2 py-1 rounded ${currentLocale === 'fi' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}
-            >
-                FI
-            </button>
+        <div
+            role="group"
+            aria-label="Language"
+            className={`inline-flex items-center rounded-full border border-border bg-card p-0.5 text-xs font-semibold ${isPending ? "opacity-60" : ""} ${className}`}
+        >
+            {routing.locales.map((l) => (
+                <button
+                    key={l}
+                    type="button"
+                    onClick={() => switchTo(l)}
+                    aria-pressed={l === locale}
+                    className={`rounded-full px-2.5 py-1 uppercase transition ${l === locale ? "bg-ink text-white" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                    {l}
+                </button>
+            ))}
         </div>
     )
 }

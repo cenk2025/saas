@@ -1,188 +1,202 @@
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/auth"
-import { createClient } from "@supabase/supabase-js"
-import { DownloadReportButton } from "@/components/DownloadReportButton"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import { TrendingUp, AlertTriangle, Lightbulb, ArrowRight, Activity, Shield, Zap } from "lucide-react"
-import { KPICard } from "@/components/KPICard"
+import { getFormatter, getTranslations } from "next-intl/server"
+import { ArrowRight, Building2, FileText, MessageSquareText, TrendingDown, TrendingUp } from "lucide-react"
+import { PageHeader } from "@/components/app/PageHeader"
 import { DataChart } from "@/components/DashboardCharts"
+import { ScoreRing } from "@/components/ScoreRing"
+import { ToolIcon } from "@/components/ToolIcon"
+import { ECOSYSTEM } from "@/lib/ecosystem"
+import { getWorkspace, supabaseAdmin } from "@/lib/workspace"
+import { Link } from "@/src/i18n/navigation"
 
-// Initialize Supabase client with service role key for server-side queries
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+const QUICK_TOOLS = ["quote", "email", "social", "meeting", "automation", "funding"]
 
 export default async function DashboardPage() {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.email) return null
+    const workspace = await getWorkspace()
+    if (!workspace?.company) return null
+    const { user, company } = workspace
 
-    // Fetch user from Supabase
-    const { data: user, error: userError } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', session.user.email)
-        .single()
+    const t = await getTranslations("Dashboard")
+    const tt = await getTranslations("Tools")
+    const te = await getTranslations("Ecosystem")
+    const format = await getFormatter()
 
-    if (userError || !user) {
-        return (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-                <h2 className="text-2xl font-bold">User Not Found</h2>
-                <p className="text-muted-foreground mt-2">Please contact your administrator.</p>
-            </div>
-        )
-    }
+    const supabase = supabaseAdmin()
+    const [{ data: reports }, { data: documents }] = await Promise.all([
+        supabase
+            .from("diagnostic_reports")
+            .select("id, score, recommendations, created_at")
+            .eq("company_id", company.id)
+            .order("created_at", { ascending: true }),
+        supabase
+            .from("ai_documents")
+            .select("id, tool, title, created_at")
+            .eq("company_id", company.id)
+            .order("created_at", { ascending: false })
+            .limit(5),
+    ])
 
-    // Note: ADMIN users can view their own dashboard
-    // They can also access /admin for company management
-
-    // Fetch company from Supabase
-    const { data: company, error: companyError } = await supabase
-        .from('companies')
-        .select('*')
-        .eq('id', user.company_id)
-        .single()
-
-    if (!company || companyError) {
-        return (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-                <h2 className="text-2xl font-bold">No Company Assigned</h2>
-                <p className="text-muted-foreground mt-2">Please contact your administrator.</p>
-            </div>
-        )
-    }
-
-    // Fetch diagnostic reports for the company
-    const { data: reports, error: reportsError } = await supabase
-        .from('diagnostic_reports')
-        .select('*')
-        .eq('company_id', company.id)
-        .order('created_at', { ascending: true })
-
-    const reportsList = reports || []
-    const latestReport = reportsList[reportsList.length - 1]
-    const previousReport = reportsList[reportsList.length - 2]
-
-    const chartData = reportsList.map((r: any) => ({
-        date: new Date(r.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
-        score: r.score
+    const reportList = reports ?? []
+    const latest = reportList.at(-1)
+    const previous = reportList.at(-2)
+    const change = latest && previous ? latest.score - previous.score : null
+    const trend = reportList.map((r) => ({
+        date: format.dateTime(new Date(r.created_at), { day: "numeric", month: "short" }),
+        score: r.score,
     }))
-
-    // Parse category scores safely
-    let categoryData: any[] = []
-    if (latestReport?.category_scores) {
-        const scores = latestReport.category_scores as Record<string, number>
-        categoryData = Object.keys(scores).map(key => ({
-            subject: key,
-            A: scores[key],
-            fullMark: 100
-        }))
-    }
-
-    // Risk Analysis Data (Mock based on Weaknesses count)
-    const riskData = [
-        { name: 'Operational', value: latestReport?.weaknesses.length * 15 || 20 },
-        { name: 'Digital', value: 45 },
-        { name: 'Compliance', value: 30 },
-        { name: 'Financial', value: 25 },
-        { name: 'Strategic', value: 55 },
-    ].sort((a, b) => b.value - a.value)
-
-
+    const profileIncomplete = !company.profile?.description
+    const firstName = (user.name || user.email).split(/[\s@]/)[0]
 
     return (
-        <div className="space-y-8 max-w-7xl mx-auto px-2">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
-                    <p className="text-muted-foreground">{company.name} • {new Date().toLocaleDateString()}</p>
+        <div className="space-y-8">
+            <PageHeader title={t("greeting", { name: firstName })} subtitle={t("subtitle")} />
+
+            {profileIncomplete && (
+                <div className="flex flex-col gap-4 rounded-2xl border border-primary/20 bg-accent p-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-start gap-3">
+                        <Building2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                        <div>
+                            <p className="font-semibold">{t("profileTitle")}</p>
+                            <p className="text-sm text-muted-foreground">{t("profileText")}</p>
+                        </div>
+                    </div>
+                    <Link href="/company" className="btn-primary shrink-0">{t("profileCta")}</Link>
                 </div>
-                <div className="flex items-center gap-3">
-                    {latestReport && <DownloadReportButton report={latestReport} />}
-                    <Link href="/test" className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all shadow-sm">
-                        Run Diagnostics <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
+            )}
+
+            {/* Quick tools */}
+            <section>
+                <div className="mb-3 flex items-center justify-between">
+                    <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">{t("quickTitle")}</h2>
+                    <Link href="/tools" className="text-sm font-medium text-primary hover:underline">{t("allTools")}</Link>
+                </div>
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+                    {QUICK_TOOLS.map((slug) => (
+                        <Link key={slug} href={`/tools/${slug}`} className="card group flex flex-col gap-3 p-4 transition hover:border-primary/40 hover:shadow-md hover:shadow-black/5">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-primary">
+                                <ToolIcon slug={slug} className="h-[18px] w-[18px]" />
+                            </span>
+                            <span className="text-sm font-semibold leading-snug">{tt(`${slug}.name`)}</span>
+                        </Link>
+                    ))}
+                </div>
+            </section>
+
+            <div className="grid gap-6 lg:grid-cols-5">
+                {/* Business health */}
+                <section className="card min-w-0 p-6 lg:col-span-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                        <h2 className="font-semibold">{t("healthTitle")}</h2>
+                        {latest && (
+                            <div className="-mr-3 flex gap-1">
+                                <Link href={`/results/${latest.id}`} className="btn-ghost">{t("viewReport")}</Link>
+                                <Link href="/test" className="btn-ghost">{t("runAgain")}</Link>
+                            </div>
+                        )}
+                    </div>
+
+                    {latest ? (
+                        <div className="mt-4 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
+                            <div className="flex flex-col items-center gap-2">
+                                <ScoreRing score={latest.score} size={128} />
+                                {change !== null && (
+                                    <span className={`inline-flex items-center gap-1 text-xs font-semibold ${change >= 0 ? "text-success" : "text-destructive"}`}>
+                                        {change >= 0 ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
+                                        {t("change", { value: change > 0 ? `+${change}` : String(change) })}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="h-44 min-w-0">
+                                {trend.length > 1 ? (
+                                    <DataChart data={trend} type="line" />
+                                ) : (
+                                    <ol className="space-y-2">
+                                        {(latest.recommendations ?? []).slice(0, 3).map((rec: string, i: number) => (
+                                            <li key={i} className="flex gap-3 text-sm">
+                                                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-bold text-white">{i + 1}</span>
+                                                <span className="line-clamp-2">{rec}</span>
+                                            </li>
+                                        ))}
+                                    </ol>
+                                )}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                            <ScoreRing score={0} size={96} label="–" />
+                            <div>
+                                <p className="text-sm text-muted-foreground">{t("healthEmpty")}</p>
+                                <Link href="/test" className="btn-primary mt-4">{t("healthCta")} <ArrowRight className="h-4 w-4" /></Link>
+                            </div>
+                        </div>
+                    )}
+
+                    {latest && trend.length > 1 && (
+                        <div className="mt-6 border-t border-border pt-5">
+                            <h3 className="mb-3 text-sm font-semibold">{t("recommendations")}</h3>
+                            <ol className="space-y-2">
+                                {(latest.recommendations ?? []).slice(0, 3).map((rec: string, i: number) => (
+                                    <li key={i} className="flex gap-3 text-sm">
+                                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-bold text-white">{i + 1}</span>
+                                        {rec}
+                                    </li>
+                                ))}
+                            </ol>
+                        </div>
+                    )}
+                </section>
+
+                <div className="flex min-w-0 flex-col gap-6 lg:col-span-2">
+                    {/* Advisor */}
+                    <section className="relative overflow-hidden rounded-2xl bg-ink p-6 text-white">
+                        <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-gradient opacity-30 blur-2xl" />
+                        <MessageSquareText className="relative h-6 w-6 text-brand-orange" />
+                        <h2 className="relative mt-3 font-semibold">{t("advisorTitle")}</h2>
+                        <p className="relative mt-1 text-sm text-white/70">{t("advisorText")}</p>
+                        <Link href="/advisor" className="btn-primary relative mt-5">{t("advisorCta")} <ArrowRight className="h-4 w-4" /></Link>
+                    </section>
+
+                    {/* Recent documents */}
+                    <section className="card flex-1 p-6">
+                        <div className="mb-3 flex items-center justify-between">
+                            <h2 className="font-semibold">{t("recentTitle")}</h2>
+                            <Link href="/library" aria-label={t("recentTitle")} className="text-primary"><ArrowRight className="h-4 w-4" /></Link>
+                        </div>
+                        {documents && documents.length > 0 ? (
+                            <ul className="-mx-2">
+                                {documents.map((doc) => (
+                                    <li key={doc.id}>
+                                        <Link href={`/library/${doc.id}`} className="flex items-center gap-3 rounded-lg px-2 py-2 hover:bg-muted">
+                                            <ToolIcon slug={doc.tool} className="h-4 w-4 shrink-0 text-primary" />
+                                            <span className="min-w-0 flex-1 truncate text-sm">{doc.title}</span>
+                                            <span className="shrink-0 text-xs text-muted-foreground">
+                                                {format.relativeTime(new Date(doc.created_at), new Date())}
+                                            </span>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <div className="flex items-start gap-3 text-sm text-muted-foreground">
+                                <FileText className="h-5 w-5 shrink-0 text-brand-gray" />
+                                {t("recentEmpty")}
+                            </div>
+                        )}
+                    </section>
                 </div>
             </div>
 
-            {!latestReport ? (
-                <div className="p-12 border border-dashed rounded-xl bg-muted/20 text-center space-y-4">
-                    <h3 className="text-xl font-semibold">No analysis generated yet</h3>
-                    <Link href="/test" className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium">Start Assessment</Link>
+            {/* Ecosystem */}
+            <section>
+                <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">{t("ecosystemTitle")}</h2>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    {ECOSYSTEM.map((service) => (
+                        <a key={service.key} href={service.url} className="card p-4 text-sm transition hover:border-primary/40">
+                            <span className="font-semibold">{new URL(service.url).host}</span>
+                            <p className="mt-1 text-muted-foreground">{te(service.key)}</p>
+                        </a>
+                    ))}
                 </div>
-            ) : (
-                <>
-                    {/* KPI Cards Row */}
-                    <div className="grid gap-6 md:grid-cols-4">
-                        <KPICard
-                            title="Overall Readiness"
-                            value={latestReport.score}
-                            change={previousReport ? latestReport.score - previousReport.score : 0}
-                            trend={!previousReport ? 'neutral' : (latestReport.score >= previousReport.score ? 'up' : 'down')}
-                            subtext="out of 100"
-                        />
-                        <KPICard title="Risks Identified" value={latestReport.weaknesses.length} trend="down" change={-12} subtext="Critical vulnerabilities" />
-                        <KPICard title="Strategic Actions" value={latestReport.recommendations.length} trend="neutral" subtext="Pending implementation" />
-                        <KPICard title="Data Maturity" value={categoryData.find(c => c.subject.includes("Digital"))?.A || "-"} trend="up" change={5} subtext="Percentile rank" />
-                    </div>
-
-                    <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-7">
-                        {/* Main Radar Chart */}
-                        <div className="col-span-3 lg:col-span-3 p-6 rounded-xl border bg-card shadow-sm h-[400px]">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                <Activity className="h-5 w-5 text-blue-500" /> Organizational Balance
-                            </h3>
-                            {categoryData.length > 0 ? (
-                                <DataChart data={categoryData} type="radar" dataKey="A" />
-                            ) : (
-                                <div className="h-full flex items-center justify-center text-muted-foreground">Run new test to see detailed breakdown</div>
-                            )}
-                        </div>
-
-                        {/* Trend Line Chart */}
-                        <div className="col-span-3 lg:col-span-4 p-6 rounded-xl border bg-card shadow-sm h-[400px]">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                <TrendingUp className="h-5 w-5 text-green-500" /> Historical Performance
-                            </h3>
-                            <DataChart data={chartData} type="line" color="#10b981" />
-                        </div>
-                    </div>
-
-                    <div className="grid gap-6 md:grid-cols-2">
-                        {/* Risk Analysis Bar Chart */}
-                        <div className="p-6 rounded-xl border bg-card shadow-sm h-[350px]">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                <Shield className="h-5 w-5 text-red-500" /> Risk Exposure (Heat Map Proxy)
-                            </h3>
-                            <DataChart data={riskData} type="bar" dataKey="value" color="#ef4444" />
-                        </div>
-
-                        {/* AI Insight Box */}
-                        <div className="p-6 rounded-xl border bg-card shadow-sm relative overflow-hidden flex flex-col justify-center">
-                            <div className="absolute top-0 right-0 p-4 opacity-10">
-                                <Lightbulb className="h-40 w-40" />
-                            </div>
-                            <div className="flex items-center gap-2 mb-4">
-                                <div className="p-2 bg-yellow-100 dark:bg-yellow-900/20 rounded-full">
-                                    <Lightbulb className="h-5 w-5 text-yellow-600" />
-                                </div>
-                                <h3 className="font-semibold text-lg">AI Strategic Insight</h3>
-                            </div>
-                            <p className="text-lg leading-relaxed text-foreground/90 relative z-10 italic">
-                                "{latestReport.summary}"
-                            </p>
-                            <div className="mt-6 flex flex-wrap gap-2">
-                                {latestReport.recommendations.slice(0, 2).map((rec: string, i: number) => (
-                                    <span key={i} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                        <Zap className="w-3 h-3 mr-1" /> Recommendation
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
+            </section>
         </div>
     )
 }

@@ -1,115 +1,72 @@
 "use client"
 
-import { PLANS, SubscriptionPlan } from "@/config/subscriptions"
-import { Check, Loader2 } from "lucide-react"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
+import { Loader2 } from "lucide-react"
+import { PricingGrid } from "@/components/PricingGrid"
+import { Link } from "@/src/i18n/navigation"
 
-interface BillingFormProps {
-    subscriptionPlan: SubscriptionPlan & {
-        stripeCurrentPeriodEnd?: number
-        isPro: boolean
-    }
-}
-
-export function BillingForm({ subscriptionPlan }: BillingFormProps) {
+export function BillingForm({ currentId }: { currentId: string }) {
+    const t = useTranslations("Plans")
     const [loading, setLoading] = useState<string | null>(null)
+    const [error, setError] = useState("")
 
-    const handleSubscribe = async (priceId: string) => {
-        if (!priceId) return
-        setLoading(priceId)
-
+    const post = async (url: string, key: string, body?: object) => {
+        setLoading(key)
+        setError("")
         try {
-            const res = await fetch("/api/billing/checkout", {
+            const res = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ priceId })
+                body: body ? JSON.stringify(body) : undefined,
             })
-
             const data = await res.json()
             if (data.url) {
                 window.location.href = data.url
-            } else {
-                alert("Failed to create checkout session")
+                return
             }
-        } catch (error) {
-            console.error(error)
-            alert("Something went wrong")
-        } finally {
-            setLoading(null)
-        }
-    }
-
-    const handleManage = async () => {
-        setLoading("manage")
-        try {
-            const res = await fetch("/api/billing/portal", { method: "POST" })
-            const data = await res.json()
-            if (data.url) window.location.href = data.url
-        } catch (e) {
-            console.error(e)
-        } finally {
+            throw new Error()
+        } catch {
+            setError(t("checkoutError"))
             setLoading(null)
         }
     }
 
     return (
-        <div className="grid md:grid-cols-3 gap-8">
-            {PLANS.map((plan) => (
-                <div
-                    key={plan.id}
-                    className={`relative p-8 rounded-2xl border bg-card flex flex-col ${plan.id === subscriptionPlan?.id ? "border-emerald-500 ring-1 ring-emerald-500 shadow-md" :
-                            plan.id === 'pro' ? 'border-primary shadow-lg ring-1 ring-primary' : 'shadow-sm'
-                        }`}
-                >
-                    {plan.id === subscriptionPlan?.id && (
-                        <div className="absolute -top-4 right-8 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                            Current Plan
-                        </div>
-                    )}
-
-                    <h3 className="text-xl font-bold">{plan.name}</h3>
-                    <p className="text-muted-foreground text-sm mt-2 h-10">{plan.description}</p>
-
-                    <div className="my-6">
-                        <span className="text-4xl font-bold">${plan.price}</span>
-                        {plan.price > 0 && <span className="text-muted-foreground">/month</span>}
-                    </div>
-
-                    <ul className="space-y-3 mb-8 flex-1">
-                        {plan.features.map((feature, i) => (
-                            <li key={i} className="flex items-center gap-2 text-sm">
-                                <Check className="h-4 w-4 text-primary shrink-0" />
-                                {feature}
-                            </li>
-                        ))}
-                    </ul>
-
-                    {plan.id === subscriptionPlan?.id ? (
+        <div className="space-y-6">
+            {error && <p className="rounded-xl bg-destructive/10 p-3 text-sm font-medium text-destructive">{error}</p>}
+            <PricingGrid
+                currentId={currentId}
+                renderAction={(plan) => {
+                    if (plan.id === currentId) {
+                        return plan.id === "free" ? (
+                            <span className="btn-secondary w-full cursor-default opacity-70">{t("current")}</span>
+                        ) : (
+                            <button type="button" onClick={() => post("/api/billing/portal", "manage")} disabled={!!loading} className="btn-secondary w-full">
+                                {loading === "manage" && <Loader2 className="h-4 w-4 animate-spin" />}
+                                {t("manage")}
+                            </button>
+                        )
+                    }
+                    if (plan.contactSales) {
+                        return <Link href="/#contact" className="btn-secondary w-full">{t("contactUs")}</Link>
+                    }
+                    if (plan.id === "free") {
+                        return <span className="btn-secondary w-full cursor-default opacity-70">{t("downgrade")}</span>
+                    }
+                    return (
                         <button
-                            onClick={handleManage}
-                            disabled={!!loading}
-                            className="w-full py-2.5 rounded-lg font-semibold bg-muted text-foreground hover:bg-muted/80 transition-all flex items-center justify-center border"
+                            type="button"
+                            onClick={() => post("/api/billing/checkout", plan.id, { priceId: plan.stripePriceId })}
+                            disabled={!!loading || !plan.stripePriceId}
+                            className="btn-primary w-full"
                         >
-                            {loading === "manage" ? <Loader2 className="h-4 w-4 animate-spin" /> : "Manage Subscription"}
+                            {loading === plan.id && <Loader2 className="h-4 w-4 animate-spin" />}
+                            {t("choose")}
                         </button>
-                    ) : (
-                        <button
-                            onClick={() => handleSubscribe(plan.stripePriceId)}
-                            disabled={!!loading || plan.id === 'free'}
-                            className={`w-full py-2.5 rounded-lg font-semibold transition-all flex items-center justify-center ${plan.id === 'free'
-                                    ? 'bg-muted text-muted-foreground cursor-default'
-                                    : 'bg-primary text-primary-foreground hover:bg-primary/90'
-                                }`}
-                        >
-                            {loading === plan.stripePriceId ? (
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                                plan.id === 'free' ? 'Downgrade' : 'Upgrade'
-                            )}
-                        </button>
-                    )}
-                </div>
-            ))}
+                    )
+                }}
+            />
         </div>
     )
 }

@@ -1,30 +1,677 @@
 {
+    "Meta": {
+        "title": "Voon Business – tekoälytyötila pk-yrityksille",
+        "description": "Tekoälytyökalut yrityksen arkeen: tarjoukset, sähköpostit, markkinointi, rekrytointi, palaverimuistiot, automaatio, rahoitus ja EU:n tekoälyasetus – suomeksi, ruotsiksi ja englanniksi."
+    },
     "Navbar": {
-        "dashboard": "Hallintapaneeli",
-        "advisor": "Neuvonantaja",
-        "billing": "Laskutus",
-        "admin": "Ylläpito",
-        "diagnostic": "Diagnostiikka",
-        "signIn": "Kirjaudu sisään",
-        "logout": "Kirjaudu ulos"
+        "features": "Ominaisuudet",
+        "tools": "Tekoälytyökalut",
+        "pricing": "Hinnoittelu",
+        "contact": "Yhteystiedot",
+        "signIn": "Kirjaudu",
+        "getStarted": "Aloita maksutta",
+        "openApp": "Avaa työtila",
+        "menu": "Valikko"
     },
     "Landing": {
-        "tagline": "Tekoälypohjainen yritysäly",
-        "title": "Muuta liiketoimintasi tekoälypohjaisilla oivalluksilla",
-        "subtitle": "Lopeta arvailu. Tekoälydiagnostiikkamme analysoi organisaatiosi rakenteen paljastaakseen piilevät heikkoudet ja hyödyntämättömän potentiaalin.",
-        "ctaTest": "Suorita ilmainen diagnostiikka",
-        "ctaDemo": "Katso demo",
-        "features": {
-            "deep": "Syvä diagnostiikka",
-            "deepDesc": "Arvioi toiminnan tehokkuus, digitaalinen kypsyys ja riskitietoisuus.",
-            "insights": "Toiminnalliset oivallukset",
-            "insightsDesc": "Saat 3 konkreettista, priorisoitua suositusta.",
-            "secure": "Turvallinen & Yksityinen",
-            "secureDesc": "Tietosi ovat salattuja ja eristettyjä."
+        "eyebrow": "Tekoälytyötila pk-yrityksille",
+        "title": "Lopeta arvailu.",
+        "titleAccent": "Anna tekoälyn hoitaa rutiinit.",
+        "subtitle": "Voon Business tuo yritykseesi turvallisen tekoälykollegan: se kirjoittaa tarjoukset ja sähköpostit, suunnittelee markkinoinnin, laatii työpaikkailmoitukset, tiivistää palaverit, etsii rahoitusta ja löytää automaatiomahdollisuudet – yrityksesi omien tietojen pohjalta.",
+        "ctaPrimary": "Aloita maksutta",
+        "ctaSecondary": "Tee maksuton kuntotesti",
+        "trust1": "Suomi, ruotsi ja englanti",
+        "trust2": "Tietosuoja edellä",
+        "trust3": "Tehty Jyväskylässä",
+        "previewGreeting": "Huomenta, Aino",
+        "previewScore": "Liiketoiminnan kunto",
+        "previewTask": "Tarjous: Järvenranta Oy",
+        "previewTaskStatus": "Valmis lähetettäväksi",
+        "previewSaved": "Säästetty aika tässä kuussa",
+        "previewHours": "14 h",
+        "problemTitle": "Pieni tiimi, pitkä tehtävälista",
+        "problemText": "Tekoälystä puhutaan paljon, mutta pienessä yrityksessä aikaa kokeiluille on vähän ja tietoturva mietityttää. Voon Business tekee tekoälystä valmiita ja turvallisia työkaluja niihin töihin, joita teet jo joka viikko.",
+        "stat1": "10",
+        "stat1Label": "valmista tekoälytyökalua",
+        "stat2": "3",
+        "stat2Label": "kieltä: FI, SV, EN",
+        "stat3": "5 min",
+        "stat3Label": "ensimmäiseen tulokseen",
+        "toolsEyebrow": "Tekoälytyökalut",
+        "toolsTitle": "Yksi työtila koko liiketoiminnalle",
+        "toolsSubtitle": "Jokainen työkalu tuntee yritysprofiilisi, kirjoittaa valitsemallasi kielellä ja tallentaa tulokset yhteiseen kirjastoon.",
+        "howEyebrow": "Näin se toimii",
+        "howTitle": "Rekisteröitymisestä tuloksiin minuuteissa",
+        "step1Title": "Kuvaile yrityksesi",
+        "step1Text": "Täytä lyhyt yritysprofiili kerran. Jokainen tekoälytyökalu käyttää sitä taustatietona.",
+        "step2Title": "Valitse työkalu tai kysy neuvojalta",
+        "step2Text": "Täytä muutama kenttä tai kysy suoraan – tekoäly vastaa suomeksi, ruotsiksi tai englanniksi.",
+        "step3Title": "Muokkaa, tallenna ja toimi",
+        "step3Text": "Kopioi tulos, tallenna se kirjastoon ja jaa tiimillesi.",
+        "healthEyebrow": "Liiketoiminnan kuntotesti",
+        "healthTitle": "Tiedä mistä aloittaa",
+        "healthText": "Vastaa 12 kysymykseen ja saat pisteet toiminnasta, digitaalisesta kypsyydestä, innovaatiosta, taloudesta ja riskeistä – sekä kolme priorisoitua suositusta ja PDF-raportin.",
+        "healthPoint1": "Pisteet viidellä osa-alueella ja kehitys ajan yli",
+        "healthPoint2": "Kolme konkreettista, priorisoitua toimenpidettä",
+        "healthPoint3": "Tekoälyneuvoja, joka tuntee tuloksesi",
+        "healthCta": "Tee kuntotesti",
+        "trustEyebrow": "Vastuullinen tekoäly",
+        "trustTitle": "Tekoäly avustaa. Ihminen päättää.",
+        "trust1Title": "Yrityksen tiedot pysyvät erillään",
+        "trust1Text": "Jokaisen yrityksen tiedot on eristetty, ja pääsy on vain omalla tiimilläsi.",
+        "trust2Title": "Läpinäkyvä",
+        "trust2Text": "Tekoäly merkitsee oletukset [hakasulkeisiin], joten tiedät aina mitä tarkistaa.",
+        "trust3Title": "EU-säännöt huomioiden",
+        "trust3Text": "Suunniteltu tietosuoja-asetus ja EU:n tekoälyasetus huomioiden – ja mukana työkalu, jolla voit tarkistaa oman tekoälyn käyttösi.",
+        "pricingEyebrow": "Hinnoittelu",
+        "pricingTitle": "Aloita maksutta, kasva kun olet valmis",
+        "pricingSubtitle": "Hinnat alv 0 %. Peru milloin tahansa.",
+        "perMonth": "/ kk",
+        "from": "alkaen",
+        "popular": "Suosituin",
+        "ecosystemEyebrow": "VOON IQ",
+        "ecosystemTitle": "Osa VOON IQ -perhettä",
+        "ecosystemText": "Voon Business on jyväskyläläisen tekoälystartup VOON IQ:n yrityspalvelu. Muut palvelumme kattavat markkinoinnin, osaamisen ja urapolut.",
+        "faqTitle": "Usein kysytyt kysymykset",
+        "faq1q": "Tarvitsenko teknistä osaamista?",
+        "faq1a": "Et. Jokainen työkalu on lyhyt lomake, ja neuvoja toimii kuin chat. Jos osaat kirjoittaa sähköpostin, osaat käyttää Voon Businessia.",
+        "faq2q": "Mitä kieliä palvelu tukee?",
+        "faq2a": "Koko palvelu ja kaikki tekoälyn tulokset ovat saatavilla suomeksi, ruotsiksi ja englanniksi.",
+        "faq3q": "Käytetäänkö tietojamme tekoälymallien kouluttamiseen?",
+        "faq3a": "Ei. Käytämme tekoälypalvelua sen yritysrajapinnan kautta, jossa lähetettyjä tietoja ei oletuksena käytetä mallien koulutukseen.",
+        "faq4q": "Voiko tekoäly tehdä virheitä?",
+        "faq4a": "Voi. Siksi tulokset ovat luonnoksia, jotka tarkistat itse, ja oletukset on merkitty selvästi. Sopimus- ja rahoitustyökalut muistuttavat tarkistamaan yksityiskohdat.",
+        "ctaTitle": "Anna tiimillesi tekoälykollega jo tänään",
+        "ctaText": "Maksuton aloitus. Ei luottokorttia."
+    },
+    "Ecosystem": {
+        "voon": "Tekoälykartoitukset, konsultointi ja automaatio yrityksille",
+        "ads": "Markkinointi ja suunnittelu",
+        "tyo": "SkillPath – osaamisesta työhön ja koulutukseen",
+        "worklife": "Talent Factory – urapalvelu kansainvälisille osaajille"
+    },
+    "Plans": {
+        "free": {
+            "name": "Free",
+            "description": "Kokeile työtilaa oman yrityksesi kanssa.",
+            "features": [
+                "Liiketoiminnan kuntotesti",
+                "20 tekoälyajoa / kk",
+                "Tekoälyneuvoja",
+                "1 käyttäjä"
+            ]
+        },
+        "pro": {
+            "name": "Pro",
+            "description": "Yrittäjille ja freelancereille.",
+            "features": [
+                "Rajattomat tekoälytyökalut",
+                "Rajattomat kuntotestit ja PDF-raportit",
+                "Dokumenttikirjasto",
+                "1 käyttäjä"
+            ]
+        },
+        "business": {
+            "name": "Business",
+            "description": "Pk-yrityksille ja niiden tiimeille.",
+            "features": [
+                "Kaikki Pro-tason ominaisuudet",
+                "Enintään 10 käyttäjää",
+                "Yhteinen kirjasto",
+                "Ensisijainen tuki"
+            ]
+        },
+        "enterprise": {
+            "name": "Enterprise & Public",
+            "description": "Suuryrityksille, kunnille ja työllisyysalueille.",
+            "features": [
+                "Räätälöidyt työkalut ja integraatiot",
+                "Rajaton käyttäjämäärä",
+                "Koulutus ja käyttöönotto",
+                "Sopimuslaskutus"
+            ]
+        },
+        "contactUs": "Ota yhteyttä",
+        "choose": "Valitse",
+        "current": "Nykyinen paketti",
+        "manage": "Hallitse tilausta",
+        "downgrade": "Maksuton paketti",
+        "billingTitle": "Paketti ja laskutus",
+        "billingSubtitle": "Käytössäsi on {plan}-paketti.",
+        "checkoutError": "Maksusivua ei voitu avata. Yritä uudelleen."
+    },
+    "Footer": {
+        "tagline": "Tekoälytyötila pienille ja keskisuurille yrityksille. VOON IQ:n palvelu.",
+        "product": "Palvelu",
+        "ecosystem": "VOON IQ -palvelut",
+        "contact": "Yhteystiedot",
+        "location": "Jyväskylä",
+        "rights": "Kaikki oikeudet pidätetään."
+    },
+    "Cookies": {
+        "text": "Käytämme vain evästeitä, jotka ovat välttämättömiä kirjautumiseen ja kielivalinnan muistamiseen. Ei seuranta- tai mainosevästeitä.",
+        "ok": "Selvä"
+    },
+    "Auth": {
+        "loginTitle": "Tervetuloa takaisin",
+        "loginSubtitle": "Kirjaudu tekoälytyötilaasi",
+        "email": "Työsähköposti",
+        "password": "Salasana",
+        "forgot": "Unohtuiko salasana?",
+        "signIn": "Kirjaudu sisään",
+        "noAccount": "Eikö sinulla ole vielä tiliä?",
+        "createAccount": "Luo maksuton tili",
+        "invalid": "Väärä sähköposti tai salasana.",
+        "unexpected": "Jokin meni pieleen. Yritä uudelleen.",
+        "registered": "Tili luotu – voit nyt kirjautua sisään.",
+        "passwordUpdated": "Salasana vaihdettu – kirjaudu uudella salasanalla.",
+        "registerTitle": "Luo työtilasi",
+        "registerSubtitle": "Maksuton aloitus. Ei luottokorttia.",
+        "companyName": "Yrityksen nimi",
+        "fullName": "Nimesi",
+        "phone": "Puhelin (valinnainen)",
+        "country": "Maa",
+        "selectCountry": "Valitse maa",
+        "confirmPassword": "Vahvista salasana",
+        "acceptTerms": "Hyväksyn käyttöehdot ja tietosuojaselosteen",
+        "createWorkspace": "Luo työtila",
+        "haveAccount": "Onko sinulla jo tili?",
+        "passwordMismatch": "Salasanat eivät täsmää.",
+        "passwordShort": "Salasanan on oltava vähintään 8 merkkiä.",
+        "termsRequired": "Hyväksy käyttöehdot jatkaaksesi.",
+        "registerFailed": "Rekisteröinti epäonnistui.",
+        "forgotTitle": "Palauta salasana",
+        "forgotSubtitle": "Anna sähköpostiosoitteesi, niin lähetämme palautuslinkin.",
+        "sendLink": "Lähetä palautuslinkki",
+        "checkEmail": "Tarkista sähköpostisi",
+        "checkEmailText": "Jos osoitteella {email} on tili, saat palautuslinkin hetken kuluttua.",
+        "backToLogin": "Takaisin kirjautumiseen",
+        "resetTitle": "Valitse uusi salasana",
+        "newPassword": "Uusi salasana",
+        "savePassword": "Tallenna salasana",
+        "resetInvalid": "Palautuslinkki on virheellinen tai vanhentunut. Pyydä uusi linkki.",
+        "countries": {
+            "FI": "Suomi",
+            "SE": "Ruotsi",
+            "NO": "Norja",
+            "DK": "Tanska",
+            "EE": "Viro",
+            "DE": "Saksa",
+            "OTHER": "Muu"
         }
     },
+    "App": {
+        "home": "Etusivu",
+        "tools": "Tekoälytyökalut",
+        "advisor": "Tekoälyneuvoja",
+        "health": "Kuntotesti",
+        "library": "Kirjasto",
+        "company": "Yritysprofiili",
+        "billing": "Paketti ja laskutus",
+        "admin": "Ylläpito",
+        "signOut": "Kirjaudu ulos",
+        "roles": {
+            "ADMIN": "Pääkäyttäjä",
+            "MANAGER": "Esihenkilö",
+            "EMPLOYEE": "Työntekijä"
+        }
+    },
+    "Workspace": {
+        "demoNotice": "**Demotila** – tekoälypalvelua ei ole vielä määritetty (OPENAI_API_KEY puuttuu), joten tämä on paikkamerkki eikä oikea tekoälyn vastaus. Lähetetyt tiedot:",
+        "demoChat": "**Demotila** – tekoälypalvelua ei ole vielä määritetty (OPENAI_API_KEY puuttuu). Kun avain on asetettu, neuvoja vastaa tähän yritysprofiilisi ja kuntotestisi pohjalta.",
+        "generate": "Luo",
+        "generating": "Kirjoitetaan…",
+        "stop": "Pysäytä",
+        "copy": "Kopioi",
+        "copied": "Kopioitu",
+        "save": "Tallenna kirjastoon",
+        "saved": "Tallennettu",
+        "saveFailed": "Tallennus epäonnistui. Onko tietokannan migraatio ajettu?",
+        "regenerate": "Yritä uudelleen",
+        "result": "Tulos",
+        "emptyResult": "Täytä lomake, niin tulos ilmestyy tähän.",
+        "error": "Tekoäly ei juuri nyt pystynyt vastaamaan. Yritä uudelleen.",
+        "required": "Pakollinen",
+        "optional": "Valinnainen",
+        "back": "Takaisin",
+        "delete": "Poista",
+        "deleteConfirm": "Poistetaanko tämä dokumentti?",
+        "open": "Avaa",
+        "privacyHint": "Älä liitä arkaluonteisia henkilötietoja (esim. terveystietoja tai henkilötunnuksia).",
+        "aiDisclaimer": "Tekoäly voi tehdä virheitä. Tarkista tulos ennen käyttöä.",
+        "noCompany": "Käyttäjääsi ei ole vielä liitetty yritykseen. Ota yhteyttä pääkäyttäjään."
+    },
+    "Tools": {
+        "title": "Tekoälytyökalut",
+        "subtitle": "Valmiit tekoälytyökalut arjen töihin. Jokainen käyttää yritysprofiiliasi ja kirjoittaa valitsemallasi kielellä.",
+        "all": "Kaikki",
+        "categories": {
+            "sales": "Myynti",
+            "marketing": "Markkinointi ja asiakkaat",
+            "people": "Henkilöstö ja rekrytointi",
+            "operations": "Toiminta",
+            "finance": "Talous ja rahoitus",
+            "legal": "Sopimukset ja vaatimustenmukaisuus"
+        },
+        "quote": {
+            "name": "Tarjouskirjoittaja",
+            "description": "Ammattimainen, lähetysvalmis tarjous hintoineen ja ehtoineen.",
+            "fields": {
+                "customer": {
+                    "label": "Asiakas",
+                    "placeholder": "esim. Järvenranta Oy, Maria Virtanen"
+                },
+                "scope": {
+                    "label": "Mitä tarjoat?",
+                    "placeholder": "Kuvaile tuotteet tai palvelut, laajuus ja aikataulu…"
+                },
+                "price": {
+                    "label": "Hintatiedot",
+                    "placeholder": "esim. 85 €/h, arviolta 40 h, tai kiinteä hinta 3 400 €"
+                },
+                "tone": {
+                    "label": "Sävy"
+                }
+            },
+            "options": {
+                "tone": {
+                    "formal": "Muodollinen",
+                    "friendly": "Ystävällinen"
+                }
+            }
+        },
+        "email": {
+            "name": "Sähköpostiavustaja",
+            "description": "Vastaukset, jatkoviestit, reklamaatiot ja maksumuistutukset hetkessä.",
+            "fields": {
+                "situation": {
+                    "label": "Tilanne"
+                },
+                "context": {
+                    "label": "Taustatiedot",
+                    "placeholder": "Liitä saamasi viesti tai kuvaile tilanne…"
+                },
+                "tone": {
+                    "label": "Sävy"
+                }
+            },
+            "options": {
+                "situation": {
+                    "reply": "Vastaus viestiin",
+                    "followUp": "Jatkoviesti tapaamisen tai tarjouksen jälkeen",
+                    "outreach": "Ensimmäinen yhteydenotto",
+                    "complaint": "Vastaus reklamaatioon",
+                    "paymentReminder": "Maksumuistutus"
+                },
+                "tone": {
+                    "formal": "Muodollinen",
+                    "friendly": "Ystävällinen"
+                }
+            }
+        },
+        "social": {
+            "name": "Somepostaukset",
+            "description": "Kolme julkaisuversiota koukkuineen, hashtageineen ja kuvaideoineen.",
+            "fields": {
+                "topic": {
+                    "label": "Mitä haluat kertoa?",
+                    "placeholder": "esim. Avasimme uuden toimiston Jyväskylään ja rekrytoimme kaksi kehittäjää"
+                },
+                "platform": {
+                    "label": "Kanava"
+                },
+                "goal": {
+                    "label": "Tavoite",
+                    "placeholder": "esim. lisää liidejä, työnantajakuva, tapahtumailmoittautumiset"
+                }
+            },
+            "options": {
+                "platform": {
+                    "linkedin": "LinkedIn",
+                    "instagram": "Instagram",
+                    "facebook": "Facebook",
+                    "newsletter": "Uutiskirje"
+                }
+            }
+        },
+        "feedback": {
+            "name": "Asiakaspalauteanalyysi",
+            "description": "Teemat, tunnelma, kehitystoimet ja vastausluonnokset arvosteluista.",
+            "fields": {
+                "reviews": {
+                    "label": "Asiakaspalaute",
+                    "placeholder": "Liitä arvostelut, kyselyvastaukset tai palautesähköpostit – yksi per rivi…"
+                }
+            }
+        },
+        "jobad": {
+            "name": "Työpaikkailmoitus ja haastattelu",
+            "description": "Yhdenvertainen työpaikkailmoitus ESCO-taitoineen ja haastattelukysymyksineen.",
+            "fields": {
+                "role": {
+                    "label": "Tehtävänimike",
+                    "placeholder": "esim. Asiakaspalvelun asiantuntija"
+                },
+                "details": {
+                    "label": "Tehtävän kuvaus",
+                    "placeholder": "Tehtävät, vaatimukset, sijainti, palkkahaarukka, aloitus…"
+                },
+                "employment": {
+                    "label": "Työsuhteen tyyppi"
+                }
+            },
+            "options": {
+                "employment": {
+                    "fullTime": "Kokoaikainen, vakituinen",
+                    "partTime": "Osa-aikainen",
+                    "fixedTerm": "Määräaikainen",
+                    "internship": "Harjoittelu / trainee"
+                }
+            }
+        },
+        "meeting": {
+            "name": "Palaverimuistio",
+            "description": "Muuttaa muistiinpanot tai litteroinnin päätöksiksi, tehtäviksi ja jatkoviestiksi.",
+            "fields": {
+                "notes": {
+                    "label": "Muistiinpanot tai litterointi",
+                    "placeholder": "Liitä palaverin muistiinpanot tai litterointi…"
+                }
+            }
+        },
+        "automation": {
+            "name": "Automaatioetsijä",
+            "description": "Löytää vaiheet, jotka tekoäly ja automaatio voivat hoitaa – aikasäästöineen.",
+            "fields": {
+                "process": {
+                    "label": "Kuvaile prosessi",
+                    "placeholder": "esim. Keräämme joka kuukausi tunnit Excelistä, tarkistamme ne, luomme laskut taloushallinnon ohjelmaan ja lähetämme ne sähköpostilla…"
+                },
+                "tools": {
+                    "label": "Käytössä olevat ohjelmistot",
+                    "placeholder": "esim. Netvisor, Excel, Outlook, HubSpot"
+                },
+                "volume": {
+                    "label": "Määrät",
+                    "placeholder": "esim. 120 laskua kuukaudessa, 3 henkilöä"
+                }
+            }
+        },
+        "funding": {
+            "name": "Rahoitusetsijä",
+            "description": "Projektiisi sopivat suomalaiset ja EU-rahoitusinstrumentit.",
+            "fields": {
+                "project": {
+                    "label": "Kuvaile hanke",
+                    "placeholder": "Mitä kehitätte, miksi, mitä se maksaa ja milloin sen pitäisi alkaa?"
+                },
+                "stage": {
+                    "label": "Yrityksen vaihe"
+                },
+                "employees": {
+                    "label": "Henkilöstö"
+                }
+            },
+            "options": {
+                "stage": {
+                    "startup": "Aloittava (0–2 vuotta)",
+                    "growth": "Kasvuyritys",
+                    "established": "Vakiintunut yritys"
+                },
+                "employees": {
+                    "1-9": "1–9",
+                    "10-49": "10–49",
+                    "50-249": "50–249",
+                    "250+": "250+"
+                }
+            }
+        },
+        "contract": {
+            "name": "Sopimuksen tarkistus",
+            "description": "Sopimuksen keskeiset ehdot, määräajat ja riskit selkokielellä.",
+            "fields": {
+                "document": {
+                    "label": "Sopimusteksti",
+                    "placeholder": "Liitä sopimus tai kohdat, jotka haluat tarkistaa…"
+                },
+                "focus": {
+                    "label": "Mihin kiinnitetään erityisesti huomiota?",
+                    "placeholder": "esim. vastuut, irtisanominen, hinnanmuutokset"
+                }
+            }
+        },
+        "aiact": {
+            "name": "EU:n tekoälyasetus ja GDPR",
+            "description": "Riskiluokka, velvoitteet ja tarkistuslista tekoälyn käyttötapaukselle.",
+            "fields": {
+                "useCase": {
+                    "label": "Kuvaile tekoälyn käyttötapaus",
+                    "placeholder": "esim. Haluamme käyttää tekoälyä työhakemusten seulontaan ja hakijoiden pisteyttämiseen…"
+                },
+                "data": {
+                    "label": "Mitä tietoja käsitellään?",
+                    "placeholder": "esim. CV:t, nimet, yhteystiedot"
+                }
+            }
+        }
+    },
+    "Dashboard": {
+        "greeting": "Hei, {name}",
+        "subtitle": "Mitä saadaan tänään valmiiksi?",
+        "quickTitle": "Pikavalinnat",
+        "allTools": "Kaikki työkalut",
+        "healthTitle": "Liiketoiminnan kunto",
+        "healthEmpty": "Et ole vielä tehnyt kuntotestiä. Se vie noin 5 minuuttia ja näyttää, missä tekoäly voi auttaa eniten.",
+        "healthCta": "Aloita kuntotesti",
+        "outOf": "/ 100",
+        "change": "{value} pistettä edellisestä",
+        "viewReport": "Näytä raportti",
+        "runAgain": "Tee uudelleen",
+        "trend": "Kehitys",
+        "recommendations": "Suositellut seuraavat askeleet",
+        "recentTitle": "Viimeisimmät dokumentit",
+        "recentEmpty": "Tekoälytyökaluista tallentamasi dokumentit näkyvät täällä.",
+        "profileTitle": "Täydennä yritysprofiili",
+        "profileText": "Tekoäly antaa paljon parempia vastauksia, kun se tietää mitä yrityksesi tekee.",
+        "profileCta": "Täytä profiili",
+        "advisorTitle": "Kysy tekoälyneuvojalta",
+        "advisorText": "Strategia, myynti, hinnoittelu, rekrytointi – kysy mitä tahansa liiketoiminnastasi.",
+        "advisorCta": "Avaa neuvoja",
+        "ecosystemTitle": "Lisää VOON IQ:lta"
+    },
+    "Advisor": {
+        "title": "Tekoälyneuvoja",
+        "subtitle": "Tuntee yritysprofiilisi ja viimeisimmän kuntotestisi.",
+        "welcome": "Hei! Olen tekoälyneuvojasi. Kysy mitä tahansa yrityksestäsi – myynnistä, markkinoinnista, hinnoittelusta, rekrytoinnista, rahoituksesta tai tekoälyn käyttöönotosta.",
+        "placeholder": "Kirjoita kysymys…",
+        "send": "Lähetä",
+        "newChat": "Uusi keskustelu",
+        "suggestionsTitle": "Kokeile kysyä",
+        "suggestions": [
+            "Mitä meidän kannattaa parantaa ensin kuntotestin perusteella?",
+            "Miten voisimme hyödyntää tekoälyä asiakaspalvelussa?",
+            "Anna 5 ideaa, joilla saamme lisää asiakkaita tällä neljänneksellä",
+            "Miten hinnoittelen uuden palvelun?"
+        ]
+    },
+    "Library": {
+        "title": "Kirjasto",
+        "subtitle": "Tiimisi tallentamat tekoälydokumentit.",
+        "empty": "Ei vielä tallennettuja dokumentteja. Käytä tekoälytyökalua ja valitse ”Tallenna kirjastoon”.",
+        "emptyCta": "Selaa tekoälytyökaluja",
+        "notFound": "Dokumenttia ei löytynyt.",
+        "createdBy": "Luotu {date}",
+        "setupHint": "Kirjasto tarvitsee tietokannan migraation supabase/business_workspace.sql."
+    },
+    "Company": {
+        "title": "Yritysprofiili",
+        "subtitle": "Tekoäly käyttää näitä tietoja jokaisessa työkalussa ja neuvojassa. Mitä tarkemmin kerrot, sitä parempia tuloksia saat.",
+        "name": "Yrityksen nimi",
+        "country": "Maa",
+        "industry": "Toimiala",
+        "industryPlaceholder": "esim. Rakentaminen, IT-palvelut, Ravintola",
+        "size": "Koko",
+        "sizes": {
+            "1": "Yksinyrittäjä",
+            "2-9": "2–9 henkilöä",
+            "10-49": "10–49 henkilöä",
+            "50-249": "50–249 henkilöä",
+            "250+": "250+ henkilöä"
+        },
+        "location": "Sijainti",
+        "locationPlaceholder": "esim. Jyväskylä",
+        "website": "Verkkosivut",
+        "description": "Mitä yritys tekee?",
+        "descriptionPlaceholder": "Tuotteet ja palvelut, mikä teistä tekee erilaisen…",
+        "customers": "Keitä asiakkaanne ovat?",
+        "customersPlaceholder": "esim. keskisuomalaiset taloyhtiöt, B2B-ohjelmistoyritykset…",
+        "goals": "Nykyiset tavoitteet ja haasteet",
+        "goalsPlaceholder": "esim. myynnin kasvu 20 %, kaksi uutta työntekijää, vähemmän hallintotyötä",
+        "save": "Tallenna profiili",
+        "saved": "Profiili tallennettu",
+        "saveFailed": "Tallennus epäonnistui. Onko tietokannan migraatio ajettu?",
+        "readOnly": "Vain pääkäyttäjät ja esihenkilöt voivat muokata yritysprofiilia."
+    },
+    "Diagnostic": {
+        "title": "Liiketoiminnan kuntotesti",
+        "subtitle": "12 kysymystä, noin 5 minuuttia. Tekoäly pisteyttää liiketoimintasi viisi osa-aluetta ja antaa kolme priorisoitua suositusta.",
+        "progress": "{done} / {total} vastattu",
+        "poor": "Heikko",
+        "excellent": "Erinomainen",
+        "submit": "Analysoi tekoälyllä",
+        "analyzing": "Analysoidaan…",
+        "failed": "Analyysi epäonnistui. Yritä uudelleen.",
+        "categories": {
+            "operations": "Toiminta",
+            "digital": "Digi ja tekoäly",
+            "people": "Ihmiset",
+            "innovation": "Innovaatio",
+            "risk": "Riskit",
+            "finance": "Talous"
+        },
+        "scoreCategories": {
+            "operations": "Toiminnan tehokkuus",
+            "digital": "Digitaalinen kypsyys",
+            "innovation": "Innovaatiokyky",
+            "finance": "Taloudellinen terveys",
+            "risk": "Riskienhallinta"
+        },
+        "questions": {
+            "efficiency_process": {
+                "label": "Kuinka selkeästi toimintaprosessinne on määritelty ja dokumentoitu?"
+            },
+            "efficiency_automation": {
+                "label": "Missä määrin keskeiset työnkulut on automatisoitu?",
+                "options": {
+                    "manual": "Käsin",
+                    "someTools": "Joitain työkaluja",
+                    "mostly": "Pääosin automatisoitu",
+                    "fully": "Täysin automatisoitu"
+                }
+            },
+            "digital_tools": {
+                "label": "Kuinka hyvin digitaaliset työkalunne on yhdistetty tiimien välillä?",
+                "options": {
+                    "siloed": "Erillisiä siiloja",
+                    "some": "Osittain yhdistetty",
+                    "integrated": "Integroitu",
+                    "realtime": "Reaaliaikainen synkronointi"
+                }
+            },
+            "digital_data": {
+                "label": "Kuinka usein käytätte dataa päätöksenteossa?",
+                "options": {
+                    "rarely": "Harvoin",
+                    "monthly": "Kuukausittain",
+                    "weekly": "Viikoittain",
+                    "daily": "Päivittäin"
+                }
+            },
+            "ai_usage": {
+                "label": "Miten tekoälyä käytetään yrityksessänne tänään?",
+                "options": {
+                    "none": "Ei lainkaan",
+                    "individual": "Yksittäiset henkilöt",
+                    "someProcesses": "Joissain prosesseissa",
+                    "strategic": "Strategisesti"
+                }
+            },
+            "hr_training": {
+                "label": "Onko teillä jatkuvan oppimisen tai koulutuksen ohjelma?",
+                "options": {
+                    "no": "Ei",
+                    "adHoc": "Satunnaisesti",
+                    "formal": "Virallinen ohjelma",
+                    "culture": "Vahva oppimiskulttuuri"
+                }
+            },
+            "hr_satisfaction": {
+                "label": "Miten arvioisit henkilöstön tyytyväisyyden ja pysyvyyden?"
+            },
+            "innovation_budget": {
+                "label": "Kuinka suuri osa budjetista käytetään kehitykseen ja uusiin hankkeisiin?",
+                "options": {
+                    "0": "0 %",
+                    "1-5": "1–5 %",
+                    "5-10": "5–10 %",
+                    "10+": "Yli 10 %"
+                }
+            },
+            "innovation_speed": {
+                "label": "Kuinka nopeasti saatte uuden tuotteen tai palvelun ideasta markkinoille?",
+                "options": {
+                    "years": "Vuosissa",
+                    "months": "Kuukausissa",
+                    "weeks": "Viikoissa",
+                    "days": "Päivissä"
+                }
+            },
+            "risk_compliance": {
+                "label": "Kuinka säännöllisesti arvioitte vaatimustenmukaisuuden, tietosuojan ja tietoturvan riskejä?",
+                "options": {
+                    "never": "Ei koskaan",
+                    "annually": "Vuosittain",
+                    "quarterly": "Neljännesvuosittain",
+                    "continuous": "Jatkuvasti"
+                }
+            },
+            "risk_resilience": {
+                "label": "Onko teillä testattu jatkuvuus- tai toipumissuunnitelma?",
+                "options": {
+                    "no": "Ei",
+                    "drafted": "Luonnos, ei testattu",
+                    "tested": "Testataan vuosittain",
+                    "automated": "Vahva ja automatisoitu"
+                }
+            },
+            "finance_visibility": {
+                "label": "Kuinka hyvin johto näkee kassavirran ja kannattavuuden?",
+                "options": {
+                    "poor": "Heikosti",
+                    "monthly": "Kuukausittain",
+                    "weekly": "Viikoittain",
+                    "realtime": "Reaaliajassa"
+                }
+            }
+        }
+    },
+    "Results": {
+        "title": "Liiketoimintasi kuntoraportti",
+        "notFound": "Raporttia ei löytynyt.",
+        "categoryTitle": "Pisteet osa-alueittain",
+        "strengths": "Vahvuudet",
+        "weaknesses": "Kehityskohteet",
+        "recommendations": "Tekoälyn suositukset",
+        "nextTitle": "Muuta suositukset teoiksi",
+        "nextText": "Kysy tekoälyneuvojalta, miten pääset alkuun, tai anna automaatioetsijän löytää nopeat voitot.",
+        "askAdvisor": "Kysy neuvojalta",
+        "findAutomation": "Etsi automaatioita",
+        "download": "Lataa PDF",
+        "dashboard": "Takaisin etusivulle"
+    },
     "contact": {
-        "subtitle": "Ota yhteyttä - olemme täällä auttamassa",
+        "title": "Jutellaan",
+        "subtitle": "Kysyttävää, demo tai räätälöity ratkaisu yrityksellesi? Vastaamme yhden arkipäivän kuluessa.",
         "name": "Nimi",
         "namePlaceholder": "Nimesi",
         "email": "Sähköposti",
@@ -32,11 +679,11 @@
         "company": "Yritys",
         "companyPlaceholder": "Yrityksesi nimi",
         "message": "Viesti",
-        "messagePlaceholder": "Kerro meille miten voimme auttaa...",
+        "messagePlaceholder": "Kerro, miten voimme auttaa…",
         "submit": "Lähetä viesti",
-        "sending": "Lähetetään...",
-        "success": "Viesti lähetetty onnistuneesti! Otamme sinuun yhteyttä pian.",
-        "error": "Viestin lähetys epäonnistui. Yritä uudelleen.",
-        "alternativeContact": "Tai ota suoraan yhteyttä:"
+        "sending": "Lähetetään…",
+        "success": "Viesti lähetetty! Otamme sinuun yhteyttä pian.",
+        "error": "Lähetys epäonnistui. Yritä uudelleen.",
+        "alternativeContact": "Tai lähetä sähköpostia suoraan:"
     }
 }
