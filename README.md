@@ -24,7 +24,8 @@ and its labels in the three message files.
 
 1. `npm install`
 2. Copy `.env.example` to `.env.local` and fill in the Supabase, NextAuth and OpenAI values.
-   Without `OPENAI_API_KEY` the app runs in demo mode with placeholder answers.
+   AI provider: `OPENAI_API_KEY` (preferred) or `NVIDIA_API_KEY` (NVIDIA NIM free tier,
+   slow and for trial use only). Without either, the app runs in demo mode with placeholder answers.
 3. Database: new Supabase project → run `supabase/setup.sql` in the SQL Editor.
    (Existing database from the old `schema.sql` → run `supabase/business_workspace.sql` instead.)
 4. `npm run dev`

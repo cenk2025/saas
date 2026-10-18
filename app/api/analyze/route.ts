@@ -1,9 +1,21 @@
 import { NextResponse } from "next/server"
 import { ANALYSIS_SYSTEM_PROMPT } from "@/lib/ai/prompt"
-import { getOpenAI, AI_MODEL, languageName } from "@/lib/ai/client"
+import { completeJson, getAI, languageName } from "@/lib/ai/client"
 import { QUESTIONS } from "@/lib/diagnostic"
 import { companyContext, getWorkspace, supabaseAdmin } from "@/lib/workspace"
 import { routing } from "@/src/i18n/navigation"
+
+interface AnalysisResult {
+    score: number
+    summary: string
+    strengths?: string[]
+    weaknesses: string[]
+    recommendations: string[]
+    categoryScores: Record<string, number>
+}
+
+// The free NVIDIA tier can take ~30 s per answer
+export const maxDuration = 120
 
 export async function POST(req: Request) {
     try {
@@ -19,26 +31,17 @@ export async function POST(req: Request) {
         const answered = QUESTIONS.map((q) => `- ${q.prompt} → ${answers[q.id] ?? "no answer"}`).join("\n")
         const userPrompt = `Company context:\n${companyContext(workspace.company)}\n\nAnswers to the business health check:\n${answered}`
 
-        let analysisResult
-        const openai = getOpenAI()
+        let analysisResult: AnalysisResult
+        const ai = getAI()
 
-        if (openai) {
-            const completion = await openai.chat.completions.create({
-                messages: [
-                    {
-                        role: "system",
-                        content: `${ANALYSIS_SYSTEM_PROMPT}\nWrite summary, strengths, weaknesses and recommendations in ${languageName(locale)}. Keep the categoryScores keys exactly as shown in English.`,
-                    },
-                    { role: "user", content: userPrompt },
-                ],
-                model: AI_MODEL,
-                response_format: { type: "json_object" },
-                temperature: 0.5,
-            })
-
-            const content = completion.choices[0].message.content
-            if (!content) throw new Error("No content from AI")
-            analysisResult = JSON.parse(content)
+        if (ai) {
+            analysisResult = (await completeJson(ai, [
+                {
+                    role: "system",
+                    content: `${ANALYSIS_SYSTEM_PROMPT}\nWrite summary, strengths, weaknesses and recommendations in ${languageName(locale)}. Keep the categoryScores keys exactly as shown in English.`,
+                },
+                { role: "user", content: userPrompt },
+            ])) as AnalysisResult
         } else {
             // Mock data for development (when no API key is set)
             await new Promise((resolve) => setTimeout(resolve, 1500))
