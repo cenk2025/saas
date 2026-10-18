@@ -2,9 +2,12 @@ import { NextResponse } from "next/server"
 import { getTranslations } from "next-intl/server"
 import { getTool } from "@/lib/ai/tool-catalog"
 import { TOOL_PROMPTS, baseSystemPrompt, formatToolInput } from "@/lib/ai/tool-prompts"
-import { getOpenAI, languageName, streamCompletion, streamText } from "@/lib/ai/client"
+import { getAI, languageName, streamCompletion, streamText } from "@/lib/ai/client"
 import { companyContext, getWorkspace } from "@/lib/workspace"
 import { routing } from "@/src/i18n/navigation"
+
+// The free NVIDIA tier can take ~30 s before the first token
+export const maxDuration = 120
 
 export async function POST(req: Request, { params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params
@@ -34,14 +37,14 @@ export async function POST(req: Request, { params }: { params: Promise<{ slug: s
         values[field.id] = value
     }
 
-    const openai = getOpenAI()
-    if (!openai) {
+    const ai = getAI()
+    if (!ai) {
         const t = await getTranslations({ locale, namespace: "Workspace" })
         return streamText(`${t("demoNotice")}\n\n${formatToolInput(values)}`)
     }
 
     try {
-        return await streamCompletion(openai, [
+        return await streamCompletion(ai, [
             {
                 role: "system",
                 content: `${baseSystemPrompt(languageName(locale), companyContext(workspace.company))}\n\n${TOOL_PROMPTS[tool.slug]}`,

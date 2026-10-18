@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server"
 import { getTranslations } from "next-intl/server"
 import { baseSystemPrompt } from "@/lib/ai/tool-prompts"
-import { ChatMessage, getOpenAI, languageName, streamCompletion, streamText } from "@/lib/ai/client"
+import { ChatMessage, getAI, languageName, streamCompletion, streamText } from "@/lib/ai/client"
 import { companyContext, getWorkspace, supabaseAdmin } from "@/lib/workspace"
 import { routing } from "@/src/i18n/navigation"
 
 const MAX_HISTORY = 20
 const MAX_MESSAGE_LENGTH = 8000
+
+// The free NVIDIA tier can take ~30 s before the first token
+export const maxDuration = 120
 
 export async function POST(req: Request) {
     const workspace = await getWorkspace()
@@ -45,8 +48,8 @@ Recommendations: ${(report.recommendations ?? []).join("; ")}`
         }
     }
 
-    const openai = getOpenAI()
-    if (!openai) {
+    const ai = getAI()
+    if (!ai) {
         const t = await getTranslations({ locale, namespace: "Workspace" })
         return streamText(t("demoChat"))
     }
@@ -58,7 +61,7 @@ ${reportContext}
 You are the company's AI business advisor. Answer questions about strategy, sales, marketing, operations, finance, HR, AI adoption and regulations. Keep answers focused (usually under 250 words) and end with a concrete next step when it makes sense. If a question needs a professional (lawyer, accountant), say so.`
 
     try {
-        return await streamCompletion(openai, [{ role: "system", content: system }, ...history], 0.7)
+        return await streamCompletion(ai, [{ role: "system", content: system }, ...history], 0.7)
     } catch (error) {
         console.error("Chat failed:", error)
         return NextResponse.json({ error: "AI request failed" }, { status: 502 })
