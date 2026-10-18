@@ -1,146 +1,51 @@
 import { Metadata } from 'next'
+import { routing } from '@/src/i18n/navigation'
 
-const siteConfig = {
-    name: 'Voon Business Intelligence',
-    description: 'AI-powered business diagnostics and intelligence platform. Get instant insights into your company\'s health, identify weaknesses, and receive actionable recommendations to improve operational efficiency, digital maturity, and innovation capability.',
+export const siteConfig = {
+    name: 'Voon Business',
     url: 'https://business.voon.fi',
-    ogImage: 'https://business.voon.fi/og-image.png',
-    keywords: [
-        // Core Business Intelligence
-        'business intelligence',
-        'business diagnostics',
-        'company health assessment',
-        'business analytics platform',
-        'enterprise intelligence',
-
-        // AI-Powered Features
-        'AI business analysis',
-        'artificial intelligence business tools',
-        'AI-powered diagnostics',
-        'machine learning business insights',
-        'AI business consultant',
-
-        // Specific Capabilities
-        'operational efficiency analysis',
-        'digital transformation assessment',
-        'innovation capability measurement',
-        'business risk management',
-        'company performance metrics',
-
-        // Target Audience
-        'SME business tools',
-        'enterprise analytics',
-        'business management software',
-        'executive dashboard',
-        'business intelligence Finland',
-
-        // Use Cases
-        'business health check',
-        'company diagnostic test',
-        'business improvement recommendations',
-        'strategic business insights',
-        'data-driven business decisions',
-
-        // Technology
-        'SaaS business intelligence',
-        'cloud business analytics',
-        'real-time business metrics',
-        'automated business reporting',
-    ],
-    authors: [
-        {
-            name: 'Voon',
-            url: 'https://voon.fi',
-        },
-    ],
-    creator: 'Voon',
-    publisher: 'Voon',
-    category: 'Business Intelligence',
 }
 
-export function generateMetadata({
+const OG_LOCALES: Record<string, string> = { fi: 'fi_FI', sv: 'sv_FI', en: 'en_US' }
+
+/** Locale-aware metadata with canonical and hreflang alternates. `path` excludes the locale prefix. */
+export function buildMetadata({
+    locale,
     title,
     description,
-    image,
+    path = '',
     noIndex = false,
-    keywords = [],
 }: {
-    title?: string
-    description?: string
-    image?: string
+    locale: string
+    title: string
+    description: string
+    path?: string
     noIndex?: boolean
-    keywords?: string[]
-} = {}): Metadata {
-    const metaTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.name
-    const metaDescription = description || siteConfig.description
-    const metaImage = image || siteConfig.ogImage
-    const allKeywords = [...siteConfig.keywords, ...keywords]
+}): Metadata {
+    const url = `${siteConfig.url}/${locale}${path}`
 
     return {
-        title: metaTitle,
-        description: metaDescription,
-        keywords: allKeywords,
-        authors: siteConfig.authors,
-        creator: siteConfig.creator,
-        publisher: siteConfig.publisher,
-        category: siteConfig.category,
-
-        // Open Graph
+        metadataBase: new URL(siteConfig.url),
+        title,
+        description,
+        applicationName: siteConfig.name,
+        authors: [{ name: 'VOON IQ', url: 'https://voon.fi' }],
+        alternates: {
+            canonical: url,
+            languages: Object.fromEntries(
+                routing.locales.map((l) => [l, `${siteConfig.url}/${l}${path}`])
+            ),
+        },
         openGraph: {
             type: 'website',
-            locale: 'en_US',
-            url: siteConfig.url,
-            title: metaTitle,
-            description: metaDescription,
+            locale: OG_LOCALES[locale] ?? 'fi_FI',
+            url,
+            title,
+            description,
             siteName: siteConfig.name,
-            images: [
-                {
-                    url: metaImage,
-                    width: 1200,
-                    height: 630,
-                    alt: metaTitle,
-                },
-            ],
         },
-
-        // Twitter
-        twitter: {
-            card: 'summary_large_image',
-            title: metaTitle,
-            description: metaDescription,
-            images: [metaImage],
-            creator: '@voonfi',
-        },
-
-        // Robots
-        robots: {
-            index: !noIndex,
-            follow: !noIndex,
-            googleBot: {
-                index: !noIndex,
-                follow: !noIndex,
-                'max-video-preview': -1,
-                'max-image-preview': 'large',
-                'max-snippet': -1,
-            },
-        },
-
-        // Verification
-        verification: {
-            google: 'your-google-verification-code',
-            // yandex: 'your-yandex-verification-code',
-            // bing: 'your-bing-verification-code',
-        },
-
-        // Alternate languages
-        alternates: {
-            canonical: siteConfig.url,
-            languages: {
-                'en': `${siteConfig.url}/en`,
-                'fi': `${siteConfig.url}/fi`,
-            },
-        },
+        twitter: { card: 'summary_large_image', title, description },
+        robots: { index: !noIndex, follow: !noIndex },
+        icons: { icon: '/icon-192.png', apple: '/apple-touch-icon.png' },
     }
 }
-
-export { siteConfig }

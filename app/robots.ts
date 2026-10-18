@@ -1,51 +1,11 @@
 import { MetadataRoute } from 'next'
+import { siteConfig } from '@/lib/seo'
+
+const PRIVATE = ['/api/', '/*/dashboard', '/*/tools', '/*/advisor', '/*/test', '/*/results', '/*/library', '/*/company', '/*/billing', '/*/admin', '/*/reset-password']
 
 export default function robots(): MetadataRoute.Robots {
     return {
-        rules: [
-            {
-                userAgent: '*',
-                allow: '/',
-                disallow: [
-                    '/api/',
-                    '/admin/',
-                    '/dashboard/',
-                    '/test/',
-                    '/results/',
-                    '/billing/',
-                    '/advisor/',
-                ],
-            },
-            {
-                userAgent: 'GPTBot',
-                allow: '/',
-                disallow: [
-                    '/api/',
-                    '/admin/',
-                    '/dashboard/',
-                    '/test/',
-                    '/results/',
-                    '/billing/',
-                    '/advisor/',
-                ],
-            },
-            {
-                userAgent: 'ChatGPT-User',
-                allow: '/',
-            },
-            {
-                userAgent: 'Google-Extended',
-                allow: '/',
-            },
-            {
-                userAgent: 'anthropic-ai',
-                allow: '/',
-            },
-            {
-                userAgent: 'ClaudeBot',
-                allow: '/',
-            },
-        ],
-        sitemap: 'https://business.voon.fi/sitemap.xml',
+        rules: [{ userAgent: '*', allow: '/', disallow: PRIVATE }],
+        sitemap: `${siteConfig.url}/sitemap.xml`,
     }
 }

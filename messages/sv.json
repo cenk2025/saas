@@ -1,0 +1,702 @@
+{
+    "Meta": {
+        "title": "Voon Business – AI-arbetsyta för små och medelstora företag",
+        "description": "AI-verktyg för företagets vardag: offerter, e-post, marknadsföring, rekrytering, mötesanteckningar, automatisering, finansiering och EU:s AI-förordning – på finska, svenska och engelska."
+    },
+    "Navbar": {
+        "features": "Funktioner",
+        "tools": "AI-verktyg",
+        "pricing": "Priser",
+        "contact": "Kontakt",
+        "signIn": "Logga in",
+        "getStarted": "Kom igång gratis",
+        "openApp": "Öppna arbetsytan",
+        "menu": "Meny"
+    },
+    "Landing": {
+        "eyebrow": "AI-arbetsyta för små och medelstora företag",
+        "title": "Sluta gissa.",
+        "titleAccent": "Låt AI sköta rutinerna.",
+        "subtitle": "Voon Business ger ditt företag en trygg AI-kollega: den skriver offerter och e-post, planerar marknadsföring, tar fram platsannonser, sammanfattar möten, hittar finansiering och upptäcker möjligheter till automatisering – utifrån er egen företagsprofil.",
+        "ctaPrimary": "Kom igång gratis",
+        "ctaSecondary": "Gör det kostnadsfria hälsotestet",
+        "trust1": "Finska, svenska och engelska",
+        "trust2": "Dataskydd först",
+        "trust3": "Gjord i Jyväskylä",
+        "previewGreeting": "God morgon, Aino",
+        "previewScore": "Affärshälsa",
+        "previewTask": "Offert till Strandvik Ab",
+        "previewTaskStatus": "Klar att skicka",
+        "previewSaved": "Sparad tid denna månad",
+        "previewHours": "14 h",
+        "problemTitle": "Litet team, lång att göra-lista",
+        "problemText": "Alla pratar om AI, men i ett litet företag finns lite tid att testa och datasäkerheten oroar. Voon Business gör AI till färdiga och trygga verktyg för det arbete ni redan gör varje vecka.",
+        "stat1": "10",
+        "stat1Label": "färdiga AI-verktyg",
+        "stat2": "3",
+        "stat2Label": "språk: FI, SV, EN",
+        "stat3": "5 min",
+        "stat3Label": "till första resultatet",
+        "toolsEyebrow": "AI-verktyg",
+        "toolsTitle": "En arbetsyta för hela verksamheten",
+        "toolsSubtitle": "Varje verktyg känner till er företagsprofil, skriver på ert språk och sparar resultaten i ert gemensamma bibliotek.",
+        "howEyebrow": "Så fungerar det",
+        "howTitle": "Från registrering till resultat på några minuter",
+        "step1Title": "Beskriv ert företag",
+        "step1Text": "Fyll i en kort företagsprofil en gång. Alla AI-verktyg använder den som bakgrund.",
+        "step2Title": "Välj ett verktyg eller fråga rådgivaren",
+        "step2Text": "Fyll i några fält eller fråga direkt – AI:n svarar på finska, svenska eller engelska.",
+        "step3Title": "Redigera, spara och agera",
+        "step3Text": "Kopiera resultatet, spara det i biblioteket och dela det med teamet.",
+        "healthEyebrow": "Hälsotest för företaget",
+        "healthTitle": "Vet var ni ska börja",
+        "healthText": "Svara på 12 frågor och få poäng för verksamhet, digital mognad, innovation, ekonomi och risker – med tre prioriterade rekommendationer och en PDF-rapport.",
+        "healthPoint1": "Poäng inom fem områden och utveckling över tid",
+        "healthPoint2": "Tre konkreta, prioriterade åtgärder",
+        "healthPoint3": "AI-rådgivare som känner till era resultat",
+        "healthCta": "Gör hälsotestet",
+        "trustEyebrow": "Ansvarsfull AI",
+        "trustTitle": "AI hjälper. Människan bestämmer.",
+        "trust1Title": "Företagets data hålls åtskild",
+        "trust1Text": "Varje företags data är isolerad och endast ert eget team har åtkomst.",
+        "trust2Title": "Transparent",
+        "trust2Text": "AI:n markerar antaganden inom [hakparenteser] så att ni alltid vet vad som ska kontrolleras.",
+        "trust3Title": "Byggd för EU:s regler",
+        "trust3Text": "Utformad med GDPR och EU:s AI-förordning i åtanke – och med ett verktyg som hjälper er granska er egen AI-användning.",
+        "pricingEyebrow": "Priser",
+        "pricingTitle": "Börja gratis, väx när ni är redo",
+        "pricingSubtitle": "Priser exkl. moms. Avsluta när som helst.",
+        "perMonth": "/ mån",
+        "from": "från",
+        "popular": "Populärast",
+        "ecosystemEyebrow": "VOON IQ",
+        "ecosystemTitle": "En del av VOON IQ-familjen",
+        "ecosystemText": "Voon Business är företagstjänsten från VOON IQ, ett AI-startup från Jyväskylä. Våra andra tjänster täcker marknadsföring, kompetens och karriärer.",
+        "faqTitle": "Vanliga frågor",
+        "faq1q": "Behöver jag tekniska kunskaper?",
+        "faq1a": "Nej. Varje verktyg är ett kort formulär och rådgivaren fungerar som en chatt. Kan du skriva ett e-postmeddelande kan du använda Voon Business.",
+        "faq2q": "Vilka språk stöds?",
+        "faq2a": "Hela tjänsten och alla AI-resultat finns på finska, svenska och engelska.",
+        "faq3q": "Används vår data för att träna AI-modeller?",
+        "faq3a": "Nej. Vi använder AI-leverantören via dess företags-API, där inskickad data som standard inte används för att träna modeller.",
+        "faq4q": "Kan AI:n göra fel?",
+        "faq4a": "Ja. Därför är resultaten utkast som ni själva granskar, och antaganden är tydligt markerade. Avtals- och finansieringsverktygen påminner er om att kontrollera detaljerna.",
+        "ctaTitle": "Ge ert team en AI-kollega redan i dag",
+        "ctaText": "Gratis att börja. Inget kreditkort behövs."
+    },
+    "Ecosystem": {
+        "voon": "AI-kartläggning, rådgivning och automatisering för företag",
+        "ads": "Marknadsföring och design",
+        "tyo": "SkillPath – från kompetens till jobb och utbildning",
+        "worklife": "Talent Factory – karriärtjänst för internationella talanger"
+    },
+    "Plans": {
+        "free": {
+            "name": "Free",
+            "description": "Prova arbetsytan med ert eget företag.",
+            "features": [
+                "Hälsotest för företaget",
+                "20 AI-körningar / mån",
+                "AI-rådgivare",
+                "1 användare"
+            ]
+        },
+        "pro": {
+            "name": "Pro",
+            "description": "För företagare och frilansare.",
+            "features": [
+                "Obegränsade AI-verktyg",
+                "Obegränsade hälsotest och PDF-rapporter",
+                "Dokumentbibliotek",
+                "1 användare"
+            ]
+        },
+        "business": {
+            "name": "Business",
+            "description": "För små och medelstora företag och deras team.",
+            "features": [
+                "Allt i Pro",
+                "Upp till 10 användare",
+                "Gemensamt bibliotek",
+                "Prioriterad support"
+            ]
+        },
+        "enterprise": {
+            "name": "Enterprise & Public",
+            "description": "För storföretag, kommuner och sysselsättningsområden.",
+            "features": [
+                "Skräddarsydda verktyg och integrationer",
+                "Obegränsat antal användare",
+                "Utbildning och införande",
+                "Avtalsfakturering"
+            ]
+        },
+        "contactUs": "Kontakta oss",
+        "choose": "Välj",
+        "current": "Nuvarande paket",
+        "manage": "Hantera prenumeration",
+        "downgrade": "Gratispaket",
+        "billingTitle": "Paket och fakturering",
+        "billingSubtitle": "Ni använder för närvarande paketet {plan}.",
+        "checkoutError": "Betalningssidan kunde inte öppnas. Försök igen."
+    },
+    "Footer": {
+        "tagline": "AI-arbetsyta för små och medelstora företag. En tjänst från VOON IQ.",
+        "product": "Tjänsten",
+        "ecosystem": "VOON IQ-tjänster",
+        "contact": "Kontakt",
+        "location": "Jyväskylä, Finland",
+        "rights": "Alla rättigheter förbehållna."
+    },
+    "Cookies": {
+        "text": "Vi använder endast kakor som behövs för inloggning och för att komma ihåg ditt språk. Inga spårnings- eller reklamkakor.",
+        "ok": "OK"
+    },
+    "Auth": {
+        "loginTitle": "Välkommen tillbaka",
+        "loginSubtitle": "Logga in på din AI-arbetsyta",
+        "email": "Jobbmejl",
+        "password": "Lösenord",
+        "forgot": "Glömt lösenordet?",
+        "signIn": "Logga in",
+        "noAccount": "Inget konto ännu?",
+        "createAccount": "Skapa ett gratis konto",
+        "invalid": "Fel e-post eller lösenord.",
+        "unexpected": "Något gick fel. Försök igen.",
+        "registered": "Kontot har skapats – du kan nu logga in.",
+        "passwordUpdated": "Lösenordet har ändrats – logga in med ditt nya lösenord.",
+        "registerTitle": "Skapa er arbetsyta",
+        "registerSubtitle": "Gratis att börja. Inget kreditkort behövs.",
+        "companyName": "Företagets namn",
+        "fullName": "Ditt namn",
+        "phone": "Telefon (valfritt)",
+        "country": "Land",
+        "selectCountry": "Välj land",
+        "confirmPassword": "Bekräfta lösenord",
+        "acceptTerms": "Jag godkänner användarvillkoren och dataskyddsbeskrivningen",
+        "createWorkspace": "Skapa arbetsyta",
+        "haveAccount": "Har du redan ett konto?",
+        "passwordMismatch": "Lösenorden matchar inte.",
+        "passwordShort": "Lösenordet måste vara minst 8 tecken.",
+        "termsRequired": "Godkänn villkoren för att fortsätta.",
+        "registerFailed": "Registreringen misslyckades.",
+        "forgotTitle": "Återställ lösenordet",
+        "forgotSubtitle": "Ange din e-post så skickar vi en återställningslänk.",
+        "sendLink": "Skicka återställningslänk",
+        "checkEmail": "Kolla din e-post",
+        "checkEmailText": "Om det finns ett konto för {email} får du en återställningslänk inom kort.",
+        "backToLogin": "Tillbaka till inloggningen",
+        "resetTitle": "Välj ett nytt lösenord",
+        "newPassword": "Nytt lösenord",
+        "savePassword": "Spara lösenord",
+        "resetInvalid": "Återställningslänken är ogiltig eller har gått ut. Begär en ny länk.",
+        "countries": {
+            "FI": "Finland",
+            "SE": "Sverige",
+            "NO": "Norge",
+            "DK": "Danmark",
+            "EE": "Estland",
+            "DE": "Tyskland",
+            "OTHER": "Annat"
+        }
+    },
+    "App": {
+        "home": "Start",
+        "tools": "AI-verktyg",
+        "advisor": "AI-rådgivare",
+        "health": "Hälsotest",
+        "library": "Bibliotek",
+        "company": "Företagsprofil",
+        "billing": "Paket och fakturering",
+        "admin": "Administration",
+        "signOut": "Logga ut",
+        "roles": {
+            "ADMIN": "Administratör",
+            "MANAGER": "Chef",
+            "EMPLOYEE": "Medarbetare"
+        }
+    },
+    "Workspace": {
+        "demoNotice": "**Demoläge** – AI-tjänsten är inte konfigurerad ännu (OPENAI_API_KEY saknas), så detta är en platshållare och inte ett riktigt AI-svar. Detta skickades:",
+        "demoChat": "**Demoläge** – AI-tjänsten är inte konfigurerad ännu (OPENAI_API_KEY saknas). När nyckeln är inställd svarar rådgivaren här utifrån er företagsprofil och ert hälsotest.",
+        "generate": "Skapa",
+        "generating": "Skriver…",
+        "stop": "Stoppa",
+        "copy": "Kopiera",
+        "copied": "Kopierat",
+        "save": "Spara i biblioteket",
+        "saved": "Sparat",
+        "saveFailed": "Det gick inte att spara. Har databasmigreringen körts?",
+        "regenerate": "Försök igen",
+        "result": "Resultat",
+        "emptyResult": "Fyll i formuläret så visas resultatet här.",
+        "error": "AI:n kunde inte svara just nu. Försök igen.",
+        "required": "Obligatoriskt",
+        "optional": "Valfritt",
+        "back": "Tillbaka",
+        "delete": "Radera",
+        "deleteConfirm": "Radera detta dokument?",
+        "open": "Öppna",
+        "privacyHint": "Klistra inte in känsliga personuppgifter (t.ex. hälsouppgifter eller personbeteckningar).",
+        "aiDisclaimer": "AI kan göra fel. Granska resultatet innan du använder det.",
+        "noCompany": "Din användare är ännu inte kopplad till ett företag. Kontakta din administratör."
+    },
+    "Tools": {
+        "title": "AI-verktyg",
+        "subtitle": "Färdiga AI-verktyg för vardagens arbete. Alla använder er företagsprofil och skriver på ert språk.",
+        "all": "Alla",
+        "categories": {
+            "sales": "Försäljning",
+            "marketing": "Marknadsföring och kunder",
+            "people": "Personal och rekrytering",
+            "operations": "Verksamhet",
+            "finance": "Ekonomi och finansiering",
+            "legal": "Avtal och regelefterlevnad"
+        },
+        "quote": {
+            "name": "Offertskrivare",
+            "description": "En professionell offert med priser och villkor, klar att skicka.",
+            "fields": {
+                "customer": {
+                    "label": "Kund",
+                    "placeholder": "t.ex. Strandvik Ab, Maria Lindqvist"
+                },
+                "scope": {
+                    "label": "Vad erbjuder ni?",
+                    "placeholder": "Beskriv produkterna eller tjänsterna, omfattning och tidsplan…"
+                },
+                "price": {
+                    "label": "Prisuppgifter",
+                    "placeholder": "t.ex. 85 €/h, uppskattat 40 h, eller fast pris 3 400 €"
+                },
+                "tone": {
+                    "label": "Ton"
+                }
+            },
+            "options": {
+                "tone": {
+                    "formal": "Formell",
+                    "friendly": "Vänlig"
+                }
+            }
+        },
+        "email": {
+            "name": "E-postassistent",
+            "description": "Svar, uppföljningar, reklamationer och betalningspåminnelser på sekunder.",
+            "fields": {
+                "situation": {
+                    "label": "Situation"
+                },
+                "context": {
+                    "label": "Bakgrund",
+                    "placeholder": "Klistra in meddelandet du fått eller beskriv situationen…"
+                },
+                "tone": {
+                    "label": "Ton"
+                }
+            },
+            "options": {
+                "situation": {
+                    "reply": "Svar på ett meddelande",
+                    "followUp": "Uppföljning efter möte eller offert",
+                    "outreach": "Första kontakt med en potentiell kund",
+                    "complaint": "Svar på en reklamation",
+                    "paymentReminder": "Betalningspåminnelse"
+                },
+                "tone": {
+                    "formal": "Formell",
+                    "friendly": "Vänlig"
+                }
+            }
+        },
+        "social": {
+            "name": "Inlägg för sociala medier",
+            "description": "Tre inläggsvarianter med krokar, hashtaggar och bildidéer.",
+            "fields": {
+                "topic": {
+                    "label": "Vad vill ni berätta?",
+                    "placeholder": "t.ex. Vi har öppnat ett nytt kontor i Jyväskylä och rekryterar två utvecklare"
+                },
+                "platform": {
+                    "label": "Kanal"
+                },
+                "goal": {
+                    "label": "Mål",
+                    "placeholder": "t.ex. fler leads, arbetsgivarvarumärke, anmälningar till ett evenemang"
+                }
+            },
+            "options": {
+                "platform": {
+                    "linkedin": "LinkedIn",
+                    "instagram": "Instagram",
+                    "facebook": "Facebook",
+                    "newsletter": "Nyhetsbrev"
+                }
+            }
+        },
+        "feedback": {
+            "name": "Analys av kundfeedback",
+            "description": "Teman, stämning, förbättringsåtgärder och svarsutkast utifrån recensioner.",
+            "fields": {
+                "reviews": {
+                    "label": "Kundfeedback",
+                    "placeholder": "Klistra in recensioner, enkätsvar eller feedbackmejl – en per rad…"
+                }
+            }
+        },
+        "jobad": {
+            "name": "Platsannons och intervju",
+            "description": "En inkluderande platsannons med ESCO-kompetenser och intervjufrågor.",
+            "fields": {
+                "role": {
+                    "label": "Befattning",
+                    "placeholder": "t.ex. Kundtjänstspecialist"
+                },
+                "details": {
+                    "label": "Om tjänsten",
+                    "placeholder": "Uppgifter, krav, ort, lönespann, startdatum…"
+                },
+                "employment": {
+                    "label": "Anställningsform"
+                }
+            },
+            "options": {
+                "employment": {
+                    "fullTime": "Heltid, tillsvidare",
+                    "partTime": "Deltid",
+                    "fixedTerm": "Visstid",
+                    "internship": "Praktik / trainee"
+                }
+            }
+        },
+        "meeting": {
+            "name": "Mötesprotokoll",
+            "description": "Gör anteckningar eller en transkription till beslut, åtgärder och ett uppföljningsmejl.",
+            "fields": {
+                "notes": {
+                    "label": "Anteckningar eller transkription",
+                    "placeholder": "Klistra in anteckningarna eller transkriptionen från mötet…"
+                }
+            }
+        },
+        "automation": {
+            "name": "Automatiseringssökaren",
+            "description": "Hittar stegen som AI och automatisering kan ta över – med tidsbesparing.",
+            "fields": {
+                "process": {
+                    "label": "Beskriv processen",
+                    "placeholder": "t.ex. Varje månad samlar vi timmar från Excel, kontrollerar dem, skapar fakturor i ekonomiprogrammet och skickar dem per e-post…"
+                },
+                "tools": {
+                    "label": "Program som används",
+                    "placeholder": "t.ex. Netvisor, Excel, Outlook, HubSpot"
+                },
+                "volume": {
+                    "label": "Volym",
+                    "placeholder": "t.ex. 120 fakturor per månad, 3 personer"
+                }
+            }
+        },
+        "funding": {
+            "name": "Finansieringssökaren",
+            "description": "Finländska och EU-finansieringsinstrument som passar ert projekt.",
+            "fields": {
+                "project": {
+                    "label": "Beskriv projektet",
+                    "placeholder": "Vad utvecklar ni, varför, vad kostar det och när ska det starta?"
+                },
+                "stage": {
+                    "label": "Företagets skede"
+                },
+                "employees": {
+                    "label": "Anställda"
+                }
+            },
+            "options": {
+                "stage": {
+                    "startup": "Nystartat (0–2 år)",
+                    "growth": "Tillväxtföretag",
+                    "established": "Etablerat företag"
+                },
+                "employees": {
+                    "1-9": "1–9",
+                    "10-49": "10–49",
+                    "50-249": "50–249",
+                    "250+": "250+"
+                }
+            }
+        },
+        "contract": {
+            "name": "Avtalsgranskning",
+            "description": "Avtalets viktigaste villkor, tidsfrister och risker på klarspråk.",
+            "fields": {
+                "document": {
+                    "label": "Avtalstext",
+                    "placeholder": "Klistra in avtalet eller de punkter du vill granska…"
+                },
+                "focus": {
+                    "label": "Vad ska vi särskilt titta på?",
+                    "placeholder": "t.ex. ansvar, uppsägning, prisändringar"
+                }
+            }
+        },
+        "aiact": {
+            "name": "EU:s AI-förordning och GDPR",
+            "description": "Riskklass, skyldigheter och checklista för ert AI-användningsfall.",
+            "fields": {
+                "useCase": {
+                    "label": "Beskriv AI-användningsfallet",
+                    "placeholder": "t.ex. Vi vill använda AI för att gallra jobbansökningar och rangordna kandidater…"
+                },
+                "data": {
+                    "label": "Vilka uppgifter behandlas?",
+                    "placeholder": "t.ex. CV:n, namn, kontaktuppgifter"
+                }
+            }
+        }
+    },
+    "Dashboard": {
+        "greeting": "Hej, {name}",
+        "subtitle": "Vad ska vi få gjort i dag?",
+        "quickTitle": "Snabbstart",
+        "allTools": "Alla verktyg",
+        "healthTitle": "Affärshälsa",
+        "healthEmpty": "Ni har inte gjort hälsotestet ännu. Det tar cirka 5 minuter och visar var AI kan hjälpa er mest.",
+        "healthCta": "Starta hälsotestet",
+        "outOf": "/ 100",
+        "change": "{value} poäng sedan förra testet",
+        "viewReport": "Visa rapport",
+        "runAgain": "Gör igen",
+        "trend": "Utveckling",
+        "recommendations": "Rekommenderade nästa steg",
+        "recentTitle": "Senaste dokument",
+        "recentEmpty": "Dokument som ni sparar från AI-verktygen visas här.",
+        "profileTitle": "Komplettera företagsprofilen",
+        "profileText": "AI:n ger mycket bättre svar när den vet vad ert företag gör.",
+        "profileCta": "Fyll i profilen",
+        "advisorTitle": "Fråga AI-rådgivaren",
+        "advisorText": "Strategi, försäljning, prissättning, rekrytering – fråga vad som helst om er verksamhet.",
+        "advisorCta": "Öppna rådgivaren",
+        "ecosystemTitle": "Mer från VOON IQ"
+    },
+    "Advisor": {
+        "title": "AI-rådgivare",
+        "subtitle": "Känner till er företagsprofil och ert senaste hälsotest.",
+        "welcome": "Hej! Jag är er AI-affärsrådgivare. Fråga mig vad som helst om ert företag – försäljning, marknadsföring, prissättning, rekrytering, finansiering eller hur ni kommer igång med AI.",
+        "placeholder": "Skriv en fråga…",
+        "send": "Skicka",
+        "newChat": "Ny konversation",
+        "suggestionsTitle": "Prova att fråga",
+        "suggestions": [
+            "Vad borde vi förbättra först utifrån vårt hälsotest?",
+            "Hur kan vi använda AI i kundtjänsten?",
+            "Ge mig 5 idéer för att få fler kunder detta kvartal",
+            "Hur prissätter jag en ny tjänst?"
+        ]
+    },
+    "Library": {
+        "title": "Bibliotek",
+        "subtitle": "AI-dokument som ert team har sparat.",
+        "empty": "Inget sparat ännu. Använd ett AI-verktyg och klicka på ”Spara i biblioteket”.",
+        "emptyCta": "Bläddra bland AI-verktyg",
+        "notFound": "Dokumentet hittades inte.",
+        "createdBy": "Skapat {date}",
+        "setupHint": "Biblioteket kräver databasmigreringen supabase/business_workspace.sql."
+    },
+    "Company": {
+        "title": "Företagsprofil",
+        "subtitle": "AI:n använder dessa uppgifter i alla verktyg och i rådgivaren. Ju mer specifik du är, desto bättre resultat.",
+        "name": "Företagets namn",
+        "country": "Land",
+        "industry": "Bransch",
+        "industryPlaceholder": "t.ex. Bygg, IT-tjänster, Restaurang",
+        "size": "Storlek",
+        "sizes": {
+            "1": "Ensamföretagare",
+            "2-9": "2–9 personer",
+            "10-49": "10–49 personer",
+            "50-249": "50–249 personer",
+            "250+": "250+ personer"
+        },
+        "location": "Ort",
+        "locationPlaceholder": "t.ex. Jyväskylä",
+        "website": "Webbplats",
+        "description": "Vad gör företaget?",
+        "descriptionPlaceholder": "Produkter och tjänster, vad som gör er unika…",
+        "customers": "Vilka är era kunder?",
+        "customersPlaceholder": "t.ex. bostadsbolag i Mellersta Finland, B2B-mjukvaruföretag…",
+        "goals": "Aktuella mål och utmaningar",
+        "goalsPlaceholder": "t.ex. öka försäljningen med 20 %, anställa två personer, mindre administration",
+        "save": "Spara profilen",
+        "saved": "Profilen sparad",
+        "saveFailed": "Det gick inte att spara. Har databasmigreringen körts?",
+        "readOnly": "Endast administratörer och chefer kan redigera företagsprofilen."
+    },
+    "Diagnostic": {
+        "title": "Hälsotest för företaget",
+        "subtitle": "12 frågor, cirka 5 minuter. AI:n poängsätter fem områden i er verksamhet och ger tre prioriterade rekommendationer.",
+        "progress": "{done} / {total} besvarade",
+        "poor": "Svag",
+        "excellent": "Utmärkt",
+        "submit": "Analysera med AI",
+        "analyzing": "Analyserar…",
+        "failed": "Analysen misslyckades. Försök igen.",
+        "categories": {
+            "operations": "Verksamhet",
+            "digital": "Digitalt och AI",
+            "people": "Människor",
+            "innovation": "Innovation",
+            "risk": "Risker",
+            "finance": "Ekonomi"
+        },
+        "scoreCategories": {
+            "operations": "Operativ effektivitet",
+            "digital": "Digital mognad",
+            "innovation": "Innovationsförmåga",
+            "finance": "Finansiell hälsa",
+            "risk": "Riskhantering"
+        },
+        "questions": {
+            "efficiency_process": {
+                "label": "Hur tydligt är era verksamhetsprocesser definierade och dokumenterade?"
+            },
+            "efficiency_automation": {
+                "label": "I vilken utsträckning är era centrala arbetsflöden automatiserade?",
+                "options": {
+                    "manual": "Manuellt",
+                    "someTools": "Några verktyg",
+                    "mostly": "Mestadels automatiserat",
+                    "fully": "Helt automatiserat"
+                }
+            },
+            "digital_tools": {
+                "label": "Hur väl är era digitala verktyg sammankopplade mellan teamen?",
+                "options": {
+                    "siloed": "Separata silor",
+                    "some": "Delvis sammankopplade",
+                    "integrated": "Integrerade",
+                    "realtime": "Synkade i realtid"
+                }
+            },
+            "digital_data": {
+                "label": "Hur ofta använder ni data i beslutsfattandet?",
+                "options": {
+                    "rarely": "Sällan",
+                    "monthly": "Månadsvis",
+                    "weekly": "Veckovis",
+                    "daily": "Dagligen"
+                }
+            },
+            "ai_usage": {
+                "label": "Hur används AI i ert företag i dag?",
+                "options": {
+                    "none": "Inte alls",
+                    "individual": "Av enskilda personer",
+                    "someProcesses": "I vissa processer",
+                    "strategic": "Strategiskt"
+                }
+            },
+            "hr_training": {
+                "label": "Har ni ett program för kontinuerligt lärande eller utbildning?",
+                "options": {
+                    "no": "Nej",
+                    "adHoc": "Ibland",
+                    "formal": "Formellt program",
+                    "culture": "Stark lärandekultur"
+                }
+            },
+            "hr_satisfaction": {
+                "label": "Hur bedömer du personalens nöjdhet och hur länge de stannar?"
+            },
+            "innovation_budget": {
+                "label": "Hur stor del av budgeten går till utveckling och nya initiativ?",
+                "options": {
+                    "0": "0 %",
+                    "1-5": "1–5 %",
+                    "5-10": "5–10 %",
+                    "10+": "Över 10 %"
+                }
+            },
+            "innovation_speed": {
+                "label": "Hur snabbt kan ni ta en ny produkt eller tjänst från idé till marknad?",
+                "options": {
+                    "years": "År",
+                    "months": "Månader",
+                    "weeks": "Veckor",
+                    "days": "Dagar"
+                }
+            },
+            "risk_compliance": {
+                "label": "Hur regelbundet granskar ni risker kring regelefterlevnad, dataskydd och säkerhet?",
+                "options": {
+                    "never": "Aldrig",
+                    "annually": "Årligen",
+                    "quarterly": "Kvartalsvis",
+                    "continuous": "Kontinuerligt"
+                }
+            },
+            "risk_resilience": {
+                "label": "Har ni en testad kontinuitets- eller återställningsplan?",
+                "options": {
+                    "no": "Nej",
+                    "drafted": "Utkast, ej testad",
+                    "tested": "Testas årligen",
+                    "automated": "Robust och automatiserad"
+                }
+            },
+            "finance_visibility": {
+                "label": "Hur väl ser ledningen kassaflöde och lönsamhet?",
+                "options": {
+                    "poor": "Dåligt",
+                    "monthly": "Månadsvis",
+                    "weekly": "Veckovis",
+                    "realtime": "I realtid"
+                }
+            }
+        }
+    },
+    "Results": {
+        "title": "Er hälsorapport",
+        "notFound": "Rapporten hittades inte.",
+        "categoryTitle": "Poäng per område",
+        "strengths": "Styrkor",
+        "weaknesses": "Förbättringsområden",
+        "recommendations": "AI:ns rekommendationer",
+        "nextTitle": "Gör rekommendationerna till handling",
+        "nextText": "Fråga AI-rådgivaren hur ni kommer igång, eller låt automatiseringssökaren hitta snabba vinster.",
+        "askAdvisor": "Fråga rådgivaren",
+        "findAutomation": "Hitta automatiseringar",
+        "download": "Ladda ner PDF",
+        "dashboard": "Tillbaka till start"
+    },
+    "contact": {
+        "title": "Låt oss prata",
+        "subtitle": "Frågor, en demo eller en skräddarsydd lösning för ert företag? Vi svarar inom en arbetsdag.",
+        "name": "Namn",
+        "namePlaceholder": "Ditt namn",
+        "email": "E-post",
+        "emailPlaceholder": "namn@foretag.fi",
+        "company": "Företag",
+        "companyPlaceholder": "Företagets namn",
+        "need": "Vad behöver ni hjälp med?",
+        "needOptions": {
+            "demo": "Demo av tjänsten",
+            "tools": "Använda AI-verktygen",
+            "custom": "Skräddarsydd AI-lösning eller integration",
+            "enterprise": "Storföretag och offentlig sektor",
+            "training": "AI-utbildning för vårt team",
+            "other": "Något annat"
+        },
+        "message": "Meddelande",
+        "messagePlaceholder": "Berätta hur vi kan hjälpa…",
+        "submit": "Skicka meddelande",
+        "sending": "Skickar…",
+        "success": "Meddelandet har skickats! Vi återkommer snart.",
+        "error": "Det gick inte att skicka. Försök igen.",
+        "alternativeContact": "Eller mejla oss direkt:",
+        "autoReplySubject": "Tack för att du kontaktade oss – Voon Business",
+        "autoReplyGreeting": "Hej {name}!",
+        "autoReplyText": "Tack för ditt meddelande. Vi har tagit emot det och återkommer inom en arbetsdag.",
+        "autoReplyOutro": "Under tiden kan ni börja använda AI-arbetsytan gratis."
+    }
+}

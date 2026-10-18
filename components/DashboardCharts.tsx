@@ -1,86 +1,42 @@
 "use client"
 
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-    BarChart, Bar
-} from 'recharts'
+    Line, LineChart, CartesianGrid, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart,
+    ResponsiveContainer, Tooltip, XAxis, YAxis,
+} from "recharts"
 
 interface ChartProps {
-    data: any[]
-    type?: 'line' | 'radar' | 'bar'
+    data: Record<string, string | number>[]
+    type?: "line" | "radar"
     dataKey?: string
-    color?: string
 }
 
-export function DataChart({ data, type = 'line', dataKey = 'value', color = "var(--primary)" }: ChartProps) {
-    if (type === 'radar') {
-        return (
-            <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                    <PolarGrid stroke="var(--border)" />
-                    <PolarAngleAxis dataKey="subject" tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }} />
-                    <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                    <Radar
-                        name="Score"
-                        dataKey={dataKey}
-                        stroke={color}
-                        fill={color}
-                        fillOpacity={0.3}
-                    />
-                    <Tooltip
-                        contentStyle={{ backgroundColor: 'var(--popover)', borderRadius: '8px', border: '1px solid var(--border)' }}
-                        itemStyle={{ color: 'var(--foreground)' }}
-                    />
-                </RadarChart>
-            </ResponsiveContainer>
-        )
-    }
+const BRAND = "#e23d96"
+const tooltipStyle = { backgroundColor: "#fff", borderRadius: 12, border: "1px solid var(--border)", fontSize: 12 }
 
-    if (type === 'bar') {
+export function DataChart({ data, type = "line", dataKey = "score" }: ChartProps) {
+    if (type === "radar") {
         return (
             <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--border)" />
-                    <XAxis type="number" domain={[0, 100]} hide />
-                    <YAxis type="category" dataKey="name" width={100} tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }} />
-                    <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ backgroundColor: 'var(--popover)', borderRadius: '8px', border: '1px solid var(--border)' }} />
-                    <Bar dataKey={dataKey} fill={color} radius={[0, 4, 4, 0]} barSize={20} />
-                </BarChart>
+                <RadarChart cx="50%" cy="50%" outerRadius="72%" data={data}>
+                    <PolarGrid stroke="var(--border)" />
+                    <PolarAngleAxis dataKey="subject" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />
+                    <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                    <Radar dataKey={dataKey} stroke={BRAND} fill={BRAND} fillOpacity={0.18} strokeWidth={2} />
+                    <Tooltip contentStyle={tooltipStyle} />
+                </RadarChart>
             </ResponsiveContainer>
         )
     }
 
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <LineChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -24 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                <XAxis
-                    dataKey="date"
-                    stroke="var(--muted-foreground)"
-                    fontSize={12}
-                    tickLine={false}
-                    axisLine={false}
-                />
-                <YAxis
-                    stroke="var(--muted-foreground)"
-                    fontSize={12}
-                    tickLine={false}
-                    axisLine={false}
-                    domain={[0, 100]}
-                />
-                <Tooltip
-                    contentStyle={{ backgroundColor: 'var(--popover)', borderRadius: '8px', border: '1px solid var(--border)' }}
-                    itemStyle={{ color: 'var(--foreground)' }}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="score"
-                    stroke={color}
-                    strokeWidth={3}
-                    dot={{ r: 4, fill: 'var(--background)', strokeWidth: 2 }}
-                    activeDot={{ r: 6 }}
-                />
+                <XAxis dataKey="date" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} />
+                <Tooltip contentStyle={tooltipStyle} />
+                <Line type="monotone" dataKey={dataKey} stroke={BRAND} strokeWidth={2.5} dot={{ r: 3.5, fill: "#fff", strokeWidth: 2 }} activeDot={{ r: 5 }} />
             </LineChart>
         </ResponsiveContainer>
     )
