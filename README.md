@@ -32,4 +32,4 @@ and its labels in the three message files.
 ## Tech stack
 
 Next.js 16 (App Router, `proxy.ts`), TypeScript, Tailwind CSS v4, Supabase (Postgres + Auth),
-NextAuth, OpenAI, next-intl, Recharts, jsPDF.
+NextAuth, OpenAI, Resend (contact form, see CONTACT_FORM.md), next-intl, Recharts, jsPDF.

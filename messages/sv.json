@@ -678,12 +678,25 @@
         "emailPlaceholder": "namn@foretag.fi",
         "company": "Företag",
         "companyPlaceholder": "Företagets namn",
+        "need": "Vad behöver ni hjälp med?",
+        "needOptions": {
+            "demo": "Demo av tjänsten",
+            "tools": "Använda AI-verktygen",
+            "custom": "Skräddarsydd AI-lösning eller integration",
+            "enterprise": "Storföretag och offentlig sektor",
+            "training": "AI-utbildning för vårt team",
+            "other": "Något annat"
+        },
         "message": "Meddelande",
         "messagePlaceholder": "Berätta hur vi kan hjälpa…",
         "submit": "Skicka meddelande",
         "sending": "Skickar…",
         "success": "Meddelandet har skickats! Vi återkommer snart.",
         "error": "Det gick inte att skicka. Försök igen.",
-        "alternativeContact": "Eller mejla oss direkt:"
+        "alternativeContact": "Eller mejla oss direkt:",
+        "autoReplySubject": "Tack för att du kontaktade oss – Voon Business",
+        "autoReplyGreeting": "Hej {name}!",
+        "autoReplyText": "Tack för ditt meddelande. Vi har tagit emot det och återkommer inom en arbetsdag.",
+        "autoReplyOutro": "Under tiden kan ni börja använda AI-arbetsytan gratis."
     }
 }

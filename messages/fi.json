@@ -678,12 +678,25 @@
         "emailPlaceholder": "nimi@yritys.fi",
         "company": "Yritys",
         "companyPlaceholder": "Yrityksesi nimi",
+        "need": "Mihin tarvitset apua?",
+        "needOptions": {
+            "demo": "Palvelun esittely",
+            "tools": "Tekoälytyökalujen käyttö",
+            "custom": "Räätälöity tekoälyratkaisu tai integraatio",
+            "enterprise": "Suuryritykset ja julkinen sektori",
+            "training": "Tekoälykoulutus tiimillemme",
+            "other": "Jokin muu"
+        },
         "message": "Viesti",
         "messagePlaceholder": "Kerro, miten voimme auttaa…",
         "submit": "Lähetä viesti",
         "sending": "Lähetetään…",
         "success": "Viesti lähetetty! Otamme sinuun yhteyttä pian.",
         "error": "Lähetys epäonnistui. Yritä uudelleen.",
-        "alternativeContact": "Tai lähetä sähköpostia suoraan:"
+        "alternativeContact": "Tai lähetä sähköpostia suoraan:",
+        "autoReplySubject": "Kiitos yhteydenotostasi – Voon Business",
+        "autoReplyGreeting": "Hei {name}!",
+        "autoReplyText": "Kiitos viestistäsi. Olemme vastaanottaneet sen ja palaamme asiaan yhden arkipäivän kuluessa.",
+        "autoReplyOutro": "Sillä välin voit aloittaa tekoälytyötilan käytön maksutta."
     }
 }

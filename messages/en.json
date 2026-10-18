@@ -678,12 +678,25 @@
         "emailPlaceholder": "name@company.com",
         "company": "Company",
         "companyPlaceholder": "Your company name",
+        "need": "What do you need help with?",
+        "needOptions": {
+            "demo": "Demo of the service",
+            "tools": "Using the AI tools",
+            "custom": "Custom AI solution or integration",
+            "enterprise": "Enterprise & public sector",
+            "training": "AI training for our team",
+            "other": "Something else"
+        },
         "message": "Message",
         "messagePlaceholder": "Tell us how we can help…",
         "submit": "Send message",
         "sending": "Sending…",
         "success": "Message sent! We'll get back to you soon.",
         "error": "Sending failed. Please try again.",
-        "alternativeContact": "Or email us directly:"
+        "alternativeContact": "Or email us directly:",
+        "autoReplySubject": "Thanks for contacting us – Voon Business",
+        "autoReplyGreeting": "Hi {name}!",
+        "autoReplyText": "Thank you for your message. We have received it and will get back to you within one business day.",
+        "autoReplyOutro": "In the meantime you can start using the AI workspace for free."
     }
 }

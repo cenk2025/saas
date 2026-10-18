@@ -1,12 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { CheckCircle2, Loader2, Mail, Send } from 'lucide-react';
+import { NEED_OPTIONS } from '@/lib/contact';
+
+const EMPTY_FORM = { name: '', email: '', company: '', need: 'demo', message: '', website: '' };
 
 export default function ContactForm() {
     const t = useTranslations('contact');
-    const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
+    const locale = useLocale();
+    const [formData, setFormData] = useState(EMPTY_FORM);
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -17,12 +21,12 @@ export default function ContactForm() {
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, locale }),
             });
             if (!response.ok) throw new Error('Failed to send message');
 
             setStatus('success');
-            setFormData({ name: '', email: '', company: '', message: '' });
+            setFormData(EMPTY_FORM);
         } catch {
             setStatus('error');
         }
@@ -60,9 +64,32 @@ export default function ContactForm() {
                         <input id="company" name="company" value={formData.company} onChange={handleChange} className="input" placeholder={t('companyPlaceholder')} />
                     </div>
                     <div>
+                        <span id="need-label" className="label">{t('need')} *</span>
+                        <div role="radiogroup" aria-labelledby="need-label" className="flex flex-wrap gap-2">
+                            {NEED_OPTIONS.map((option) => {
+                                const selected = formData.need === option;
+                                return (
+                                    <button
+                                        key={option}
+                                        type="button"
+                                        role="radio"
+                                        aria-checked={selected}
+                                        onClick={() => setFormData((prev) => ({ ...prev, need: option }))}
+                                        className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${selected ? 'border-ink bg-ink text-white' : 'border-border bg-card text-muted-foreground hover:border-foreground/30 hover:text-foreground'}`}
+                                    >
+                                        {t(`needOptions.${option}`)}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div>
                         <label htmlFor="message" className="label">{t('message')} *</label>
                         <textarea id="message" name="message" required rows={5} value={formData.message} onChange={handleChange} className="input resize-none" placeholder={t('messagePlaceholder')} />
                     </div>
+
+                    {/* Honeypot for spam bots, hidden from people and assistive tech */}
+                    <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={formData.website} onChange={handleChange} className="hidden" />
 
                     {status === 'success' && (
                         <p className="flex items-center gap-2 rounded-xl bg-success/10 p-3 text-sm font-medium text-success">
