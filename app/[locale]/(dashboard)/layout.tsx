@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import { AppShell } from "@/components/app/AppShell"
+import { isPlatformAdmin } from "@/lib/admin"
 import { getWorkspace } from "@/lib/workspace"
 import { redirect } from "@/src/i18n/navigation"
 
@@ -25,7 +26,7 @@ export default async function DashboardLayout({
                 name: workspace.user.name || workspace.user.email,
                 email: workspace.user.email,
                 role: t(`roles.${workspace.user.role}`),
-                isAdmin: workspace.user.role === "ADMIN",
+                isAdmin: isPlatformAdmin(workspace.user.email),
             }}
             companyName={workspace.company?.name}
         >

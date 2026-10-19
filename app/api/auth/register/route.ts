@@ -31,7 +31,9 @@ export async function POST(req: NextRequest) {
             password,
             email_confirm: true, // Auto-confirm email for now
             user_metadata: {
-                full_name: fullName
+                full_name: fullName,
+                // Shown to platform admins so they can contact the company
+                phone: typeof phone === "string" ? phone.trim().slice(0, 40) : ""
             }
         })
 

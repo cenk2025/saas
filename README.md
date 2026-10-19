@@ -14,6 +14,7 @@ companies a secure AI co-worker in Finnish, Swedish and English.
   three recommendations and a PDF report.
 - **Company profile** (`/company`): context that every AI request uses.
 - **Library** (`/library`): AI documents saved by the team.
+- **Platform admin** (`/admin`, only for `PLATFORM_ADMIN_EMAILS`, default cenk.yakinlar@hotmail.com and info@voon.fi): all companies with contacts, usage and last activity, CSV export and email to selected companies via Resend.
 - Languages: `fi` (default), `sv`, `en` via next-intl (`messages/*.json`).
 
 Tool definitions live in `lib/ai/tool-catalog.ts` (fields, shared with the browser) and
