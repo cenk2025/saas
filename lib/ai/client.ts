@@ -19,7 +19,10 @@ export interface AIProvider {
 
 // Models on NVIDIA's free tier come and go, and some are gated per account, so we
 // fall back through several instead of depending on one. Fast instruct models first.
+// Nemotron Lightning answers in a few seconds on this account (it also powers the
+// voon.fi chat); deepseek and gemma were timing out at 40 s in production.
 const NVIDIA_FALLBACK_MODELS = [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
     "deepseek-ai/deepseek-v4.1-flash",
     "google/gemma-4-31b-it",
     "mistralai/mistral-large-2-instruct",
@@ -70,6 +73,14 @@ const STREAM_HEADERS = {
     "Cache-Control": "no-cache, no-transform",
 }
 
+/**
+ * Nemotron 3.x reasons by default and can spend the whole answer budget on hidden
+ * thinking; for chat and JSON answers we turn that off, as the voon.fi chat does.
+ */
+function extraBody(ai: AIProvider, model: string): Record<string, unknown> {
+    return ai.name === "nvidia" && model.includes("nemotron") ? { chat_template_kwargs: { enable_thinking: false } } : {}
+}
+
 // Total time for all model attempts, so the route stays within maxDuration (120 s)
 const FALLBACK_BUDGET_MS = 85_000
 const MODEL_TIMEOUT_MS = 40_000
@@ -115,7 +126,7 @@ export async function streamCompletion(
 ): Promise<Response> {
     // Headers arrive before the first token, so a failing model is detected here and the next one tried
     const completion = await createWithFallback(ai, (model, options) =>
-        ai.client.chat.completions.create({ model, messages, temperature, stream: true }, options)
+        ai.client.chat.completions.create({ model, messages, temperature, stream: true, ...extraBody(ai, model) }, options)
     )
 
     const encoder = new TextEncoder()
@@ -150,6 +161,7 @@ export async function completeJson(ai: AIProvider, messages: ChatMessage[], temp
                 messages,
                 temperature,
                 ...(ai.name === "openai" ? { response_format: { type: "json_object" as const } } : {}),
+                ...extraBody(ai, model),
             },
             options
         )
