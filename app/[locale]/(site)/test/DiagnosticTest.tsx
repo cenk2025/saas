@@ -5,17 +5,20 @@ import { useLocale, useTranslations } from "next-intl"
 import { Loader2, Sparkles } from "lucide-react"
 import { QUESTIONS } from "@/lib/diagnostic"
 import { useRouter } from "@/src/i18n/navigation"
+import { PublicResult, type DiagnosticResult } from "./PublicResult"
 
 const initialAnswers = () =>
     Object.fromEntries(QUESTIONS.filter((q) => q.type === "range").map((q) => [q.id, 5])) as Record<string, string | number>
 
-export default function DiagnosticPage() {
+// Signed-in users get a saved report (/results/[id]); visitors see the result here without saving.
+export function DiagnosticTest({ signedIn }: { signedIn: boolean }) {
     const t = useTranslations("Diagnostic")
     const locale = useLocale()
     const router = useRouter()
     const [answers, setAnswers] = useState<Record<string, string | number>>(initialAnswers)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const [result, setResult] = useState<DiagnosticResult | null>(null)
 
     const answered = QUESTIONS.filter((q) => answers[q.id] !== undefined).length
     const complete = answered === QUESTIONS.length
@@ -31,15 +34,34 @@ export default function DiagnosticPage() {
                 body: JSON.stringify({ answers, locale }),
             })
             const data = await res.json().catch(() => null)
-            if (res.ok && data?.reportId) {
+            if (res.ok && signedIn && data?.reportId) {
                 router.push(`/results/${data.reportId}`)
                 return
             }
-            throw new Error()
+            if (res.ok && data?.result) {
+                setResult(data.result)
+                setLoading(false)
+                window.scrollTo({ top: 0, behavior: "smooth" })
+                return
+            }
+            setError(res.status === 429 ? t("rateLimited") : t("failed"))
+            setLoading(false)
         } catch {
             setError(t("failed"))
             setLoading(false)
         }
+    }
+
+    if (result) {
+        return (
+            <PublicResult
+                result={result}
+                onRetake={() => {
+                    setResult(null)
+                    setAnswers(initialAnswers())
+                }}
+            />
+        )
     }
 
     return (

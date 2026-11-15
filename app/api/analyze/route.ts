@@ -17,19 +17,55 @@ interface AnalysisResult {
 // The free NVIDIA tier can take ~30 s per answer
 export const maxDuration = 120
 
+// Visitors who are not signed in can take the test too. Their results are not saved, and each
+// address gets a few analyses per hour so the public page cannot run up AI costs. The counter lives
+// in the function instance's memory: a soft limit, enough to stop casual repeat use.
+const ANON_LIMIT = 5
+const ANON_WINDOW_MS = 60 * 60 * 1000
+const anonHits = new Map<string, number[]>()
+
+function anonAllowed(ip: string): boolean {
+    const now = Date.now()
+    const recent = (anonHits.get(ip) ?? []).filter((t) => now - t < ANON_WINDOW_MS)
+    if (recent.length >= ANON_LIMIT) {
+        anonHits.set(ip, recent)
+        return false
+    }
+    recent.push(now)
+    anonHits.set(ip, recent)
+    if (anonHits.size > 5000) anonHits.clear()
+    return true
+}
+
+/** Keep only answers to known questions, with values the question allows. */
+function cleanAnswers(raw: unknown): Record<string, string | number> {
+    const input = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>
+    const out: Record<string, string | number> = {}
+    for (const q of QUESTIONS) {
+        const v = input[q.id]
+        if (q.type === "range" && typeof v === "number" && v >= 1 && v <= 10) out[q.id] = Math.round(v)
+        if (q.type === "select" && typeof v === "string" && q.options?.includes(v)) out[q.id] = v
+    }
+    return out
+}
+
 export async function POST(req: Request) {
     try {
         const workspace = await getWorkspace()
-        if (!workspace) return new NextResponse("Unauthorized", { status: 401 })
-        if (!workspace.company) return new NextResponse("User not associated with a company", { status: 400 })
+        if (workspace && !workspace.company) return new NextResponse("User not associated with a company", { status: 400 })
+        if (!workspace) {
+            const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown"
+            if (!anonAllowed(ip)) return new NextResponse("Too many requests", { status: 429 })
+        }
 
         const body = await req.json()
-        const answers: Record<string, string | number> = body?.answers ?? {}
+        const answers = cleanAnswers(body?.answers)
         const locale = routing.locales.includes(body?.locale) ? body.locale : routing.defaultLocale
 
         // Pair each answer with the English question so the model sees full context
         const answered = QUESTIONS.map((q) => `- ${q.prompt} → ${answers[q.id] ?? "no answer"}`).join("\n")
-        const userPrompt = `Company context:\n${companyContext(workspace.company)}\n\nAnswers to the business health check:\n${answered}`
+        const context = workspace?.company ? companyContext(workspace.company) : "Not provided (anonymous visitor on the public test page)."
+        const userPrompt = `Company context:\n${context}\n\nAnswers to the business health check:\n${answered}`
 
         let analysisResult: AnalysisResult
         const ai = getAI()
@@ -64,6 +100,9 @@ export async function POST(req: Request) {
                 },
             }
         }
+
+        // Visitors get the result back directly; nothing is stored.
+        if (!workspace?.company) return NextResponse.json({ success: true, result: analysisResult })
 
         const { data: report, error: reportError } = await supabaseAdmin()
             .from("diagnostic_reports")

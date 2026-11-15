@@ -653,7 +653,12 @@
                     "realtime": "I realtid"
                 }
             }
-        }
+        },
+        "metaTitle": "Hälsotest för företaget – gratis AI-analys",
+        "publicNote": "Resultatet sparas inte. Skapa ett konto för att spara rapporten, följa utvecklingen och fråga AI-rådgivaren om nästa steg.",
+        "createAccount": "Skapa ett konto och spara rapporten",
+        "retake": "Gör testet igen",
+        "rateLimited": "Du har gjort testet flera gånger på kort tid. Försök igen om en stund."
     },
     "Results": {
         "title": "Er hälsorapport",

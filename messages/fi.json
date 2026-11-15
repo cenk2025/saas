@@ -653,7 +653,12 @@
                     "realtime": "Reaaliajassa"
                 }
             }
-        }
+        },
+        "metaTitle": "Liiketoiminnan kuntotesti – maksuton tekoälyanalyysi",
+        "publicNote": "Tulostasi ei tallenneta. Luo tili, niin voit tallentaa raportin, seurata kehitystä ja kysyä tekoälyneuvojalta seuraavista askelista.",
+        "createAccount": "Luo tili ja tallenna raportti",
+        "retake": "Tee testi uudelleen",
+        "rateLimited": "Olet tehnyt testin useita kertoja lyhyessä ajassa. Yritä hetken päästä uudelleen."
     },
     "Results": {
         "title": "Liiketoimintasi kuntoraportti",

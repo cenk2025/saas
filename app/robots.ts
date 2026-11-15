@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/seo'
 
-const PRIVATE = ['/api/', '/*/dashboard', '/*/tools', '/*/advisor', '/*/test', '/*/results', '/*/library', '/*/company', '/*/billing', '/*/admin', '/*/reset-password']
+const PRIVATE = ['/api/', '/*/dashboard', '/*/tools', '/*/advisor', '/*/results', '/*/library', '/*/company', '/*/billing', '/*/admin', '/*/reset-password']
 
 export default function robots(): MetadataRoute.Robots {
     return {

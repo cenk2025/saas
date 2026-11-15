@@ -653,7 +653,12 @@
                     "realtime": "In real time"
                 }
             }
-        }
+        },
+        "metaTitle": "Business health check – free AI analysis",
+        "publicNote": "Your result is not saved. Create an account to save the report, follow your progress and ask the AI advisor about next steps.",
+        "createAccount": "Create an account and save the report",
+        "retake": "Take the test again",
+        "rateLimited": "You have taken the test several times in a short time. Please try again in a while."
     },
     "Results": {
         "title": "Your business health report",
