@@ -4,6 +4,7 @@ import { completeJson, getAI, languageName } from "@/lib/ai/client"
 import { QUESTIONS } from "@/lib/diagnostic"
 import { companyContext, getWorkspace, supabaseAdmin } from "@/lib/workspace"
 import { routing } from "@/src/i18n/navigation"
+import en from "@/messages/en.json"
 
 interface AnalysisResult {
     score: number
@@ -37,6 +38,15 @@ function anonAllowed(ip: string): boolean {
     return true
 }
 
+const OPTION_LABELS = en.Diagnostic.questions as Record<string, { options?: Record<string, string> }>
+
+/** How an answer reads to the model: "6/10" for scales, the English label (not the internal id) for choices. */
+function answerText(id: string, value: string | number | undefined): string {
+    if (value === undefined) return "no answer"
+    if (typeof value === "number") return `${value}/10`
+    return OPTION_LABELS[id]?.options?.[value] ?? value
+}
+
 /** Keep only answers to known questions, with values the question allows. */
 function cleanAnswers(raw: unknown): Record<string, string | number> {
     const input = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>
@@ -63,7 +73,7 @@ export async function POST(req: Request) {
         const locale = routing.locales.includes(body?.locale) ? body.locale : routing.defaultLocale
 
         // Pair each answer with the English question so the model sees full context
-        const answered = QUESTIONS.map((q) => `- ${q.prompt} → ${answers[q.id] ?? "no answer"}`).join("\n")
+        const answered = QUESTIONS.map((q) => `- ${q.prompt} → ${answerText(q.id, answers[q.id])}`).join("\n")
         const context = workspace?.company ? companyContext(workspace.company) : "Not provided (anonymous visitor on the public test page)."
         const userPrompt = `Company context:\n${context}\n\nAnswers to the business health check:\n${answered}`
 
