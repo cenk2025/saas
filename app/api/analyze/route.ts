@@ -75,7 +75,9 @@ export async function POST(req: Request) {
         // Pair each answer with the English question so the model sees full context
         const answered = QUESTIONS.map((q) => `- ${q.prompt} → ${answerText(q.id, answers[q.id])}`).join("\n")
         const context = workspace?.company ? companyContext(workspace.company) : "Not provided (anonymous visitor on the public test page)."
-        const userPrompt = `Company context:\n${context}\n\nAnswers to the business health check:\n${answered}`
+        // The answers are in English, so the output language is repeated last; otherwise parts of
+        // the report (seen: weaknesses) come back in English.
+        const userPrompt = `Company context:\n${context}\n\nAnswers to the business health check:\n${answered}\n\nWrite every text value (summary, strengths, weaknesses, recommendations) in ${languageName(locale)}.`
 
         let analysisResult: AnalysisResult
         const ai = getAI()
