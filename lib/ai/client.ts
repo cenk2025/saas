@@ -33,8 +33,8 @@ let workingNvidiaModel: string | null = null
 /**
  * OpenAI when OPENAI_API_KEY is set, otherwise NVIDIA NIM (OpenAI-compatible,
  * free tier at build.nvidia.com) when NVIDIA_API_KEY is set, otherwise null (demo mode).
- * NVIDIA's free tier is slow and rate-limited; each model gets one SDK retry and
- * the next model is tried when one is unavailable (see createWithFallback).
+ * NVIDIA's free tier is slow and rate-limited; when a model fails or is too slow
+ * the next one is tried (see createWithFallback).
  */
 export function getAI(): AIProvider | null {
     if (process.env.OPENAI_API_KEY) {
@@ -70,21 +70,30 @@ const STREAM_HEADERS = {
     "Cache-Control": "no-cache, no-transform",
 }
 
-// Stop trying further models after this long so the route stays within maxDuration
+// Total time for all model attempts, so the route stays within maxDuration (120 s)
 const FALLBACK_BUDGET_MS = 85_000
+const MODEL_TIMEOUT_MS = 40_000
+const MIN_ATTEMPT_MS = 5_000
+
 
 /**
  * Runs `request` with each model in turn until one succeeds. A wrong key (401)
  * fails at once; any other error (model gated/removed, rate limit, timeout)
- * moves on to the next model.
+ * moves on to the next model, which serves as the retry. Each attempt only gets the
+ * time left in the budget, so a slow model started late can no longer push the
+ * route past maxDuration and end in a 504.
  */
-async function createWithFallback<T>(ai: AIProvider, request: (model: string) => Promise<T>): Promise<T> {
+async function createWithFallback<T>(
+    ai: AIProvider,
+    request: (model: string, options: { timeout: number; maxRetries: number }) => Promise<T>
+): Promise<T> {
     const started = Date.now()
-    let lastError: unknown
+    let lastError: unknown = new Error("AI time budget exhausted")
     for (const model of ai.models) {
-        if (Date.now() - started > FALLBACK_BUDGET_MS) break
+        const remaining = FALLBACK_BUDGET_MS - (Date.now() - started)
+        if (remaining < MIN_ATTEMPT_MS) break
         try {
-            const result = await request(model)
+            const result = await request(model, { timeout: Math.min(MODEL_TIMEOUT_MS, remaining), maxRetries: 0 })
             if (ai.name === "nvidia") workingNvidiaModel = model
             return result
         } catch (error) {
@@ -105,8 +114,8 @@ export async function streamCompletion(
     temperature = 0.6
 ): Promise<Response> {
     // Headers arrive before the first token, so a failing model is detected here and the next one tried
-    const completion = await createWithFallback(ai, (model) =>
-        ai.client.chat.completions.create({ model, messages, temperature, stream: true })
+    const completion = await createWithFallback(ai, (model, options) =>
+        ai.client.chat.completions.create({ model, messages, temperature, stream: true }, options)
     )
 
     const encoder = new TextEncoder()
@@ -134,13 +143,16 @@ export async function streamCompletion(
  * for bare JSON and the answer is parsed tolerantly (fences and stray text removed).
  */
 export async function completeJson(ai: AIProvider, messages: ChatMessage[], temperature = 0.5): Promise<unknown> {
-    const completion = await createWithFallback(ai, (model) =>
-        ai.client.chat.completions.create({
-            model,
-            messages,
-            temperature,
-            ...(ai.name === "openai" ? { response_format: { type: "json_object" as const } } : {}),
-        })
+    const completion = await createWithFallback(ai, (model, options) =>
+        ai.client.chat.completions.create(
+            {
+                model,
+                messages,
+                temperature,
+                ...(ai.name === "openai" ? { response_format: { type: "json_object" as const } } : {}),
+            },
+            options
+        )
     )
 
     const content = completion.choices[0]?.message?.content
