@@ -14,7 +14,53 @@ const contactSchema = z.object({
     locale: z.string().optional(),
     // Honeypot: real users never see or fill this field
     website: z.string().max(500).optional(),
+    // When the form appeared in the browser (ms since epoch)
+    startedAt: z.number().optional(),
+    turnstileToken: z.string().max(2048).nullish(),
 });
+
+// Bot protection: honeypot, a minimum fill time, a per-IP rate limit and Cloudflare Turnstile.
+const MIN_FILL_MS = 3_000;
+const MAX_FILL_MS = 24 * 60 * 60 * 1000;
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+// In-memory, so it is per server instance: a speed bump against floods, not a hard guarantee.
+const hits = new Map<string, number[]>();
+
+function rateLimited(ip: string): boolean {
+    const now = Date.now();
+    const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+    recent.push(now);
+    hits.set(ip, recent);
+    if (hits.size > 5_000) {
+        for (const [key, times] of hits) {
+            if (times.every((t) => now - t >= RATE_WINDOW_MS)) hits.delete(key);
+        }
+    }
+    return recent.length > RATE_LIMIT;
+}
+
+// When TURNSTILE_SECRET_KEY is unset the check is skipped, so the form keeps working until the keys are added.
+async function turnstileOk(token: string | null | undefined, ip: string): Promise<boolean> {
+    const secret = process.env.TURNSTILE_SECRET_KEY;
+    if (!secret) return true;
+    if (!token) return false;
+    try {
+        const form = new URLSearchParams({ secret, response: token });
+        if (ip !== 'unknown') form.set('remoteip', ip);
+        const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+            method: 'POST',
+            body: form,
+            signal: AbortSignal.timeout(5_000),
+        });
+        const result = (await res.json()) as { success?: boolean; 'error-codes'?: string[] };
+        if (!result.success) console.warn('Turnstile rejected', result['error-codes']);
+        return result.success === true;
+    } catch (error) {
+        console.error('Turnstile verification failed:', error);
+        return false;
+    }
+}
 
 export async function POST(req: Request) {
     const resend = getResend();
@@ -28,9 +74,24 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Invalid form data' }, { status: 400 });
     }
 
-    const { name, email, company, need, message, website } = parsed.data;
+    const { name, email, company, need, message, website, startedAt, turnstileToken } = parsed.data;
     // Pretend success to bots that filled the honeypot
     if (website) return NextResponse.json({ success: true });
+
+    // Too fast, or no timestamp at all (scripts posting straight to the API)
+    const elapsed = Date.now() - Number(startedAt);
+    if (!Number.isFinite(elapsed) || elapsed < MIN_FILL_MS || elapsed > MAX_FILL_MS) {
+        return NextResponse.json({ error: 'Please try again' }, { status: 400 });
+    }
+
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || req.headers.get('x-real-ip') || 'unknown';
+    if (rateLimited(ip)) {
+        return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    }
+
+    if (!(await turnstileOk(turnstileToken, ip))) {
+        return NextResponse.json({ error: 'Verification failed' }, { status: 403 });
+    }
 
     const locale = routing.locales.find((l) => l === parsed.data.locale) ?? routing.defaultLocale;
     const tTeam = await getTranslations({ locale: 'fi', namespace: 'contact' });
@@ -41,7 +102,7 @@ export async function POST(req: Request) {
         from: FROM_ADDRESS,
         to: TEAM_ADDRESS,
         replyTo: email,
-        subject: `Business-yhteydenotto: ${company || name} – ${tTeam(`needOptions.${need}`)}`,
+        subject: `Business-yhteydenotto: ${(company || name).replace(/[\r\n]+/g, ' ')} – ${tTeam(`needOptions.${need}`)}`,
         html: layout(
             'Uusi yhteydenotto business.voon.fi:stä',
             [
