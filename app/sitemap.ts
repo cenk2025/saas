@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 import { routing } from '@/src/i18n/navigation'
-import { siteConfig } from '@/lib/seo'
+import { localeLanguages, siteConfig } from '@/lib/seo'
 
 // Login and registration are noindex; the public health check is a landing page in its own right.
 const PUBLIC_PATHS = ['', '/test']
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly' as const,
             priority: path === '' ? 1 : 0.6,
             alternates: {
-                languages: Object.fromEntries(routing.locales.map((l) => [l, `${siteConfig.url}/${l}${path}`])),
+                languages: localeLanguages(path),
             },
         }))
     )
