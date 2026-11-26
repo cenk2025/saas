@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
-/* Self-hosted fonts (Fontsource 5.3.0, OFL-1.1). next/font/google fetched them at build time and
-   broke production builds whenever Google returned its newer font URLs, so they are served from
-   public/fonts instead. Latin + Latin Extended cover Finnish and Swedish. */
+/* Self-hosted Inter (Fontsource 5.3.0, OFL-1.1). next/font/google fetched it at build time and
+   broke production builds whenever Google returned its newer font URLs, so it is served from
+   public/fonts instead. Latin + Latin Extended cover Finnish and Swedish.
+   VOON IQ design system: one family only (Inter), so no display font. */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -19,31 +20,11 @@
   src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
-@font-face {
-  font-family: 'Plus Jakarta Sans';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 200 800;
-  src: url('/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2') format('woff2');
-  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Plus Jakarta Sans';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 200 800;
-  src: url('/fonts/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-
-:root {
-  --font-inter: 'Inter';
-  --font-jakarta: 'Plus Jakarta Sans';
-}
 
 @theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  /* Kept as an alias so existing `font-display` classes still resolve; same family. */
+  --font-display: var(--font-sans);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -68,36 +49,46 @@
   --color-ring: var(--ring);
   --radius-radius: var(--radius);
 
-  /* VOON IQ brand colours, taken from the logo */
-  --color-brand-orange: #ffa970;
-  --color-brand-pink: #f2409f;
-  --color-brand-gray: #c4c4c4;
-  --color-ink: #16131a;
+  /* VOON IQ: neutral canvas + one accent, the VOON gradient #fb2b3b → #fd4180.
+     The old orange/pink names are kept so existing classes follow the new gradient. */
+  --color-brand-orange: #fb2b3b;
+  --color-brand-pink: #fd4180;
+  --color-brand-gray: #86868b;
+  --color-brand: #d81b47;
+  --color-ink: #000000;
+  --color-alt: #f5f5f7;
+  --color-fg-2: #6e6e73;
 }
 
 :root {
-  --background: #fafafa;
-  --foreground: #16131a;
+  --background: #ffffff;
+  --foreground: #1d1d1f;
   --card: #ffffff;
-  --card-foreground: #16131a;
+  --card-foreground: #1d1d1f;
   --popover: #ffffff;
-  --popover-foreground: #16131a;
-  --primary: #e23d96;
+  --popover-foreground: #1d1d1f;
+  --primary: #d81b47; /* text-safe brand red: 5.0:1 on white */
   --primary-foreground: #ffffff;
-  --secondary: #f3f2f4;
-  --secondary-foreground: #16131a;
-  --muted: #f3f2f4;
-  --muted-foreground: #66616c;
-  --accent: #fdf0f6;
-  --accent-foreground: #b02a74;
-  --destructive: #d92d20;
+  --secondary: #f5f5f7;
+  --secondary-foreground: #1d1d1f;
+  --muted: #f5f5f7;
+  --muted-foreground: #6e6e73; /* lightest grey allowed for small text on light */
+  --accent: #fdeef2;
+  --accent-foreground: #b3163b;
+  --destructive: #c4261d;
   --destructive-foreground: #ffffff;
-  --success: #12805c;
-  --warning: #b54708;
-  --border: #e8e6ea;
-  --input: #dddae0;
-  --ring: #e23d96;
-  --radius: 0.75rem;
+  --success: #1d7a46;
+  --warning: #a34a06;
+  --border: #d2d2d7;
+  --input: #d2d2d7;
+  --ring: #d81b47;
+  --radius: 0.875rem;
+
+  --grad: linear-gradient(90deg, #fb2b3b, #fd4180);
+  /* Darker stops for anything carrying small white text (buttons): >= 4.6:1. */
+  --grad-ui: linear-gradient(90deg, #e5192b, #d92a63);
+  --ease: cubic-bezier(0.28, 0.11, 0.32, 1);
+  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.04), 0 18px 48px -20px rgba(0, 0, 0, 0.18);
 }
 
 @layer base {
@@ -107,68 +98,199 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.022em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
   }
 
   ::selection {
-    background: #fbd3e8;
+    background: rgba(253, 65, 128, 0.18);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
   }
 }
 
 @utility bg-brand-gradient {
-  background-image: linear-gradient(100deg, var(--color-brand-orange) 0%, var(--color-brand-pink) 100%);
+  background-image: var(--grad);
+}
+
+@utility bg-brand-gradient-ui {
+  background-image: var(--grad-ui);
 }
 
 @utility text-brand-gradient {
-  background-image: linear-gradient(100deg, var(--color-brand-orange) 0%, var(--color-brand-pink) 100%);
+  background-image: var(--grad);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
 }
 
 @layer components {
+  /* ---------- Type scale (Apple-style, tight tracking) ---------- */
+  .t-hero {
+    font-size: clamp(3rem, 1.6rem + 5.4vw, 6rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .t-headline {
+    font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .t-title {
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  .t-sub {
+    font-size: clamp(1.1875rem, 1.1rem + 0.45vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.38;
+    letter-spacing: -0.012em;
+    color: var(--muted-foreground);
+    text-wrap: pretty;
+  }
+
+  /* ---------- Layout ---------- */
+  .container-apple {
+    width: min(1068px, calc(100% - 2 * max(22px, 4vw)));
+    margin-inline: auto;
+  }
+
+  .container-wide {
+    width: min(1280px, calc(100% - 2 * max(22px, 4vw)));
+    margin-inline: auto;
+  }
+
+  .section {
+    padding-block: clamp(5rem, 3rem + 7vw, 9rem);
+  }
+
+  /* ---------- Buttons: pill, 44 px minimum hit area ---------- */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-gradient px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-brand-pink/20 transition hover:brightness-105 hover:shadow-md hover:shadow-brand-pink/25 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 font-medium whitespace-nowrap text-white transition disabled:cursor-not-allowed disabled:opacity-60;
+    min-height: 44px;
+    font-size: 1.0625rem;
+    letter-spacing: -0.015em;
+    background-image: var(--grad-ui);
+    box-shadow: 0 8px 24px -10px rgba(253, 53, 93, 0.7);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s, opacity 0.2s;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 10px 30px -8px rgba(253, 53, 93, 0.8);
+  }
+
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: scale(0.98);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-transparent px-6 font-medium whitespace-nowrap text-foreground transition hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-60;
+    min-height: 44px;
+    font-size: 1.0625rem;
+    letter-spacing: -0.015em;
+    box-shadow: inset 0 0 0 1.5px currentColor;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-3.5 font-medium text-foreground/80 transition hover:bg-black/5 hover:text-foreground;
+    min-height: 44px;
+    font-size: 0.9375rem;
   }
 
+  .link-more {
+    @apply inline-flex items-center gap-1 font-medium text-primary hover:underline;
+    min-height: 44px;
+    text-underline-offset: 0.15em;
+  }
+
+  /* ---------- Surfaces: depth from layers, not outlines ---------- */
   .card {
-    @apply rounded-2xl border border-border bg-card;
+    @apply rounded-[28px] bg-card;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.58);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55), 0 24px 60px -24px rgba(30, 40, 30, 0.35);
+    color: #1d1d1f;
+  }
+
+  .glass-dark {
+    background: rgba(28, 28, 30, 0.42);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    backdrop-filter: blur(28px) saturate(160%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 24px 60px -24px rgba(0, 0, 0, 0.6);
+    color: #f5f5f7;
+  }
+
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
   }
 
   .input {
-    @apply block w-full rounded-xl border border-input bg-card px-3.5 py-2.5 text-sm text-foreground shadow-xs placeholder:text-muted-foreground/70 transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 disabled:opacity-60;
+    @apply block w-full rounded-xl border border-input bg-card px-4 text-foreground placeholder:text-muted-foreground transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 disabled:opacity-60;
+    min-height: 44px;
+    font-size: 1.0625rem;
   }
 
   .label {
-    @apply mb-1.5 block text-sm font-medium text-foreground;
+    @apply mb-1.5 block text-[15px] font-medium text-foreground;
   }
 
+  /* Eyebrow: 17 px / 600 in the text-safe brand colour above a headline. */
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground;
+    @apply inline-block font-semibold text-primary;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+  }
+
+  .check-dot {
+    @apply grid shrink-0 place-items-center rounded-full text-white;
+    width: 1.375rem;
+    height: 1.375rem;
+    background-image: var(--grad);
   }
 
   /* Rendered AI output (Markdown) */
   .prose-voon {
-    @apply text-[15px] leading-7 text-foreground;
+    @apply text-[17px] leading-7 text-foreground;
   }
 
   .prose-voon > * + * {
@@ -177,7 +299,7 @@
 
   .prose-voon h1,
   .prose-voon h2 {
-    @apply mt-8 text-xl font-bold first:mt-0;
+    @apply mt-8 text-xl font-semibold first:mt-0;
   }
 
   .prose-voon h3,
@@ -186,7 +308,7 @@
   }
 
   .prose-voon ul {
-    @apply list-disc space-y-1.5 pl-5 marker:text-brand-pink;
+    @apply list-disc space-y-1.5 pl-5 marker:text-primary;
   }
 
   .prose-voon ol {
@@ -202,11 +324,11 @@
   }
 
   .prose-voon blockquote {
-    @apply border-l-2 border-brand-pink/60 pl-4 text-muted-foreground;
+    @apply border-l-2 border-primary/50 pl-4 text-muted-foreground;
   }
 
   .prose-voon code {
-    @apply rounded bg-muted px-1.5 py-0.5 text-[13px];
+    @apply rounded bg-muted px-1.5 py-0.5 text-[14px];
   }
 
   .prose-voon hr {
@@ -214,11 +336,11 @@
   }
 
   .prose-voon table {
-    @apply w-full border-collapse text-sm;
+    @apply w-full border-collapse text-[15px];
   }
 
   .prose-voon th {
-    @apply border-b-2 border-border bg-muted/60 px-3 py-2 text-left font-semibold;
+    @apply border-b-2 border-border bg-muted px-3 py-2 text-left font-semibold;
   }
 
   .prose-voon td {
@@ -226,28 +348,58 @@
   }
 }
 
+/* ---------- Motion ---------- */
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(24px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
 .animate-fade-up {
-  animation: fade-up 0.5s ease-out both;
+  animation: fade-up 1s var(--ease) both;
+}
+
+/* Scroll reveal: .reveal + .is-visible (added by <Reveal>) */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .animate-fade-up {
     animation: none;
   }
 
-  html {
-    scroll-behavior: auto;
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .glass-dark {
+    background: rgba(28, 28, 30, 0.94);
   }
 }

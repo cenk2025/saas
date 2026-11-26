@@ -52,18 +52,18 @@ export default function ContactForm() {
     };
 
     return (
-        <section id="contact" className="scroll-mt-20">
-            <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1fr_1.3fr]">
+        <section id="contact" className="section scroll-mt-20 bg-alt">
+            <div className="container-apple grid gap-12 lg:grid-cols-[1fr_1.3fr]">
                 <div>
-                    <h2 className="text-3xl font-bold sm:text-4xl">{t('title')}</h2>
-                    <p className="mt-4 text-lg text-muted-foreground">{t('subtitle')}</p>
-                    <p className="mt-8 text-sm text-muted-foreground">{t('alternativeContact')}</p>
-                    <a href="mailto:info@voon.fi" className="mt-1 inline-flex items-center gap-2 text-lg font-semibold hover:text-primary">
+                    <h2 className="t-title">{t('title')}</h2>
+                    <p className="t-sub mt-4">{t('subtitle')}</p>
+                    <p className="mt-10 text-[15px] text-muted-foreground">{t('alternativeContact')}</p>
+                    <a href="mailto:info@voon.fi" className="inline-flex min-h-11 items-center gap-2 text-[21px] font-semibold text-primary hover:underline">
                         <Mail className="h-5 w-5" /> info@voon.fi
                     </a>
                 </div>
 
-                <form onSubmit={handleSubmit} className="card space-y-4 p-6 sm:p-8">
+                <form onSubmit={handleSubmit} className="card space-y-5 p-6 sm:p-9">
                     <div className="grid gap-4 sm:grid-cols-2">
                         <div>
                             <label htmlFor="name" className="label">{t('name')} *</label>
@@ -90,7 +90,7 @@ export default function ContactForm() {
                                         role="radio"
                                         aria-checked={selected}
                                         onClick={() => setFormData((prev) => ({ ...prev, need: option }))}
-                                        className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${selected ? 'border-ink bg-ink text-white' : 'border-border bg-card text-muted-foreground hover:border-foreground/30 hover:text-foreground'}`}
+                                        className={`min-h-11 rounded-full px-4 text-[15px] font-medium transition ${selected ? 'bg-foreground text-white' : 'bg-muted text-foreground/80 hover:text-foreground'}`}
                                     >
                                         {t(`needOptions.${option}`)}
                                     </button>
@@ -119,7 +119,7 @@ export default function ContactForm() {
                         <Turnstile key={turnstileKey} siteKey={TURNSTILE_SITE_KEY} language={locale} theme="light" onToken={setTurnstileToken} />
                     )}
 
-                    <button type="submit" disabled={status === 'loading' || (!!TURNSTILE_SITE_KEY && !turnstileToken)} className="btn-primary w-full py-3">
+                    <button type="submit" disabled={status === 'loading' || (!!TURNSTILE_SITE_KEY && !turnstileToken)} className="btn-primary w-full">
                         {status === 'loading' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                         {status === 'loading' ? t('sending') : t('submit')}
                     </button>

@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth"
 import { getTranslations } from "next-intl/server"
-import { ArrowRight } from "lucide-react"
 import { authOptions } from "@/lib/auth"
 import { Link } from "@/src/i18n/navigation"
 import { LanguageSwitcher } from "./LanguageSwitcher"
@@ -19,13 +18,13 @@ export async function Navbar() {
     ]
 
     return (
-        <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-lg">
-            <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-                <Link href="/" aria-label="Voon Business" className="shrink-0">
-                    <Logo />
+        <header className="glass-nav sticky top-0 z-50">
+            <div className="container-wide flex h-16 items-center justify-between gap-4">
+                <Link href="/" aria-label="Voon Business" className="inline-flex min-h-11 shrink-0 items-center">
+                    <Logo className="h-6 w-auto" />
                 </Link>
 
-                <nav className="hidden items-center gap-1 md:flex">
+                <nav className="hidden items-center gap-1 lg:flex">
                     {links.map((link) => (
                         <Link key={link.href} href={link.href} className="btn-ghost">
                             {link.label}
@@ -34,10 +33,13 @@ export async function Navbar() {
                 </nav>
 
                 <div className="flex items-center gap-2">
-                    <LanguageSwitcher className="hidden sm:inline-flex" />
+                    {/* Wrapper: the switcher's own inline-flex would override `hidden`. */}
+                    <div className="hidden xl:block">
+                        <LanguageSwitcher />
+                    </div>
                     {session?.user ? (
                         <Link href="/dashboard" className="btn-primary hidden sm:inline-flex">
-                            {t("openApp")} <ArrowRight className="h-4 w-4" />
+                            {t("openApp")}
                         </Link>
                     ) : (
                         <>

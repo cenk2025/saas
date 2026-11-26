@@ -32,8 +32,8 @@ export default function CookieConsent() {
     };
 
     return (
-        <div className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-xl rounded-2xl border border-border bg-card p-4 shadow-xl sm:flex sm:items-center sm:gap-4">
-            <p className="text-sm text-muted-foreground">{t('text')}</p>
+        <div className="glass fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-2xl rounded-[24px] p-5 sm:flex sm:items-center sm:gap-5">
+            <p className="text-[15px] leading-snug text-[#3a3a3c]">{t('text')}</p>
             <button onClick={accept} className="btn-primary mt-3 w-full shrink-0 sm:mt-0 sm:w-auto">
                 {t('ok')}
             </button>
