@@ -9,14 +9,15 @@ export const siteConfig = {
 const OG_LOCALES: Record<string, string> = { fi: 'fi_FI', sv: 'sv_FI', en: 'en_US' }
 
 /**
- * hreflang alternates for a path (without the locale prefix). x-default is the unprefixed
- * URL: it redirects each visitor to their language, so it is the right page for anyone
- * whose language none of the versions match.
+ * hreflang alternates for a path (without the locale prefix). x-default points at the
+ * default-locale (fi) page, not the unprefixed URL: that one only answers with a temporary
+ * 307 redirect, and Search Console flagged /fi as "duplicate without user-selected
+ * canonical" while the hreflang cluster pointed at a redirect.
  */
 export function localeLanguages(path = ''): Record<string, string> {
     return {
         ...Object.fromEntries(routing.locales.map((l) => [l, `${siteConfig.url}/${l}${path}`])),
-        'x-default': `${siteConfig.url}${path || '/'}`,
+        'x-default': `${siteConfig.url}/${routing.defaultLocale}${path}`,
     }
 }
 
