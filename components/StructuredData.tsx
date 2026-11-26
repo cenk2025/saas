@@ -15,7 +15,8 @@ export function StructuredData({ description }: { description: string }) {
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
             name: siteConfig.name,
-            url: siteConfig.url,
+            // The root only redirects; point at the canonical default-locale page.
+            url: `${siteConfig.url}/fi`,
             applicationCategory: "BusinessApplication",
             operatingSystem: "Web",
             description,
